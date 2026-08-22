@@ -1,0 +1,5 @@
+model = 'positional'
+pos_encoding = 'cope'
+init_from = 'scratch'
+out_dir = 'out/positional/cope'
+wandb_run_name = 'positional-cope'

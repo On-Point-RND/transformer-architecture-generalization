@@ -1,0 +1,5 @@
+model = 'positional'
+pos_encoding = 'rope+relative_bias'
+init_from = 'scratch'
+out_dir = 'out/positional/rope-relative-bias'
+wandb_run_name = 'positional-rope-relative-bias'

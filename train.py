@@ -19,41 +19,57 @@ $ torchrun --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr=123.456.123
 import os
 import time
 import math
-import pickle
+import json
+import random
+import dataclasses
 from contextlib import nullcontext
 
-import numpy as np
 import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed import init_process_group, destroy_process_group
 
-from model import GPTConfig, GPT
+from models import get_model
+from generator import get_generator
 
 # -----------------------------------------------------------------------------
-# default config values designed to train a gpt2 (124M) on OpenWebText
+# default config values
 # I/O
 out_dir = 'out'
 eval_interval = 2000
-log_interval = 1
+log_interval = 100
 eval_iters = 200
 eval_only = False # if True, script exits right after the first eval
 always_save_checkpoint = True # if True, always save a checkpoint after each eval
-init_from = 'scratch' # 'scratch' or 'resume' or 'gpt2*'
+init_from = 'scratch' # 'scratch' or 'resume'
+log_file = '' # optional: path to append one JSON line per eval step (training dynamics); '' disables
 # wandb logging
 wandb_log = False # disabled by default
-wandb_project = 'owt'
-wandb_run_name = 'gpt2' # 'run' + str(time.time())
-# data
-dataset = 'openwebtext'
+wandb_project = 'sandbox'
+wandb_run_name = 'run' # 'run' + str(time.time())
+# data — training/validation data is streamed live from a Generator (no on-disk bins)
+dataset = 'kv' # generator name; selects the task from the generator/ registry
+gen_params = {} # task hyperparams, merged over the registry defaults for `dataset`
+n_val = 1000 # size of the fixed held-out validation set
+eval_accuracy = True # also report answer exact-match accuracy during eval
 gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
 batch_size = 12 # if gradient_accumulation_steps > 1, this is the micro-batch size
 block_size = 1024
 # model
+model = 'base' # which architecture file to load from the models/ folder (--model=<name>)
 n_layer = 12
 n_head = 12
 n_embd = 768
 dropout = 0.0 # for pretraining 0 is good, for finetuning try 0.1+
 bias = False # do we use bias inside LayerNorm and Linear layers?
+# composable positional model
+pos_encoding = 'nope' # one name or e.g. 'rope+relative_bias'
+rope_theta = 10000.0
+rpe_num_buckets = 32
+rpe_max_distance = 128
+cope_max_position = 64
+cape_hidden_dim = 32
+fope_train_length = 128
+fope_init_gain = 0.3
 # adamw optimizer
 learning_rate = 6e-4 # max learning rate
 max_iters = 600000 # total number of training iterations
@@ -71,11 +87,16 @@ backend = 'nccl' # 'nccl', 'gloo', etc.
 # system
 device = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1' etc., or try 'mps' on macbooks
 dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else 'float16' # 'float32', 'bfloat16', or 'float16', the latter will auto implement a GradScaler
-compile = True # use PyTorch 2.0 to compile the model to be faster
+compile = False # use PyTorch 2.0 to compile the model to be faster
+seed = 1337 # shared initialization/data seed; override explicitly for seed sweeps
+data_seed = 42 # kept separate to preserve the legacy generator stream exactly
 # -----------------------------------------------------------------------------
 config_keys = [k for k,v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
 exec(open('configurator.py').read()) # overrides from command line or config file
 config = {k: globals()[k] for k in config_keys} # will be useful for logging
+config['gen_params'] = gen_params # dicts are excluded by the scalar filter above; record it explicitly
+# load the chosen architecture from the models/ folder (selected via --model=<name>)
+ModelConfig, Model = get_model(model)
 # -----------------------------------------------------------------------------
 
 # various inits, derived attributes, I/O setup
@@ -103,7 +124,9 @@ print(f"tokens per iteration will be: {tokens_per_iter:,}")
 
 if master_process:
     os.makedirs(out_dir, exist_ok=True)
-torch.manual_seed(1337 + seed_offset)
+    if log_file and init_from == 'scratch':
+        open(log_file, 'w').close()  # fresh run starts a fresh log; resume appends instead
+torch.manual_seed(seed + seed_offset)
 torch.backends.cuda.matmul.allow_tf32 = True # allow tf32 on matmul
 torch.backends.cudnn.allow_tf32 = True # allow tf32 on cudnn
 device_type = 'cuda' if 'cuda' in device else 'cpu' # for later use in torch.autocast
@@ -111,18 +134,15 @@ device_type = 'cuda' if 'cuda' in device else 'cpu' # for later use in torch.aut
 ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
-# poor man's data loader
-data_dir = os.path.join('data', dataset)
+# live data loader — samples straight from the generator, no on-disk bins.
+# `gen` and `val_items` are built below (needs seed_offset from the DDP setup).
 def get_batch(split):
-    # We recreate np.memmap every batch to avoid a memory leak, as per
-    # https://stackoverflow.com/questions/45132940/numpy-memmap-memory-usage-want-to-iterate-once/61472122#61472122
     if split == 'train':
-        data = np.memmap(os.path.join(data_dir, 'train.bin'), dtype=np.uint16, mode='r')
+        items = gen.sample_train(batch_size)
     else:
-        data = np.memmap(os.path.join(data_dir, 'val.bin'), dtype=np.uint16, mode='r')
-    ix = torch.randint(len(data) - block_size, (batch_size,))
-    x = torch.stack([torch.from_numpy((data[i:i+block_size]).astype(np.int64)) for i in ix])
-    y = torch.stack([torch.from_numpy((data[i+1:i+1+block_size]).astype(np.int64)) for i in ix])
+        items = random.sample(val_items, min(batch_size, len(val_items)))
+    x_np, y_np = gen.collate(items, block_size)
+    x, y = torch.from_numpy(x_np), torch.from_numpy(y_np)
     if device_type == 'cuda':
         # pin arrays x,y, which allows us to move them to GPU asynchronously (non_blocking=True)
         x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
@@ -134,27 +154,37 @@ def get_batch(split):
 iter_num = 0
 best_val_loss = 1e9
 
-# attempt to derive vocab_size from the dataset
-meta_path = os.path.join(data_dir, 'meta.pkl')
-meta_vocab_size = None
-if os.path.exists(meta_path):
-    with open(meta_path, 'rb') as f:
-        meta = pickle.load(f)
-    meta_vocab_size = meta['vocab_size']
-    print(f"found vocab_size = {meta_vocab_size} (inside {meta_path})")
+# build the generator once and derive vocab_size + the held-out val set from it.
+# Offset the seed by seed_offset so DDP ranks draw different train samples. Every
+# rank calls generate_val to populate val_hashes (needed by sample_train's dedup);
+# only the master process actually evaluates val, so per-rank val divergence is moot.
+gen = get_generator(dataset, {**gen_params, 'seed': data_seed + seed_offset})
+val_items = gen.generate_val(n_val)
+meta_vocab_size = gen.vocab_size
+print(f"generator '{dataset}' vocab_size = {meta_vocab_size}, held-out val size = {len(val_items)}")
 
 # model init
 model_args = dict(n_layer=n_layer, n_head=n_head, n_embd=n_embd, block_size=block_size,
-                  bias=bias, vocab_size=None, dropout=dropout) # start with model_args from command line
+                  bias=bias, vocab_size=None, dropout=dropout,
+                  pos_encoding=pos_encoding, rope_theta=rope_theta,
+                  rpe_num_buckets=rpe_num_buckets, rpe_max_distance=rpe_max_distance,
+                  cope_max_position=cope_max_position, cape_hidden_dim=cape_hidden_dim,
+                  fope_train_length=fope_train_length, fope_init_gain=fope_init_gain)
+# Keep only fields declared by the selected architecture.
+_model_fields = {f.name for f in dataclasses.fields(ModelConfig)}
+_dropped = sorted(set(model_args) - _model_fields)
+if _dropped:
+    print(f"note: models/{model}.py's ModelConfig has no {_dropped} field(s) — not passing them")
+model_args = {k: v for k, v in model_args.items() if k in _model_fields}
 if init_from == 'scratch':
     # init a new model from scratch
     print("Initializing a new model from scratch")
     # determine the vocab size we'll use for from-scratch training
     if meta_vocab_size is None:
-        print("defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)")
+        print("no meta.pkl found, defaulting to vocab_size of 50304 (a multiple of 64 for efficiency)")
     model_args['vocab_size'] = meta_vocab_size if meta_vocab_size is not None else 50304
-    gptconf = GPTConfig(**model_args)
-    model = GPT(gptconf)
+    modelconf = ModelConfig(**model_args)
+    model = Model(modelconf)
 elif init_from == 'resume':
     print(f"Resuming training from {out_dir}")
     # resume training from a checkpoint.
@@ -163,11 +193,14 @@ elif init_from == 'resume':
     checkpoint_model_args = checkpoint['model_args']
     # force these config attributes to be equal otherwise we can't even resume training
     # the rest of the attributes (e.g. dropout) can stay as desired from command line
-    for k in ['n_layer', 'n_head', 'n_embd', 'block_size', 'bias', 'vocab_size']:
-        model_args[k] = checkpoint_model_args[k]
+    for k in ['n_layer', 'n_head', 'n_embd', 'block_size', 'bias', 'vocab_size',
+              'pos_encoding', 'rope_theta', 'rpe_num_buckets', 'rpe_max_distance',
+              'cope_max_position', 'cape_hidden_dim', 'fope_train_length', 'fope_init_gain']:
+        if k in checkpoint_model_args and k in model_args:
+            model_args[k] = checkpoint_model_args[k]
     # create the model
-    gptconf = GPTConfig(**model_args)
-    model = GPT(gptconf)
+    modelconf = ModelConfig(**model_args)
+    model = Model(modelconf)
     state_dict = checkpoint['model']
     # fix the keys of the state dictionary :(
     # honestly no idea how checkpoints sometimes get this prefix, have to debug more
@@ -178,14 +211,6 @@ elif init_from == 'resume':
     model.load_state_dict(state_dict)
     iter_num = checkpoint['iter_num']
     best_val_loss = checkpoint['best_val_loss']
-elif init_from.startswith('gpt2'):
-    print(f"Initializing from OpenAI GPT-2 weights: {init_from}")
-    # initialize from OpenAI GPT-2 weights
-    override_args = dict(dropout=dropout)
-    model = GPT.from_pretrained(init_from, override_args)
-    # read off the created config params, so we can store them into checkpoint correctly
-    for k in ['n_layer', 'n_head', 'n_embd', 'block_size', 'bias', 'vocab_size']:
-        model_args[k] = getattr(model.config, k)
 # crop down the model block size if desired, using model surgery
 if block_size < model.config.block_size:
     model.crop_block_size(block_size)
@@ -218,12 +243,23 @@ def estimate_loss():
     model.eval()
     for split in ['train', 'val']:
         losses = torch.zeros(eval_iters)
+        accs = torch.zeros(eval_iters)
         for k in range(eval_iters):
             X, Y = get_batch(split)
             with ctx:
                 logits, loss = model(X, Y)
             losses[k] = loss.item()
+            if eval_accuracy:
+                # answer exact-match: a row is correct iff every answer position
+                # (Y != -1) is predicted right. Reduces to token accuracy for
+                # single-token answers. Non-answer positions are masked out.
+                mask = Y != -1
+                pred = logits.argmax(dim=-1)
+                row_correct = ((pred == Y) | ~mask).all(dim=1)
+                accs[k] = row_correct.float().mean().item()
         out[split] = losses.mean()
+        if eval_accuracy:
+            out[f'{split}_acc'] = accs.mean()
     model.train()
     return out
 
@@ -251,6 +287,29 @@ X, Y = get_batch('train') # fetch the very first batch
 t0 = time.time()
 local_iter_num = 0 # number of iterations in the lifetime of this process
 raw_model = model.module if ddp else model # unwrap DDP container if needed
+if hasattr(raw_model, 'positional_spec'):
+    positional_encoding = raw_model.positional_spec.canonical
+elif model == 'base':
+    positional_encoding = 'wpe'
+else:
+    positional_encoding = model
+positional_counts = (raw_model.get_positional_param_counts()
+                     if hasattr(raw_model, 'get_positional_param_counts')
+                     else {'trainable': 0, 'frozen': 0, 'total': 0})
+if positional_encoding == 'wpe' and positional_counts['total'] == 0 \
+        and hasattr(getattr(raw_model, 'transformer', None), 'wpe'):
+    n_wpe = raw_model.transformer.wpe.weight.numel()
+    positional_counts = {'trainable': n_wpe, 'frozen': 0, 'total': n_wpe}
+run_metadata = {
+    'positional_encoding': positional_encoding,
+    'combination': positional_encoding if '+' in positional_encoding else '',
+    'task': dataset,
+    'task_variant': gen_params.get('task', gen_params.get('variant', 'default')),
+    'seed': seed,
+    'train_distribution': gen_params,
+    'number_of_parameters': sum(p.numel() for p in raw_model.parameters()),
+    'positional_parameters': positional_counts,
+}
 running_mfu = -1.0
 while True:
 
@@ -262,15 +321,36 @@ while True:
     # evaluate the loss on train/val sets and write checkpoints
     if iter_num % eval_interval == 0 and master_process:
         losses = estimate_loss()
-        print(f"step {iter_num}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+        msg = f"step {iter_num}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}"
+        if eval_accuracy:
+            msg += f", train acc {losses['train_acc']:.4f}, val acc {losses['val_acc']:.4f}"
+        print(msg)
         if wandb_log:
-            wandb.log({
+            log = {
                 "iter": iter_num,
                 "train/loss": losses['train'],
                 "val/loss": losses['val'],
                 "lr": lr,
                 "mfu": running_mfu*100, # convert to percentage
-            })
+            }
+            if eval_accuracy:
+                log["train/acc"] = losses['train_acc']
+                log["val/acc"] = losses['val_acc']
+            wandb.log(log)
+        if log_file:
+            entry = {
+                'iter': iter_num,
+                'train_loss': float(losses['train']),
+                'val_loss': float(losses['val']),
+                'lr': lr,
+                'mfu': running_mfu,
+                **run_metadata,
+            }
+            if eval_accuracy:
+                entry['train_acc'] = float(losses['train_acc'])
+                entry['val_acc'] = float(losses['val_acc'])
+            with open(log_file, 'a', encoding='utf-8') as f:
+                f.write(json.dumps(entry) + '\n')
         if losses['val'] < best_val_loss or always_save_checkpoint:
             best_val_loss = losses['val']
             if iter_num > 0:
@@ -281,6 +361,7 @@ while True:
                     'iter_num': iter_num,
                     'best_val_loss': best_val_loss,
                     'config': config,
+                    'run_metadata': run_metadata,
                 }
                 print(f"saving checkpoint to {out_dir}")
                 torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))

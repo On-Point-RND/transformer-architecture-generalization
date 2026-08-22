@@ -1,0 +1,5 @@
+model = 'positional'
+pos_encoding = 'fope'
+init_from = 'scratch'
+out_dir = 'out/positional/fope'
+wandb_run_name = 'positional-fope'

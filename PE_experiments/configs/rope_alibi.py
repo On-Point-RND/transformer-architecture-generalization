@@ -1,0 +1,5 @@
+model = 'positional'
+pos_encoding = 'rope+alibi'
+init_from = 'scratch'
+out_dir = 'out/positional/rope-alibi'
+wandb_run_name = 'positional-rope-alibi'

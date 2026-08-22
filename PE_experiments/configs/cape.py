@@ -1,0 +1,5 @@
+model = 'positional'
+pos_encoding = 'cape'
+init_from = 'scratch'
+out_dir = 'out/positional/cape'
+wandb_run_name = 'positional-cape'
