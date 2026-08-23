@@ -1,0 +1,5 @@
+# Layer-truncation probe over the trained addition grid (SEQ, N=16).
+# Run: python src/probe_layers.py --config configs/add_grid_probe.yaml
+ckpts: "checkpoints/add_grid_*.pt"
+per_bin: 100
+out: add_grid

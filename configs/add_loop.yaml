@@ -1,0 +1,34 @@
+# LOOPED sweep (SPEC sweep type 3): ONE shared transformer block applied T
+# times, T in {1,2,4,8,12}. Tests H4: a T-iteration looped model behaves like a
+# T-layer model on SEQ (depth via iteration), while iterations don't help INDEP.
+# d_model fixed at 128, N=16, SEQ + INDEP.
+sweep: loop
+task: addition
+kinds: [loop]
+loop_width: 128
+loop_Ts: [1, 2, 4, 8, 12]
+loop_N: 16
+
+tasks: [SEQ, INDEP]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0               # disabled: addition groks late, patience cut runs off early
+
+eval:
+  chain_per_bin: 300

@@ -1,0 +1,19 @@
+# Cross-task layer-truncation probe: take S5-TRAINED models and evaluate them
+# on C5 sequences, layer by layer.
+#
+# Why: C5 sequences are a SPECIAL CASE of S5 (all permutations happen to be
+# rotations, which are a subset of the same 120 tokens). An S5-trained model has
+# seen those tokens and learned general composition, so it should solve C5
+# sequences too. If it does, that proves C5 is computationally TRIVIAL and the
+# failure of C5-native models (~chance) was purely an OPTIMIZATION issue
+# (modular-addition / grokking difficulty), not task difficulty.
+#
+# Uses existing S5 checkpoints from the grid (configs/perm_grid.yaml) —
+# no retraining needed.
+#
+# Run:
+#   python src/probe_layers.py --config configs/perm_grid_cross_probe.yaml
+ckpts: "checkpoints/perm_grid_*_S5_*.pt"
+eval_task: C5          # feed C5 sequences to the S5-trained models
+per_bin: 100
+out: perm_cross_S5_on_C5

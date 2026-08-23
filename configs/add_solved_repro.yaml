@@ -1,0 +1,37 @@
+# Воспроизведение: обучение сложения до accuracy ~= 1.0
+#
+# Задача SEQ (целочисленное сложение с переносами), 8-значные числа.
+# Модель: 2 слоя, ширина 128 (~0.4M параметров) — маленькая и быстрая.
+# По нашим прогонам все сиды выходят на ~1.0 за 6000-8000 шагов.
+#
+# Метрика id_test_em_ag в results/addition_solved_summary.csv — это честный
+# exact-match (авторегрессивная генерация ответа), а не teacher-forcing.
+sweep: addition_solved
+kinds: [fixed_width]
+fixed_width: 128
+
+depths: [2]
+tasks: [SEQ]
+Ns: [8]
+seeds: [0]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 1000
+  eval_subset: 2000
+  eval_mode: teacher_forced
+  train_eval_n: 1000
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200

@@ -1,0 +1,7 @@
+torch>=2.1
+numpy
+pyyaml
+pandas
+matplotlib
+tqdm
+

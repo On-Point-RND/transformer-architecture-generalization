@@ -1,0 +1,32 @@
+# Fixed-WIDTH sweep (SPEC sweep type 2): d_model=128 held constant, depth
+# L in {2,4,6,8,12}; parameters GROW with depth. This disentangles "deeper" from
+# "narrower" (the fixed-budget confound). SEQ + INDEP, N=16.
+sweep: fixed_width
+kinds: [fixed_width]
+fixed_width: 128
+
+depths: [2, 4, 6, 8, 12]
+tasks: [SEQ, INDEP]
+Ns: [16]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0               # disabled: addition groks late, patience cut runs off early
+
+eval:
+  chain_per_bin: 300

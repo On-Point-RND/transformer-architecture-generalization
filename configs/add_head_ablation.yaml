@@ -1,0 +1,38 @@
+# Experiment 2: HEAD ablation at fixed depth & width.
+# Hold L=2 (shallow) and d_model=128 fixed; vary ONLY n_heads in {1,2,4,8}
+# (head_dim = 128/H = 128/64/32/16). Tests the idea that a shallow model looks
+# "too capable" because many heads give it parallel routing (carry-lookahead):
+# if so, fewer heads should make accuracy DROP with carry-chain length L(x).
+# N=16, SEQ + INDEP. NOTE: this deliberately varies n_heads, which SPEC section 4
+# otherwise holds fixed — it is an exploratory ablation, not part of the main grid.
+sweep: headabl
+task: addition
+kinds: [head_ablation]
+ha_width: 128
+ha_depth: 2
+ha_heads: [1, 2, 4, 8]
+ha_N: 16
+
+tasks: [SEQ, INDEP]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 300

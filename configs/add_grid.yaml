@@ -1,0 +1,42 @@
+# Trains a depth x width grid for ADDITION (SEQ, N=16), saving checkpoints, so
+# we can run the layer-truncation probe (src/probe_layers.py) and compare
+# the layer-wise picture with permutations.
+#
+# Addition is PARALLELIZABLE, so the prediction is a DIFFERENT layer-wise shape
+# than S5's clean staircase (e.g. the answer may only become decodable near the
+# last layer, or all L(x) solved at once once enough layers are used).
+#
+# NOTE: deep+narrow cells (e.g. L8 d128) may fail to train (optimization) — that
+# is expected; the wider cells (d256/d512) are the reliable ones for the probe.
+#
+# After training:
+#   python src/probe_layers.py --ckpts 'checkpoints/add_grid_*.pt' --out add_grid --per-bin 100
+sweep: add_grid
+kinds: [grid]
+
+depths: [2, 4, 8]
+widths: [128, 256, 512]
+tasks: [SEQ]
+Ns: [16]
+seeds: [0]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 1000
+  eval_subset: 2000
+  eval_mode: teacher_forced
+  train_eval_n: 1000
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200

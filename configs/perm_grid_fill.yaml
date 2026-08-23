@@ -1,0 +1,48 @@
+# Fills the MISSING cells of the (depth x width) capacity grid for K=16, so that
+# together with perm_fw_v2 (d128, L1/2/4/8) and perm_width (L4, d128/256/512)
+# we get the full 3x3 grid (depth {2,4,8} x width {128,256,512}) for S5 and C5.
+#
+# All runs use the SAME 1M-data / 60k-step recipe as perm_fw_v2 & perm_width,
+# so cells from the three sweeps are directly comparable.
+#
+# Already covered on the 1M recipe (DO NOT re-run): S5 (2,128)(4,*); C5 (2,128)(4,*)(8,128).
+# Missing (this config):
+#   S5: (2,256) (2,512) (8,128) (8,256) (8,512)
+#   C5: (2,256) (2,512)         (8,256) (8,512)
+sweep: perm_grid_fill
+task: permutation
+kinds: [cells]
+K: 16
+seeds: [0, 1, 2]
+
+cells:
+  - {task: S5, depth: 2, width: 256}
+  - {task: S5, depth: 2, width: 512}
+  - {task: S5, depth: 8, width: 128}
+  - {task: S5, depth: 8, width: 256}
+  - {task: S5, depth: 8, width: 512}
+  - {task: C5, depth: 2, width: 256}
+  - {task: C5, depth: 2, width: 512}
+  - {task: C5, depth: 8, width: 256}
+  - {task: C5, depth: 8, width: 512}
+
+train:
+  max_steps: 60000
+  n_train: 1000000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200

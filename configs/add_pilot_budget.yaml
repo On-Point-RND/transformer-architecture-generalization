@@ -1,0 +1,36 @@
+# Pilot sweep (SPEC section 8): budget 2M only; N in {4,8,16}; SEQ+INDEP;
+# 3 seeds; depths {2,4,6,8,12}  =>  1 budget x 5 depths x 2 tasks x 3 Ns x 3 seeds
+# = 90 runs. Produces the H3 money plot (FIG-A) fastest.
+sweep: pilot
+kinds: [fixed_budget]
+
+budgets:
+  - {name: "0.5M", target: 500000}
+  - {name: "2M",   target: 2000000}
+  - {name: "8M",   target: 8000000}
+
+depths: [2, 4, 6, 8, 12]
+tasks: [SEQ, INDEP]
+Ns: [4, 8, 16]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000          # fewer, cheaper evals
+  eval_subset: 512          # in-loop eval on 512 examples (not full 5k)
+  eval_mode: teacher_forced # single forward pass for progress/early-stop
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000           # never patience-stop before this (protect grokking)
+  patience: 0               # disabled: addition groks late, patience cut runs off early
+
+eval:
+  chain_per_bin: 300

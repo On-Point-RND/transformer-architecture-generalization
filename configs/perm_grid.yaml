@@ -1,0 +1,38 @@
+# Trains the 9-model depth x width grid for S5 (K=8), saving checkpoints, so we
+# can then run the LAYER-TRUNCATION PROBE (src/probe_layers.py) on each model.
+#
+# K=8 (not 16) because there the full models actually solve a good range of L(x),
+# so truncating layers shows a clean, interpretable degradation. 1 seed keeps it
+# to 9 runs; bump seeds later if the pattern looks worth tightening.
+#
+# After training:
+#   python src/probe_layers.py --ckpts 'checkpoints/perm_grid_*_S5_*.pt' --out perm_grid
+sweep: perm_grid
+kinds: [grid]
+
+depths: [2, 4, 8]
+widths: [128, 256, 512]
+tasks: [S5, C5]
+Ks: [8]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 60000
+  n_train: 1000000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200

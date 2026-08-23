@@ -1,0 +1,42 @@
+# Permutation composition — v2: 5 seeds + 10x data (fixes the two weaknesses
+# of the first run: huge confidence intervals and memorization).
+#
+# Changes vs perm_fixed_width.yaml:
+#   seeds    3 -> 5           (tighter CIs; seeds were bimodal)
+#   n_train  100k -> 1M       (at 100k the model memorized: train 0.56 / test 0.22)
+#   max_steps 20k -> 60k      (with 10x data the test plateau arrives later)
+#   Ks       [16] -> [8]      (K=8 is where the money plot is clearest)
+#
+# NOTE: a NEW sweep name, so these results never mix with the 3-seed/100k run.
+# NOTE: C5 K=8 has only 5^8 = 390,625 distinct sequences, so its train split is
+#       automatically capped at ~351k (a warning is printed). That is the whole
+#       task; nothing is lost. S5 K=8 has 1.2e17, so 1M is a vanishing fraction.
+sweep: perm_fw_v2
+kinds: [fixed_width]
+fixed_width: 128
+
+depths: [1, 2, 4, 8]
+tasks: [S5, C5]
+Ks: [8]
+seeds: [0, 1, 2, 3, 4]
+
+train:
+  max_steps: 60000
+  n_train: 1000000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200

@@ -1,0 +1,36 @@
+# Sorting task — depth x width grid, saving checkpoints for the layer probe.
+# Sort n values (n in {8,16}) from an alphabet of 52 values, duplicates allowed.
+#
+# Sorting is parallelizable (rank counting = constant depth), so the expectation
+# is: shallow models already solve it, depth doesn't scale with difficulty, and
+# the layer probe shows NO staircase (unlike the permutation task).
+#
+# After training:
+#   python src/probe_layers.py --ckpts 'checkpoints/sort_grid_*.pt' --out sort_grid
+sweep: sort_grid
+
+ns: [8, 16]
+depths: [2, 4, 8]
+widths: [128, 256, 512]
+seeds: [0]
+
+train:
+  v_card: 52
+  duplicates: true
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  eval_every: 1000
+  eval_subset: 2000
+  eval_mode: teacher_forced
+  train_eval_n: 1000
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  inv_per_bin: 100

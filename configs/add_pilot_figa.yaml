@@ -1,0 +1,32 @@
+# Reduced pilot focused on the FIG-A money plot: SEQ, N=16, shallow (L=2) vs
+# deep (L=12), budget 2M. Fewer steps/seeds than the full pilot.yaml so it runs
+# on a single laptop GPU (MPS) in a reasonable time. Use pilot.yaml for the
+# full 90-run pilot on a proper GPU.
+sweep: pilot_figa
+kinds: [fixed_budget]
+
+budgets:
+  - name: "2M"
+    target: 2000000
+
+depths: [2, 12]
+tasks: [SEQ]
+Ns: [16]
+seeds: [0, 1]
+
+train:
+  max_steps: 12000
+  n_train: 60000
+  n_test: 3000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 1000
+  train_eval_n: 1000
+  early_stop_acc: 0.999
+
+eval:
+  chain_per_bin: 300

@@ -1,0 +1,42 @@
+# Head ablation for permutation composition: do the number of attention heads
+# matter for a genuinely SEQUENTIAL task? (In addition they did not — but that
+# task was parallelizable.)
+#
+# Fix depth=4, d_model=256, K=16; vary ONLY n_heads in {1,2,4,8}
+# (head_dim = 256/H = 256/128/64/32). Parameter count is IDENTICAL across H,
+# so any accuracy difference is purely from head structure.
+#
+# K=16 (not 8) is used so the C5 control is valid — C5 at K=8 collapses to a
+# degenerate ~1/5 solution (space 5^8 is too small). At K=16 C5 solves cleanly
+# (~1.0) and S5 is partially solved (~0.29), leaving room to see a head effect.
+sweep: perm_headabl
+task: permutation
+kinds: [head_ablation]
+ha_width: 256
+ha_depth: 4
+ha_heads: [1, 2, 4, 8]
+ha_K: 16
+
+tasks: [S5, C5]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 60000
+  n_train: 1000000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200

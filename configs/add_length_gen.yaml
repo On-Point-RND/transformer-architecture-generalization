@@ -1,0 +1,36 @@
+# Length-generalization experiment (SPEC section 3 OOD + FIG-C):
+# train at N=8, evaluate WITHOUT retraining on larger Ns. Shallow (L=2) vs deep
+# (L=12) at fixed width, SEQ + INDEP. The model is built with positional
+# embeddings sized for the largest eval N (max_eval_N handled automatically).
+sweep: lengthgen
+task: addition
+kinds: [length_gen]
+
+lg_train_N: 8
+lg_eval_Ns: [10, 12, 16, 24, 32]   # the id anchor (N=8) is added automatically
+lg_depths: [2, 12]
+lg_width: 128
+
+tasks: [SEQ, INDEP]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0               # disabled: addition groks late, patience cut runs off early
+
+eval:
+  chain_per_bin: 300

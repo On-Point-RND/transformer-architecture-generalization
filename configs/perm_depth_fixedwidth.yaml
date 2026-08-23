@@ -1,0 +1,41 @@
+# Permutation composition (state tracking) — fixed-width depth sweep.
+#
+# S5 = full symmetric group (NON-SOLVABLE -> word problem is NC^1-complete,
+#      cannot be collapsed to constant depth): the genuinely SEQUENTIAL task.
+# C5 = cyclic subgroup <(0 1 2 3 4)> (abelian -> composition = addition of
+#      exponents mod 5, computable by a parallel prefix scan): the CONTROL.
+# Identical surface form for both (same vocab, same length, same answer format).
+#
+# Prediction if "depth ~ sequential dependency length" holds:
+#   S5: shallow models should fail once L(x) exceeds what their depth supports,
+#       deeper models should hold up  -> the money plot addition never produced.
+#   C5: flat for every depth (parallelizable).
+sweep: perm_fw
+kinds: [fixed_width]
+fixed_width: 128
+
+depths: [1, 2, 4, 8]
+tasks: [S5, C5]
+Ks: [16]            # number of composed permutations (= max chain length)
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 20000
+  n_train: 100000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0        # keep disabled: these tasks grok late
+
+eval:
+  chain_per_bin: 200

@@ -1,0 +1,37 @@
+# Permutation composition — WIDTH sweep at fixed depth.
+# Question: "does simply widening the model lift S5 accuracy?"
+#
+# Fix depth = 4 (>= the log2(K) expressivity floor for K<=16, and shallow enough
+# to avoid the deep+narrow optimization wall), vary ONLY d_model in {128,256,512}.
+# S5 only, K in {8,16}. 3 seeds to start (bump to 5 once a trend is visible).
+#
+# Param counts at depth 4:  d128 ~0.8M,  d256 ~3.2M,  d512 ~12.6M.
+sweep: perm_width
+kinds: [width_sweep]
+depth: 4
+widths: [128, 256, 512]
+
+tasks: [S5]
+Ks: [8, 16]
+seeds: [0, 1, 2]
+
+train:
+  max_steps: 60000
+  n_train: 1000000
+  n_test: 5000
+  batch_size: 256
+  lr: 0.0003
+  weight_decay: 0.1
+  warmup_steps: 500
+  grad_clip: 1.0
+  dropout: 0.0
+  eval_every: 2000
+  eval_subset: 512
+  eval_mode: teacher_forced
+  train_eval_n: 512
+  early_stop_acc: 0.999
+  min_steps: 4000
+  patience: 0
+
+eval:
+  chain_per_bin: 200
