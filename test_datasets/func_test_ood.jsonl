@@ -1,0 +1,1000 @@
+{"prompt": "f(x)=x+1; g(x)=5x; h(x)=x+4; i(x)=x+2; j(x)=9x; k(x)=x+7; l(x)=x+1; m(x)=x+4; n(x)=x+9; o(x)=1x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "480", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=x-4; h(x)=x-5; i(x)=x+3; j(x)=7x; k(x)=x-5; k(j(i(h(g(f(2)))))) =", "target": "79", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-2; g(x)=x+7; h(x)=x+6; i(x)=x-5; j(x)=x+8; k(x)=2x; k(j(i(h(g(f(6)))))) =", "target": "40", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=6x; h(x)=4x; i(x)=2x; j(x)=x+4; j(i(h(g(f(4))))) =", "target": "964", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=x-5; h(x)=x-6; i(x)=x+6; j(x)=x-4; j(i(h(g(f(4))))) =", "target": "-3", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=3x; h(x)=4x; i(x)=x+8; j(x)=x-5; k(x)=9x; l(x)=x+6; m(x)=x+4; n(x)=x+6; o(x)=x-5; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "254", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=x+8; h(x)=x-8; i(x)=x+5; j(x)=x+4; k(x)=9x; k(j(i(h(g(f(8)))))) =", "target": "513", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x-4; i(x)=x+9; j(x)=x-2; k(x)=x+2; l(x)=x+3; l(k(j(i(h(g(f(6))))))) =", "target": "302", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+7; g(x)=x-8; h(x)=5x; i(x)=1x; j(x)=2x; k(x)=9x; l(x)=x-6; m(x)=x+5; n(x)=x-3; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "536", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=3x; h(x)=2x; i(x)=5x; j(x)=9x; j(i(h(g(f(9))))) =", "target": "12150", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=x+9; h(x)=1x; i(x)=6x; j(x)=x-1; k(x)=x+6; k(j(i(h(g(f(4)))))) =", "target": "119", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+4; g(x)=2x; h(x)=x+8; i(x)=x+9; j(x)=x+3; k(x)=8x; k(j(i(h(g(f(8)))))) =", "target": "352", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-9; g(x)=7x; h(x)=x+9; i(x)=4x; j(x)=5x; k(x)=x-6; k(j(i(h(g(f(7)))))) =", "target": "-106", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-2; g(x)=x+4; h(x)=x+6; i(x)=x+9; j(x)=x+4; k(x)=x+2; l(x)=1x; m(x)=x+2; n(x)=x+6; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "32", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+5; g(x)=8x; h(x)=x+9; i(x)=x+8; j(x)=x+8; k(x)=x-4; l(x)=x+2; m(x)=7x; n(x)=x-7; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "770", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=1x; g(x)=2x; h(x)=x+7; i(x)=6x; j(x)=x+4; k(x)=x+4; l(x)=8x; m(x)=x+7; m(l(k(j(i(h(g(f(2)))))))) =", "target": "599", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-4; g(x)=x+8; h(x)=2x; i(x)=x+9; j(x)=x+2; k(x)=x+3; l(x)=x-8; l(k(j(i(h(g(f(7))))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=x+7; h(x)=x+7; i(x)=x-8; j(x)=x-7; k(x)=9x; k(j(i(h(g(f(7)))))) =", "target": "45", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=x+1; h(x)=9x; i(x)=x+6; j(x)=x+1; k(x)=8x; k(j(i(h(g(f(8)))))) =", "target": "1064", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=2x; h(x)=x+2; i(x)=2x; j(x)=4x; k(x)=x-2; l(x)=4x; m(x)=1x; n(x)=2x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "1008", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=x-5; h(x)=x+6; i(x)=x+5; j(x)=x-3; k(x)=5x; l(x)=x-6; m(x)=x+1; n(x)=x-2; o(x)=x+9; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "152", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=x-2; h(x)=x+6; i(x)=x-3; j(x)=x-9; k(x)=5x; l(x)=9x; m(x)=x+9; n(x)=x-2; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-398", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+2; g(x)=9x; h(x)=x+5; i(x)=x-4; j(x)=6x; k(x)=x+5; l(x)=8x; l(k(j(i(h(g(f(4))))))) =", "target": "2680", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+7; g(x)=x-1; h(x)=x+6; i(x)=x+5; j(x)=x+8; j(i(h(g(f(8))))) =", "target": "33", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-9; g(x)=x+2; h(x)=x+3; i(x)=1x; j(x)=x-9; k(x)=x+7; l(x)=x+1; m(x)=x-6; n(x)=x+6; o(x)=x+4; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=3x; h(x)=x+3; i(x)=x+7; j(x)=x+3; k(x)=6x; l(x)=x-4; l(k(j(i(h(g(f(4))))))) =", "target": "578", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=x-1; h(x)=x-4; i(x)=x+8; j(x)=x-5; k(x)=x+4; k(j(i(h(g(f(0)))))) =", "target": "2", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+7; g(x)=x-5; h(x)=x+5; i(x)=x-9; j(x)=x-9; k(x)=x-1; l(x)=x+5; m(x)=x+5; n(x)=x+2; o(x)=7x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "35", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=9x; h(x)=x+7; i(x)=4x; j(x)=x-1; k(x)=7x; l(x)=x+9; m(x)=4x; n(x)=x-7; o(x)=x+6; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "2807", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=2x; g(x)=5x; h(x)=5x; i(x)=7x; j(x)=x-7; k(x)=5x; l(x)=3x; l(k(j(i(h(g(f(3))))))) =", "target": "15645", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=7x; g(x)=3x; h(x)=5x; i(x)=x-9; j(x)=x+5; k(x)=x-4; l(x)=x-6; m(x)=x-8; m(l(k(j(i(h(g(f(7)))))))) =", "target": "713", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+9; g(x)=x-3; h(x)=2x; i(x)=x-9; j(x)=6x; k(x)=x+4; l(x)=5x; m(x)=x+4; n(x)=x+1; o(x)=x+4; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "539", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+8; g(x)=x-4; h(x)=7x; i(x)=x-7; j(x)=x+3; k(x)=1x; l(x)=x+7; m(x)=x+3; n(x)=9x; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "747", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=4x; g(x)=x+8; h(x)=x+8; i(x)=9x; j(x)=6x; j(i(h(g(f(7))))) =", "target": "2376", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=9x; g(x)=x-9; h(x)=x-3; i(x)=8x; j(x)=x-5; k(x)=x+5; l(x)=8x; m(x)=4x; n(x)=x-8; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-776", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=x-6; h(x)=x-9; i(x)=x+3; j(x)=x+4; k(x)=x-3; l(x)=4x; m(x)=x+7; n(x)=x-6; o(x)=8x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-280", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=x-1; h(x)=7x; i(x)=x-1; j(x)=x-5; j(i(h(g(f(6))))) =", "target": "78", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=9x; g(x)=4x; h(x)=x-4; i(x)=x-7; j(x)=x-1; k(x)=x-6; l(x)=7x; m(x)=3x; m(l(k(j(i(h(g(f(7)))))))) =", "target": "4914", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=9x; g(x)=x+7; h(x)=1x; i(x)=x+7; j(x)=x+8; k(x)=x+1; k(j(i(h(g(f(4)))))) =", "target": "59", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-4; g(x)=x-6; h(x)=x-7; i(x)=x-7; j(x)=x-2; k(x)=x-1; l(x)=9x; m(x)=x+6; m(l(k(j(i(h(g(f(3)))))))) =", "target": "-210", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x+4; h(x)=x+1; i(x)=3x; j(x)=x+3; k(x)=x-2; l(x)=4x; m(x)=x-5; n(x)=x-3; o(x)=2x; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "184", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+1; g(x)=x-7; h(x)=x-4; i(x)=x+4; j(x)=x+5; k(x)=2x; l(x)=1x; l(k(j(i(h(g(f(5))))))) =", "target": "8", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-6; g(x)=x+9; h(x)=6x; i(x)=x+7; j(x)=x-2; k(x)=x-6; l(x)=8x; m(x)=3x; n(x)=x-3; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "1557", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-9; g(x)=x-8; h(x)=x-5; i(x)=x-4; j(x)=x+5; k(x)=x-4; l(x)=x-7; m(x)=x-1; n(x)=x-6; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "-28", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x-5; h(x)=1x; i(x)=4x; j(x)=x+4; k(x)=7x; l(x)=x-9; l(k(j(i(h(g(f(3))))))) =", "target": "-205", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-8; g(x)=x-1; h(x)=x+5; i(x)=x+7; j(x)=4x; k(x)=x-6; l(x)=x-9; m(x)=6x; n(x)=x-9; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "135", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=x+2; h(x)=4x; i(x)=x-2; j(x)=9x; k(x)=3x; l(x)=x+4; l(k(j(i(h(g(f(7))))))) =", "target": "382", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=9x; g(x)=5x; h(x)=x+4; i(x)=x-4; j(x)=x-3; k(x)=x-1; l(x)=9x; l(k(j(i(h(g(f(2))))))) =", "target": "774", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+1; g(x)=5x; h(x)=3x; i(x)=8x; j(x)=x+1; k(x)=5x; l(x)=x-8; l(k(j(i(h(g(f(7))))))) =", "target": "4797", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+1; g(x)=x-8; h(x)=x+2; i(x)=x-8; j(x)=x+1; k(x)=x+3; l(x)=5x; l(k(j(i(h(g(f(1))))))) =", "target": "-40", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=x-4; h(x)=7x; i(x)=x-8; j(x)=x-7; k(x)=x-1; k(j(i(h(g(f(9)))))) =", "target": "82", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+4; g(x)=4x; h(x)=x-2; i(x)=x+4; j(x)=x+9; k(x)=x+3; l(x)=x+7; m(x)=x-8; n(x)=x-1; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "49", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=4x; h(x)=x-4; i(x)=x-2; j(x)=4x; k(x)=3x; l(x)=x-3; m(x)=x+1; n(x)=x+5; o(x)=5x; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "855", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=7x; h(x)=x-9; i(x)=8x; j(x)=x-2; j(i(h(g(f(9))))) =", "target": "150", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=5x; h(x)=x+2; i(x)=x+1; j(x)=5x; j(i(h(g(f(9))))) =", "target": "90", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+8; g(x)=8x; h(x)=x-3; i(x)=7x; j(x)=8x; j(i(h(g(f(1))))) =", "target": "3864", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=x-6; h(x)=2x; i(x)=x+6; j(x)=x-8; k(x)=x-7; l(x)=1x; m(x)=x-2; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-27", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x-9; h(x)=x+9; i(x)=x-7; j(x)=x+4; k(x)=6x; l(x)=8x; l(k(j(i(h(g(f(7))))))) =", "target": "96", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+5; g(x)=3x; h(x)=x-8; i(x)=8x; j(x)=x+1; j(i(h(g(f(9))))) =", "target": "273", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=x-9; h(x)=x+9; i(x)=x-2; j(x)=x+2; k(x)=x-2; k(j(i(h(g(f(2)))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=5x; h(x)=x-8; i(x)=x-4; j(x)=x-9; k(x)=x+7; l(x)=x+9; m(x)=3x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "60", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-6; g(x)=5x; h(x)=x+5; i(x)=5x; j(x)=8x; k(x)=x+8; l(x)=8x; l(k(j(i(h(g(f(5))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=9x; g(x)=x-8; h(x)=x-4; i(x)=4x; j(x)=7x; k(x)=x+7; l(x)=x+6; l(k(j(i(h(g(f(7))))))) =", "target": "1441", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=3x; h(x)=x-1; i(x)=x+9; j(x)=6x; k(x)=x+8; l(x)=x+9; m(x)=x-1; n(x)=3x; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-135", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=7x; h(x)=2x; i(x)=x-9; j(x)=x-6; k(x)=8x; l(x)=1x; m(x)=2x; m(l(k(j(i(h(g(f(3)))))))) =", "target": "-912", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=5x; g(x)=x+2; h(x)=x-2; i(x)=2x; j(x)=x-3; k(x)=5x; l(x)=x+1; m(x)=x-1; n(x)=x-6; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "72", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=3x; h(x)=x+3; i(x)=x+7; j(x)=4x; k(x)=x-3; k(j(i(h(g(f(3)))))) =", "target": "289", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=x-5; h(x)=1x; i(x)=x-5; j(x)=9x; k(x)=x+2; l(x)=x-6; m(x)=5x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "880", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=x-4; h(x)=x-8; i(x)=x+4; j(x)=x-6; k(x)=5x; l(x)=5x; m(x)=x+7; n(x)=x-1; o(x)=1x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "-319", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=x+6; h(x)=x+4; i(x)=5x; j(x)=3x; k(x)=2x; l(x)=1x; m(x)=x-8; n(x)=x+6; o(x)=3x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "534", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=x+4; h(x)=x+9; i(x)=x-9; j(x)=5x; k(x)=x+5; l(x)=x-5; l(k(j(i(h(g(f(5))))))) =", "target": "10", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x+4; h(x)=7x; i(x)=6x; j(x)=x+7; j(i(h(g(f(0))))) =", "target": "91", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x-6; h(x)=5x; i(x)=7x; j(x)=6x; k(x)=x+4; l(x)=x-1; l(k(j(i(h(g(f(9))))))) =", "target": "2523", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-4; g(x)=2x; h(x)=8x; i(x)=5x; j(x)=7x; k(x)=x+3; l(x)=x+1; m(x)=x-8; n(x)=x+2; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "-562", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+7; g(x)=x-6; h(x)=9x; i(x)=x-3; j(x)=x-2; k(x)=x-7; l(x)=x-1; m(x)=6x; n(x)=x+8; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "362", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=6x; h(x)=6x; i(x)=x+7; j(x)=x-4; k(x)=x+8; k(j(i(h(g(f(1)))))) =", "target": "-25", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=x+6; h(x)=x+3; i(x)=4x; j(x)=x+9; k(x)=x+4; l(x)=x+6; m(x)=x+1; n(x)=x-3; o(x)=x+9; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "82", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+1; g(x)=x+1; h(x)=x-4; i(x)=6x; j(x)=x+3; k(x)=x-1; k(j(i(h(g(f(2)))))) =", "target": "2", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-9; g(x)=x+2; h(x)=x-8; i(x)=x-9; j(x)=2x; k(x)=x-9; l(x)=x+1; m(x)=9x; n(x)=x-8; o(x)=1x; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-512", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=2x; h(x)=x-8; i(x)=x+2; j(x)=x-3; k(x)=x+3; l(x)=x-9; m(x)=6x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "-102", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=5x; g(x)=x-9; h(x)=7x; i(x)=x+2; j(x)=9x; k(x)=4x; l(x)=x-8; m(x)=x+7; n(x)=x-8; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "5355", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=x-7; h(x)=x-5; i(x)=x-3; j(x)=8x; k(x)=x+2; l(x)=x+2; m(x)=x-2; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-38", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=9x; h(x)=6x; i(x)=2x; j(x)=x-6; k(x)=7x; k(j(i(h(g(f(0)))))) =", "target": "-42", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=x-2; h(x)=9x; i(x)=x+3; j(x)=8x; k(x)=x+2; l(x)=x-9; l(k(j(i(h(g(f(5))))))) =", "target": "1673", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-4; g(x)=x-9; h(x)=9x; i(x)=x+5; j(x)=x+3; j(i(h(g(f(4))))) =", "target": "-73", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=x-1; h(x)=x+3; i(x)=7x; j(x)=x+3; k(x)=1x; l(x)=x+9; m(x)=x+7; n(x)=x-8; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=2x; h(x)=x+3; i(x)=x+1; j(x)=2x; k(x)=x-8; l(x)=7x; l(k(j(i(h(g(f(7))))))) =", "target": "1176", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=x-4; h(x)=2x; i(x)=x-7; j(x)=x+5; k(x)=8x; l(x)=5x; m(x)=x+4; n(x)=x-1; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-957", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=x+5; h(x)=x-6; i(x)=x+1; j(x)=x-7; k(x)=x+3; k(j(i(h(g(f(6)))))) =", "target": "-2", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=9x; h(x)=6x; i(x)=x+7; j(x)=1x; k(x)=x-1; l(x)=x-2; m(x)=x-7; n(x)=7x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "9051", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+7; g(x)=x+6; h(x)=x+8; i(x)=6x; j(x)=x+7; k(x)=x+4; l(x)=x-7; l(k(j(i(h(g(f(8))))))) =", "target": "178", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=6x; h(x)=x+6; i(x)=x+2; j(x)=2x; j(i(h(g(f(8))))) =", "target": "52", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=x-3; h(x)=x+2; i(x)=x+5; j(x)=x+3; k(x)=3x; l(x)=2x; m(x)=x+8; n(x)=x-8; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "132", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=6x; h(x)=x+8; i(x)=x+8; j(x)=x-5; k(x)=x-1; l(x)=x-9; m(x)=x+5; n(x)=x-8; o(x)=x+1; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "179", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=9x; h(x)=x-8; i(x)=9x; j(x)=1x; k(x)=x-4; l(x)=x-8; l(k(j(i(h(g(f(8))))))) =", "target": "726", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+8; g(x)=x+6; h(x)=2x; i(x)=3x; j(x)=x+4; k(x)=8x; k(j(i(h(g(f(7)))))) =", "target": "1040", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x-6; h(x)=x-7; i(x)=x-6; j(x)=1x; k(x)=6x; l(x)=x+6; m(x)=x+9; n(x)=7x; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "-189", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=x-2; h(x)=3x; i(x)=x-5; j(x)=7x; k(x)=x+2; l(x)=x-9; l(k(j(i(h(g(f(6))))))) =", "target": "294", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=9x; h(x)=x+7; i(x)=6x; j(x)=x+6; k(x)=x-3; l(x)=x+6; m(x)=x-4; n(x)=x+3; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "106", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=9x; h(x)=x+6; i(x)=3x; j(x)=7x; j(i(h(g(f(2))))) =", "target": "3528", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=8x; h(x)=x+7; i(x)=x-4; j(x)=x-5; k(x)=8x; k(j(i(h(g(f(3)))))) =", "target": "368", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=x-4; h(x)=x-8; i(x)=x-5; j(x)=x-9; k(x)=7x; l(x)=x+4; m(x)=3x; n(x)=x-1; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "-283", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=9x; h(x)=x+5; i(x)=x+3; j(x)=x-8; k(x)=3x; l(x)=x-2; l(k(j(i(h(g(f(3))))))) =", "target": "160", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=x-1; h(x)=x-9; i(x)=x-4; j(x)=x-2; k(x)=x-4; l(x)=x+6; m(x)=x+6; m(l(k(j(i(h(g(f(2)))))))) =", "target": "-7", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x-3; h(x)=8x; i(x)=x-1; j(x)=x+1; k(x)=x-4; k(j(i(h(g(f(2)))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=x-2; h(x)=x-4; i(x)=x-2; j(x)=x+4; k(x)=x-8; l(x)=x+2; m(x)=x-9; n(x)=x+9; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "71", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=x-7; h(x)=x+6; i(x)=x+7; j(x)=x+2; k(x)=6x; k(j(i(h(g(f(1)))))) =", "target": "66", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=9x; h(x)=x+7; i(x)=x-1; j(x)=7x; k(x)=x-5; l(x)=1x; m(x)=x-2; n(x)=x-4; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "598", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=x+1; h(x)=x-9; i(x)=x-3; j(x)=8x; k(x)=8x; l(x)=3x; m(x)=x+2; n(x)=8x; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-16880", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+1; g(x)=x+1; h(x)=x-5; i(x)=7x; j(x)=8x; k(x)=x-1; l(x)=4x; l(k(j(i(h(g(f(4))))))) =", "target": "220", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+6; g(x)=x-2; h(x)=x-7; i(x)=x-8; j(x)=x-6; k(x)=x+8; l(x)=8x; l(k(j(i(h(g(f(5))))))) =", "target": "-32", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=7x; h(x)=x+7; i(x)=3x; j(x)=5x; k(x)=x-2; l(x)=x+6; m(x)=5x; n(x)=x-8; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "4212", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-3; g(x)=8x; h(x)=x-8; i(x)=x+6; j(x)=7x; k(x)=x-1; l(x)=x+7; m(x)=x-9; n(x)=3x; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "960", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-1; g(x)=x+2; h(x)=x+6; i(x)=x-7; j(x)=1x; k(x)=3x; l(x)=8x; m(x)=x-6; n(x)=x-2; o(x)=3x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "552", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=5x; h(x)=x+2; i(x)=x+3; j(x)=x-9; k(x)=x-9; l(x)=x+5; l(k(j(i(h(g(f(4))))))) =", "target": "-18", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-4; g(x)=5x; h(x)=8x; i(x)=x+2; j(x)=x+2; k(x)=x-3; l(x)=8x; m(x)=x+6; n(x)=6x; o(x)=2x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "15528", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=x+3; h(x)=x-9; i(x)=x+2; j(x)=x+3; k(x)=x+8; l(x)=x+6; m(x)=6x; n(x)=x-9; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "51", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+2; g(x)=x-7; h(x)=8x; i(x)=7x; j(x)=x-2; k(x)=x+6; l(x)=2x; m(x)=x-8; n(x)=9x; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=x+7; h(x)=1x; i(x)=x+9; j(x)=x+5; k(x)=x+3; k(j(i(h(g(f(5)))))) =", "target": "39", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+6; g(x)=5x; h(x)=x+5; i(x)=x+9; j(x)=x-3; k(x)=5x; l(x)=9x; m(x)=x+9; n(x)=3x; o(x)=3x; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "20736", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=1x; h(x)=x+2; i(x)=x+5; j(x)=4x; k(x)=7x; l(x)=1x; m(x)=x-9; n(x)=x-5; o(x)=x-4; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "1186", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=1x; h(x)=x+8; i(x)=x-8; j(x)=x-4; k(x)=x-3; l(x)=x-6; l(k(j(i(h(g(f(5))))))) =", "target": "-10", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+6; g(x)=9x; h(x)=x+6; i(x)=x+8; j(x)=x+5; k(x)=x-4; l(x)=x+2; m(x)=x+5; m(l(k(j(i(h(g(f(6)))))))) =", "target": "130", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-4; g(x)=x+6; h(x)=6x; i(x)=x+3; j(x)=x-9; k(x)=x-8; l(x)=x-8; m(x)=x+2; n(x)=x-9; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "25", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+6; g(x)=x+1; h(x)=x-8; i(x)=8x; j(x)=x-9; k(x)=x+2; k(j(i(h(g(f(6)))))) =", "target": "33", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=x-6; h(x)=x+7; i(x)=x+9; j(x)=x+6; k(x)=5x; k(j(i(h(g(f(1)))))) =", "target": "55", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=8x; g(x)=5x; h(x)=2x; i(x)=x+2; j(x)=x-6; k(x)=x-9; l(x)=x-3; m(x)=x+9; m(l(k(j(i(h(g(f(6)))))))) =", "target": "473", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=6x; i(x)=x-9; j(x)=x-3; k(x)=9x; l(x)=x+6; m(x)=6x; n(x)=x+7; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "3607", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-6; g(x)=9x; h(x)=8x; i(x)=5x; j(x)=x-1; k(x)=x-6; l(x)=2x; m(x)=x-5; n(x)=1x; o(x)=8x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "-11672", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=1x; h(x)=8x; i(x)=x+9; j(x)=7x; k(x)=x+4; l(x)=x+2; m(x)=x+1; n(x)=x-6; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "1405", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=8x; h(x)=1x; i(x)=3x; j(x)=4x; k(x)=6x; l(x)=8x; m(x)=7x; n(x)=x-3; o(x)=x-9; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "387060", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=8x; h(x)=x+4; i(x)=x-9; j(x)=x-4; k(x)=x-5; l(x)=4x; m(x)=8x; n(x)=x-8; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "-456", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=x-2; h(x)=9x; i(x)=x-7; j(x)=x-3; k(x)=x-1; l(x)=x-2; m(x)=x-8; n(x)=5x; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "1380", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+9; g(x)=x-9; h(x)=5x; i(x)=x+2; j(x)=4x; k(x)=x+1; k(j(i(h(g(f(8)))))) =", "target": "169", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=x+2; h(x)=x-6; i(x)=8x; j(x)=x+3; k(x)=x+9; k(j(i(h(g(f(2)))))) =", "target": "44", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=8x; g(x)=x-4; h(x)=x-6; i(x)=x-1; j(x)=x+4; k(x)=1x; l(x)=x+7; m(x)=x+1; m(l(k(j(i(h(g(f(6)))))))) =", "target": "49", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x+1; h(x)=x-2; i(x)=x-5; j(x)=x-9; k(x)=8x; l(x)=x+9; m(x)=x-5; m(l(k(j(i(h(g(f(3)))))))) =", "target": "-52", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=8x; h(x)=5x; i(x)=3x; j(x)=x+6; j(i(h(g(f(4))))) =", "target": "126", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=4x; g(x)=x+7; h(x)=x-9; i(x)=x-2; j(x)=x-2; k(x)=x+3; l(x)=x-6; m(x)=x+1; n(x)=x-7; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "-3", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-6; g(x)=x-1; h(x)=x-6; i(x)=4x; j(x)=x+2; k(x)=x-5; l(x)=x+7; m(x)=9x; m(l(k(j(i(h(g(f(4)))))))) =", "target": "-288", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x-4; h(x)=x+3; i(x)=x-3; j(x)=x-6; k(x)=x-9; l(x)=x-9; m(x)=4x; n(x)=x+2; o(x)=8x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "-464", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=2x; h(x)=x+9; i(x)=4x; j(x)=9x; k(x)=x+3; l(x)=x-9; m(x)=x-2; n(x)=4x; o(x)=8x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "7808", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-1; g(x)=x-3; h(x)=7x; i(x)=x-1; j(x)=8x; k(x)=5x; l(x)=1x; m(x)=x-5; n(x)=x+4; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "1359", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+7; g(x)=x-2; h(x)=1x; i(x)=x+8; j(x)=x+5; j(i(h(g(f(6))))) =", "target": "24", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+7; g(x)=x-7; h(x)=x-7; i(x)=x-2; j(x)=9x; k(x)=x+6; k(j(i(h(g(f(1)))))) =", "target": "-66", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=3x; h(x)=4x; i(x)=x+1; j(x)=x-8; k(x)=9x; k(j(i(h(g(f(6)))))) =", "target": "4473", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-4; g(x)=x+8; h(x)=x-3; i(x)=x-4; j(x)=2x; k(x)=x+7; l(x)=1x; m(x)=x+4; n(x)=x+2; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "25", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=x+1; h(x)=x-8; i(x)=x+9; j(x)=x+1; j(i(h(g(f(2))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=6x; h(x)=6x; i(x)=x+5; j(x)=x+9; k(x)=x+7; l(x)=x-5; m(x)=x+9; n(x)=3x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "291", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=x-7; h(x)=6x; i(x)=7x; j(x)=x-3; k(x)=x-7; l(x)=x+9; m(x)=x-4; n(x)=x+5; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-252", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+9; g(x)=x-7; h(x)=9x; i(x)=x+7; j(x)=x+5; k(x)=x+6; l(x)=2x; m(x)=x-6; m(l(k(j(i(h(g(f(1)))))))) =", "target": "84", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=4x; g(x)=x+5; h(x)=x-1; i(x)=x+4; j(x)=9x; k(x)=x+8; l(x)=x+6; m(x)=x-1; n(x)=x+4; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "125", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=4x; h(x)=x-4; i(x)=6x; j(x)=x-7; k(x)=x-9; l(x)=6x; m(x)=x-5; n(x)=x-9; o(x)=x-8; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-694", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x+6; h(x)=x-7; i(x)=x+4; j(x)=3x; k(x)=x+5; l(x)=7x; m(x)=x-3; n(x)=x+6; o(x)=x+7; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "171", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-9; g(x)=6x; h(x)=x-8; i(x)=8x; j(x)=x-3; k(x)=6x; k(j(i(h(g(f(2)))))) =", "target": "-2418", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=x-3; h(x)=1x; i(x)=1x; j(x)=x+1; k(x)=x+7; k(j(i(h(g(f(2)))))) =", "target": "23", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+2; g(x)=3x; h(x)=x+4; i(x)=8x; j(x)=x-1; k(x)=8x; l(x)=8x; m(x)=x+1; n(x)=9x; o(x)=x-1; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "45512", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=5x; h(x)=x+9; i(x)=7x; j(x)=x+2; k(x)=x+9; l(x)=x+4; m(x)=x+9; n(x)=x-6; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "781", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+6; g(x)=x-8; h(x)=4x; i(x)=4x; j(x)=x-2; k(x)=1x; l(x)=x+7; m(x)=x-7; m(l(k(j(i(h(g(f(8)))))))) =", "target": "94", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=3x; h(x)=x+8; i(x)=x-6; j(x)=2x; k(x)=1x; l(x)=x+4; m(x)=8x; m(l(k(j(i(h(g(f(4)))))))) =", "target": "304", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=1x; h(x)=x+6; i(x)=x+4; j(x)=3x; j(i(h(g(f(6))))) =", "target": "63", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-3; g(x)=4x; h(x)=7x; i(x)=9x; j(x)=x-7; j(i(h(g(f(2))))) =", "target": "-259", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=6x; h(x)=x+2; i(x)=x-4; j(x)=x+6; k(x)=7x; l(x)=x-1; m(x)=5x; n(x)=x-8; o(x)=x+6; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "3493", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=7x; h(x)=x+5; i(x)=x+2; j(x)=x+5; k(x)=x+7; l(x)=3x; m(x)=7x; m(l(k(j(i(h(g(f(5)))))))) =", "target": "693", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+2; g(x)=x+5; h(x)=x-6; i(x)=x-2; j(x)=x+2; k(x)=x+7; l(x)=x-9; l(k(j(i(h(g(f(8))))))) =", "target": "7", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x+2; h(x)=x-9; i(x)=x+6; j(x)=x-1; k(x)=x-7; l(x)=x-2; m(x)=9x; n(x)=x+9; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-90", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-3; g(x)=x+5; h(x)=x-5; i(x)=x-3; j(x)=x+3; k(x)=x-5; l(x)=x-5; m(x)=x-2; n(x)=x-5; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "-3", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+8; g(x)=x+3; h(x)=x-1; i(x)=x-6; j(x)=7x; k(x)=x-8; l(x)=x-7; m(x)=3x; n(x)=x-6; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "222", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+8; g(x)=x-3; h(x)=x-6; i(x)=x-8; j(x)=4x; k(x)=x-7; l(x)=x-7; m(x)=x-2; n(x)=4x; o(x)=9x; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-1584", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=1x; g(x)=8x; h(x)=4x; i(x)=x-5; j(x)=2x; k(x)=x-8; l(x)=x+5; m(x)=x+5; n(x)=3x; o(x)=7x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "7896", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=7x; h(x)=9x; i(x)=7x; j(x)=1x; j(i(h(g(f(5))))) =", "target": "-1323", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x+4; h(x)=6x; i(x)=x+1; j(x)=7x; k(x)=x-7; l(x)=x+1; m(x)=x+5; n(x)=x+9; o(x)=9x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "7695", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=x-6; h(x)=x-8; i(x)=9x; j(x)=x+6; k(x)=x+8; l(x)=x+5; m(x)=x-2; n(x)=x+3; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "74", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-8; g(x)=x+9; h(x)=x-6; i(x)=x-2; j(x)=x-8; k(x)=x-2; l(x)=x-1; l(k(j(i(h(g(f(1))))))) =", "target": "-17", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=3x; h(x)=4x; i(x)=3x; j(x)=3x; j(i(h(g(f(5))))) =", "target": "324", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=x+7; h(x)=3x; i(x)=x+7; j(x)=x-1; k(x)=4x; l(x)=x-7; m(x)=x-1; n(x)=4x; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "160", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=2x; h(x)=3x; i(x)=x-6; j(x)=x+8; k(x)=x+5; l(x)=8x; l(k(j(i(h(g(f(8))))))) =", "target": "824", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=7x; h(x)=2x; i(x)=x-6; j(x)=x-3; k(x)=5x; l(x)=2x; m(x)=3x; n(x)=x-2; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-2787", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=7x; h(x)=x-3; i(x)=7x; j(x)=x-3; k(x)=x-9; k(j(i(h(g(f(2)))))) =", "target": "-82", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+8; g(x)=x-3; h(x)=x+6; i(x)=x-1; j(x)=x-1; k(x)=x-3; l(x)=x+7; m(x)=9x; n(x)=8x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "1368", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=8x; h(x)=x-3; i(x)=x+1; j(x)=x+5; k(x)=x+5; l(x)=x+9; m(x)=x-3; n(x)=x-8; o(x)=9x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-378", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+5; g(x)=6x; h(x)=1x; i(x)=8x; j(x)=4x; k(x)=x-2; l(x)=4x; m(x)=x-1; n(x)=x-5; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "7666", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=x+4; h(x)=6x; i(x)=7x; j(x)=x+3; j(i(h(g(f(3))))) =", "target": "213", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=5x; h(x)=9x; i(x)=x+6; j(x)=5x; k(x)=x-5; k(j(i(h(g(f(8)))))) =", "target": "3175", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x-1; h(x)=x-3; i(x)=3x; j(x)=x+3; k(x)=6x; l(x)=x+7; m(x)=x-3; n(x)=5x; o(x)=7x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "3920", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=5x; i(x)=6x; j(x)=x-8; k(x)=x-1; l(x)=2x; m(x)=8x; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-1104", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=7x; g(x)=x+7; h(x)=x+8; i(x)=x-6; j(x)=x-6; j(i(h(g(f(8))))) =", "target": "59", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+8; g(x)=x-1; h(x)=x+2; i(x)=8x; j(x)=x+2; k(x)=x+8; l(x)=x-1; m(x)=x-4; n(x)=3x; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "327", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=6x; h(x)=x-2; i(x)=x-3; j(x)=x+7; k(x)=5x; k(j(i(h(g(f(3)))))) =", "target": "40", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=2x; g(x)=2x; h(x)=x+4; i(x)=x-2; j(x)=x+4; k(x)=8x; l(x)=x+1; m(x)=6x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "486", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=3x; g(x)=x-2; h(x)=x+7; i(x)=x+2; j(x)=x+6; k(x)=x-5; l(x)=x+7; m(x)=x+3; m(l(k(j(i(h(g(f(1)))))))) =", "target": "21", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=x-6; i(x)=4x; j(x)=3x; k(x)=x-8; l(x)=x+2; m(x)=x+3; n(x)=x+7; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "112", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-3; g(x)=x+5; h(x)=2x; i(x)=x+9; j(x)=5x; k(x)=1x; l(x)=5x; m(x)=x+9; m(l(k(j(i(h(g(f(9)))))))) =", "target": "784", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+7; g(x)=x-1; h(x)=x+8; i(x)=x-2; j(x)=x+8; k(x)=2x; l(x)=1x; m(x)=x-6; n(x)=x+7; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "59", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-9; g(x)=3x; h(x)=x-2; i(x)=x+2; j(x)=x+5; k(x)=x+1; l(x)=x+7; m(x)=5x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "50", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-7; g(x)=x+9; h(x)=3x; i(x)=x-2; j(x)=x-2; k(x)=4x; l(x)=x+9; m(x)=x-7; m(l(k(j(i(h(g(f(9)))))))) =", "target": "118", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=2x; g(x)=x-7; h(x)=4x; i(x)=x+4; j(x)=x+7; k(x)=x+8; l(x)=1x; m(x)=x-3; n(x)=x+1; o(x)=3x; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-33", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=9x; h(x)=5x; i(x)=x+6; j(x)=x+5; k(x)=2x; k(j(i(h(g(f(0)))))) =", "target": "-518", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-5; g(x)=2x; h(x)=x-2; i(x)=x-8; j(x)=6x; k(x)=x+8; l(x)=3x; l(k(j(i(h(g(f(5))))))) =", "target": "-156", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=2x; h(x)=x+9; i(x)=x+1; j(x)=x+4; k(x)=x+8; k(j(i(h(g(f(5)))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x+9; h(x)=7x; i(x)=x+6; j(x)=x+7; k(x)=6x; l(x)=x-2; m(x)=6x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "3732", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=x+4; h(x)=1x; i(x)=x-2; j(x)=x-5; k(x)=x-6; l(x)=x+9; m(x)=x-1; n(x)=x-4; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "-1", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=x-6; h(x)=8x; i(x)=x+9; j(x)=x+3; k(x)=x+7; l(x)=x+4; m(x)=6x; n(x)=1x; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "-102", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=5x; h(x)=x+4; i(x)=4x; j(x)=x-8; j(i(h(g(f(0))))) =", "target": "8", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x+1; h(x)=x+9; i(x)=x-6; j(x)=x-2; k(x)=2x; k(j(i(h(g(f(8)))))) =", "target": "84", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=x+1; h(x)=x-3; i(x)=x+5; j(x)=x-6; k(x)=x-6; k(j(i(h(g(f(5)))))) =", "target": "26", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-4; g(x)=x+4; h(x)=x+2; i(x)=x+2; j(x)=x+8; k(x)=x-6; l(x)=x-2; m(x)=6x; m(l(k(j(i(h(g(f(3)))))))) =", "target": "42", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=x-2; h(x)=x+3; i(x)=5x; j(x)=1x; k(x)=x+6; l(x)=x+2; m(x)=4x; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=5x; h(x)=x-3; i(x)=x+7; j(x)=x-9; k(x)=9x; l(x)=x+2; m(x)=x-2; m(l(k(j(i(h(g(f(2)))))))) =", "target": "45", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=x+7; i(x)=x-2; j(x)=5x; j(i(h(g(f(1))))) =", "target": "50", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+4; g(x)=8x; h(x)=x+2; i(x)=x-2; j(x)=x+8; j(i(h(g(f(0))))) =", "target": "40", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x-1; i(x)=x-7; j(x)=x+6; k(x)=x+3; k(j(i(h(g(f(4)))))) =", "target": "197", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x+4; h(x)=5x; i(x)=x-7; j(x)=8x; k(x)=x+2; l(x)=x-7; l(k(j(i(h(g(f(2))))))) =", "target": "59", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=x+9; h(x)=x+7; i(x)=6x; j(x)=x-9; k(x)=x-6; l(x)=9x; m(x)=x-7; m(l(k(j(i(h(g(f(4)))))))) =", "target": "1424", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+6; g(x)=4x; h(x)=x+5; i(x)=x+8; j(x)=6x; k(x)=4x; k(j(i(h(g(f(2)))))) =", "target": "1080", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+4; g(x)=x-9; h(x)=1x; i(x)=x+7; j(x)=x-3; j(i(h(g(f(2))))) =", "target": "1", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=6x; g(x)=6x; h(x)=1x; i(x)=6x; j(x)=3x; k(x)=4x; k(j(i(h(g(f(7)))))) =", "target": "18144", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x-1; h(x)=x+1; i(x)=x+4; j(x)=x+9; k(x)=x-1; l(x)=x-4; m(x)=x+6; n(x)=3x; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "48", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+3; g(x)=3x; h(x)=x+9; i(x)=x-2; j(x)=x-7; j(i(h(g(f(9))))) =", "target": "36", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=x+7; i(x)=8x; j(x)=6x; j(i(h(g(f(2))))) =", "target": "48", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=6x; g(x)=x+3; h(x)=x-5; i(x)=5x; j(x)=x+3; k(x)=1x; l(x)=7x; m(x)=1x; n(x)=x+6; o(x)=4x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "7388", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=x-2; h(x)=x+6; i(x)=x-3; j(x)=2x; j(i(h(g(f(5))))) =", "target": "6", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+5; g(x)=x+4; h(x)=2x; i(x)=x-5; j(x)=x+1; k(x)=x+7; l(x)=x-7; m(x)=x+7; m(l(k(j(i(h(g(f(7)))))))) =", "target": "35", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-9; g(x)=x-2; h(x)=x-4; i(x)=x+8; j(x)=x+1; k(x)=x-1; l(x)=x-5; m(x)=x+2; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-5", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=2x; h(x)=2x; i(x)=x-8; j(x)=1x; k(x)=x-3; k(j(i(h(g(f(9)))))) =", "target": "13", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=x+6; h(x)=x+4; i(x)=x-9; j(x)=9x; k(x)=x-5; l(x)=x-4; m(x)=x+1; m(l(k(j(i(h(g(f(6)))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=x+1; h(x)=x-1; i(x)=x-2; j(x)=x-8; k(x)=x+2; l(x)=x+4; m(x)=x+5; n(x)=x+8; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "17", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-8; g(x)=x-5; h(x)=x+9; i(x)=x-3; j(x)=x-7; k(x)=x-3; l(x)=x-1; l(k(j(i(h(g(f(4))))))) =", "target": "-14", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=x+5; h(x)=1x; i(x)=x+2; j(x)=x+6; k(x)=7x; l(x)=4x; m(x)=1x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "392", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-9; g(x)=8x; h(x)=4x; i(x)=x-5; j(x)=x+7; k(x)=1x; l(x)=9x; m(x)=3x; n(x)=x+8; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-5986", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=x+1; h(x)=x-2; i(x)=7x; j(x)=x+3; k(x)=5x; k(j(i(h(g(f(5)))))) =", "target": "295", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=x-9; i(x)=x-5; j(x)=8x; k(x)=x+9; l(x)=x-2; m(x)=x-3; n(x)=x+2; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "-128", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=x-7; h(x)=8x; i(x)=8x; j(x)=x+3; k(x)=x-7; l(x)=x+7; m(x)=x+7; n(x)=x-4; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-890", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-5; g(x)=x-1; h(x)=x-5; i(x)=x-5; j(x)=x-2; k(x)=x+3; l(x)=x-8; m(x)=x-5; n(x)=7x; o(x)=2x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "-350", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=8x; h(x)=6x; i(x)=x+9; j(x)=x+2; k(x)=x-9; l(x)=x-3; m(x)=1x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "431", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x+1; h(x)=x-1; i(x)=x-4; j(x)=x-6; k(x)=x-9; k(j(i(h(g(f(6)))))) =", "target": "-12", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=x+6; h(x)=x-8; i(x)=x+8; j(x)=9x; k(x)=x-6; l(x)=x+5; m(x)=2x; n(x)=x-1; o(x)=x-1; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "158", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+4; g(x)=4x; h(x)=4x; i(x)=x-7; j(x)=1x; k(x)=1x; l(x)=x-3; m(x)=3x; n(x)=1x; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "306", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=5x; h(x)=x-7; i(x)=x-8; j(x)=x-4; k(x)=x-5; l(x)=9x; l(k(j(i(h(g(f(9))))))) =", "target": "1809", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=6x; i(x)=5x; j(x)=x-2; k(x)=x-2; l(x)=x-5; m(x)=6x; m(l(k(j(i(h(g(f(4)))))))) =", "target": "3006", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=5x; g(x)=x+3; h(x)=4x; i(x)=x+7; j(x)=6x; k(x)=3x; l(x)=1x; l(k(j(i(h(g(f(7))))))) =", "target": "2862", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=x-7; h(x)=1x; i(x)=4x; j(x)=x-4; k(x)=9x; l(x)=8x; l(k(j(i(h(g(f(5))))))) =", "target": "-2880", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=9x; h(x)=x+5; i(x)=x+8; j(x)=x+5; k(x)=9x; l(x)=x+6; m(x)=2x; n(x)=x+6; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "342", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=x-6; h(x)=x-5; i(x)=x-2; j(x)=x-1; k(x)=2x; l(x)=x-4; m(x)=2x; n(x)=7x; o(x)=5x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-2380", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+3; g(x)=x+6; h(x)=x-8; i(x)=x+6; j(x)=3x; j(i(h(g(f(1))))) =", "target": "24", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-3; g(x)=x-1; h(x)=x+8; i(x)=x-4; j(x)=x+3; k(x)=x-2; l(x)=x+7; m(x)=7x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "98", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-7; g(x)=x+1; h(x)=4x; i(x)=6x; j(x)=x+6; k(x)=4x; l(x)=x+1; m(x)=4x; m(l(k(j(i(h(g(f(3)))))))) =", "target": "-1052", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=x+2; h(x)=x-9; i(x)=5x; j(x)=x+2; k(x)=x+5; l(x)=x-8; m(x)=9x; n(x)=9x; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-4138", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x+3; h(x)=x-1; i(x)=x+4; j(x)=3x; k(x)=x+1; l(x)=9x; l(k(j(i(h(g(f(2))))))) =", "target": "63", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=x-5; h(x)=1x; i(x)=1x; j(x)=2x; j(i(h(g(f(0))))) =", "target": "-12", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x-8; h(x)=x-2; i(x)=5x; j(x)=x-3; j(i(h(g(f(3))))) =", "target": "-23", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=1x; g(x)=x-7; h(x)=2x; i(x)=9x; j(x)=x-3; k(x)=x-2; l(x)=2x; m(x)=x-2; n(x)=x+8; o(x)=x+4; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "-108", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=7x; h(x)=x-3; i(x)=x+9; j(x)=x-4; k(x)=8x; l(x)=x-4; m(x)=x+1; n(x)=2x; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "810", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=2x; i(x)=2x; j(x)=x-4; k(x)=x-5; l(x)=x-8; m(x)=x+2; n(x)=x+1; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "122", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=x-2; h(x)=x+1; i(x)=x+3; j(x)=3x; k(x)=x-6; l(x)=x-5; l(k(j(i(h(g(f(1))))))) =", "target": "13", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=x+7; h(x)=x-8; i(x)=x-7; j(x)=8x; k(x)=x-3; l(x)=x+3; l(k(j(i(h(g(f(0))))))) =", "target": "-88", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+7; g(x)=8x; h(x)=8x; i(x)=x+7; j(x)=x-1; k(x)=3x; k(j(i(h(g(f(7)))))) =", "target": "2706", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+7; g(x)=x-1; h(x)=x+5; i(x)=6x; j(x)=x+9; k(x)=4x; l(x)=6x; m(x)=9x; m(l(k(j(i(h(g(f(9)))))))) =", "target": "27864", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-4; g(x)=x-6; h(x)=7x; i(x)=x+9; j(x)=1x; j(i(h(g(f(0))))) =", "target": "-61", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+9; g(x)=x-8; h(x)=x+2; i(x)=x-6; j(x)=x+6; k(x)=x-1; l(x)=4x; m(x)=7x; n(x)=x-4; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "256", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=x-2; i(x)=x-1; j(x)=x+7; k(x)=x-1; l(x)=9x; m(x)=x+2; n(x)=5x; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "55", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+8; g(x)=x-6; h(x)=x+4; i(x)=x-6; j(x)=8x; k(x)=6x; l(x)=8x; m(x)=x+2; n(x)=4x; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "8", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-5; g(x)=9x; h(x)=x-2; i(x)=x+3; j(x)=x-3; k(x)=7x; l(x)=x+5; l(k(j(i(h(g(f(9))))))) =", "target": "243", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+2; g(x)=x-4; h(x)=x-4; i(x)=6x; j(x)=x+7; k(x)=x+2; k(j(i(h(g(f(7)))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=x+8; h(x)=x+9; i(x)=1x; j(x)=7x; k(x)=8x; l(x)=3x; m(x)=3x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "17640", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-6; g(x)=7x; h(x)=x-4; i(x)=x-7; j(x)=x-5; j(i(h(g(f(7))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+7; g(x)=9x; h(x)=x-9; i(x)=x-9; j(x)=4x; k(x)=x+4; k(j(i(h(g(f(9)))))) =", "target": "508", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=3x; h(x)=3x; i(x)=9x; j(x)=6x; k(x)=2x; l(x)=x-9; m(x)=x-7; n(x)=9x; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-52639", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+1; g(x)=x-3; h(x)=x+1; i(x)=x+5; j(x)=x+5; k(x)=5x; l(x)=x+1; m(x)=5x; n(x)=x+9; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "239", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=9x; h(x)=x+9; i(x)=x-4; j(x)=5x; k(x)=1x; l(x)=x-7; l(k(j(i(h(g(f(6))))))) =", "target": "198", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-9; g(x)=x+1; h(x)=5x; i(x)=x+8; j(x)=x+6; k(x)=9x; l(x)=4x; m(x)=4x; n(x)=x-8; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-2310", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=x+7; h(x)=x+7; i(x)=x-9; j(x)=x-3; k(x)=x+5; k(j(i(h(g(f(0)))))) =", "target": "7", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x+3; h(x)=x-1; i(x)=5x; j(x)=x-9; k(x)=x-2; l(x)=6x; l(k(j(i(h(g(f(8))))))) =", "target": "144", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=x+9; h(x)=x+7; i(x)=9x; j(x)=x-2; k(x)=x-4; k(j(i(h(g(f(3)))))) =", "target": "246", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=x-5; h(x)=x+9; i(x)=x-9; j(x)=1x; k(x)=x+6; l(x)=x-4; m(x)=4x; n(x)=x+6; o(x)=x-2; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=x-9; i(x)=8x; j(x)=x-1; k(x)=x-4; l(x)=x-9; l(k(j(i(h(g(f(1))))))) =", "target": "26", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=1x; h(x)=2x; i(x)=x+4; j(x)=7x; j(i(h(g(f(1))))) =", "target": "168", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=2x; h(x)=3x; i(x)=x+8; j(x)=6x; k(x)=x+2; k(j(i(h(g(f(1)))))) =", "target": "302", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=2x; h(x)=4x; i(x)=x-7; j(x)=x-8; j(i(h(g(f(6))))) =", "target": "73", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-1; g(x)=x-2; h(x)=1x; i(x)=2x; j(x)=1x; k(x)=2x; l(x)=x-9; m(x)=x+5; m(l(k(j(i(h(g(f(4)))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x-7; h(x)=x-1; i(x)=x-3; j(x)=4x; k(x)=x+7; l(x)=5x; m(x)=3x; n(x)=x-6; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-261", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=x+1; h(x)=x+7; i(x)=9x; j(x)=x+5; k(x)=x+6; l(x)=x+7; m(x)=9x; n(x)=x+3; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "1299", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=x+2; h(x)=x+1; i(x)=8x; j(x)=9x; k(x)=x+5; k(j(i(h(g(f(1)))))) =", "target": "581", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+4; g(x)=8x; h(x)=x-6; i(x)=x+4; j(x)=x+5; k(x)=2x; l(x)=x+6; l(k(j(i(h(g(f(7))))))) =", "target": "188", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=3x; h(x)=6x; i(x)=x-7; j(x)=x+1; k(x)=x-4; l(x)=x+7; m(x)=x-6; m(l(k(j(i(h(g(f(2)))))))) =", "target": "-63", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=6x; g(x)=x-8; h(x)=x-6; i(x)=x-8; j(x)=2x; k(x)=x+2; l(x)=x-3; m(x)=4x; n(x)=x-2; o(x)=2x; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-364", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=1x; g(x)=7x; h(x)=4x; i(x)=x+9; j(x)=x-9; k(x)=8x; l(x)=3x; m(x)=x-7; n(x)=x+5; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "1342", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=x+7; h(x)=x-9; i(x)=x+4; j(x)=3x; k(x)=3x; l(x)=x-3; m(x)=x+3; m(l(k(j(i(h(g(f(7)))))))) =", "target": "585", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x-4; h(x)=x+5; i(x)=x-4; j(x)=x+4; k(x)=6x; l(x)=x-8; l(k(j(i(h(g(f(7))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+6; g(x)=x+9; h(x)=5x; i(x)=5x; j(x)=9x; j(i(h(g(f(9))))) =", "target": "5400", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=x-2; h(x)=5x; i(x)=x-4; j(x)=7x; k(x)=x-6; k(j(i(h(g(f(7)))))) =", "target": "-104", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=x-3; i(x)=x+2; j(x)=5x; k(x)=x+3; l(x)=x+3; m(x)=x-2; m(l(k(j(i(h(g(f(3)))))))) =", "target": "44", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=x-4; i(x)=3x; j(x)=7x; k(x)=x+4; l(x)=x+3; m(x)=3x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "-735", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=x+3; i(x)=x-3; j(x)=7x; k(x)=1x; l(x)=5x; m(x)=x+4; n(x)=x-8; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "308", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=3x; g(x)=3x; h(x)=9x; i(x)=x-3; j(x)=6x; k(x)=x-2; l(x)=x+7; m(x)=x-3; m(l(k(j(i(h(g(f(1)))))))) =", "target": "470", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+9; g(x)=7x; h(x)=x+2; i(x)=x+8; j(x)=1x; j(i(h(g(f(8))))) =", "target": "129", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=x-3; h(x)=9x; i(x)=x+7; j(x)=7x; k(x)=x-1; l(x)=9x; m(x)=x-4; n(x)=x-7; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "2689", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=x-3; h(x)=x-8; i(x)=x+2; j(x)=x-9; k(x)=x-5; l(x)=x+1; m(x)=1x; n(x)=9x; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-180", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+7; g(x)=4x; h(x)=6x; i(x)=x-6; j(x)=x+3; k(x)=x-5; l(x)=x-9; m(x)=x-6; n(x)=5x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "1445", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-9; g(x)=8x; h(x)=x+6; i(x)=9x; j(x)=x-5; k(x)=x-6; k(j(i(h(g(f(6)))))) =", "target": "-173", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+2; g(x)=4x; h(x)=x-3; i(x)=x+4; j(x)=7x; k(x)=x-9; l(x)=1x; m(x)=x+7; n(x)=1x; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "260", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=x+5; h(x)=x+6; i(x)=x+1; j(x)=7x; k(x)=x-9; l(x)=x-1; m(x)=x+8; n(x)=x-1; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "88", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=x+1; h(x)=9x; i(x)=4x; j(x)=3x; k(x)=1x; l(x)=x-4; m(x)=1x; n(x)=x+2; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "2799", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=4x; h(x)=1x; i(x)=2x; j(x)=x+9; k(x)=x-9; l(x)=6x; m(x)=x-5; n(x)=x+4; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "88", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=x-9; h(x)=x+9; i(x)=x+9; j(x)=x-6; j(i(h(g(f(1))))) =", "target": "1", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-9; g(x)=5x; h(x)=8x; i(x)=x-8; j(x)=x+6; k(x)=x-8; l(x)=1x; m(x)=x-2; n(x)=x-2; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "-134", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=x-7; h(x)=x-9; i(x)=1x; j(x)=5x; k(x)=x+5; l(x)=x+7; m(x)=6x; n(x)=x+9; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "-121", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+5; g(x)=x+4; h(x)=x-4; i(x)=x+4; j(x)=x-4; k(x)=x+4; l(x)=x+6; l(k(j(i(h(g(f(2))))))) =", "target": "17", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+2; g(x)=8x; h(x)=1x; i(x)=1x; j(x)=x-6; j(i(h(g(f(9))))) =", "target": "82", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=5x; i(x)=x-4; j(x)=3x; k(x)=x+9; l(x)=x-8; l(k(j(i(h(g(f(8))))))) =", "target": "-11", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=x-3; h(x)=x-2; i(x)=9x; j(x)=x-6; j(i(h(g(f(0))))) =", "target": "-51", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=4x; g(x)=x-2; h(x)=x-6; i(x)=5x; j(x)=x+9; j(i(h(g(f(4))))) =", "target": "49", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=6x; h(x)=x-3; i(x)=x-7; j(x)=x+7; k(x)=6x; k(j(i(h(g(f(5)))))) =", "target": "-126", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-8; g(x)=x+3; h(x)=4x; i(x)=x+5; j(x)=x+9; k(x)=x-7; l(x)=x+3; m(x)=3x; m(l(k(j(i(h(g(f(7)))))))) =", "target": "54", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+7; g(x)=x-3; h(x)=9x; i(x)=6x; j(x)=x-5; j(i(h(g(f(4))))) =", "target": "427", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=1x; g(x)=x-2; h(x)=3x; i(x)=x+4; j(x)=x-8; k(x)=2x; l(x)=x-6; m(x)=x-6; n(x)=x-9; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "7", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=x-2; h(x)=x-4; i(x)=9x; j(x)=x+5; k(x)=x-6; l(x)=9x; l(k(j(i(h(g(f(7))))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x-5; h(x)=x-3; i(x)=x+6; j(x)=x-7; k(x)=x+2; l(x)=x+6; m(x)=x+6; n(x)=x-5; o(x)=5x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "35", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=x-6; h(x)=9x; i(x)=x-7; j(x)=x+3; k(x)=x+3; l(x)=4x; m(x)=5x; n(x)=2x; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-1837", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=x+1; i(x)=x-9; j(x)=x+2; j(i(h(g(f(4))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=7x; h(x)=x-4; i(x)=x+5; j(x)=x-3; k(x)=x+9; l(x)=x+1; m(x)=x+6; n(x)=x-8; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "69", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-9; g(x)=x-3; h(x)=9x; i(x)=x+8; j(x)=7x; k(x)=9x; l(x)=x-6; m(x)=x-9; n(x)=x+2; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "-2344", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=x-3; h(x)=x-1; i(x)=x+9; j(x)=x+6; k(x)=x-8; l(x)=1x; l(k(j(i(h(g(f(7))))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=x-5; h(x)=4x; i(x)=x+9; j(x)=x-4; k(x)=x-9; l(x)=x-7; m(x)=x+3; m(l(k(j(i(h(g(f(6)))))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x+7; h(x)=4x; i(x)=5x; j(x)=x-9; k(x)=x-7; l(x)=x+2; m(x)=x+3; m(l(k(j(i(h(g(f(4)))))))) =", "target": "309", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=8x; h(x)=x-8; i(x)=x+6; j(x)=x+3; j(i(h(g(f(0))))) =", "target": "1", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=x+5; h(x)=x-3; i(x)=8x; j(x)=1x; k(x)=x+2; l(x)=x+1; m(x)=x-4; n(x)=x-7; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-8; g(x)=1x; h(x)=x-2; i(x)=x+1; j(x)=x-7; k(x)=x+9; l(x)=x-3; m(x)=x+5; m(l(k(j(i(h(g(f(6)))))))) =", "target": "1", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x-8; h(x)=x+1; i(x)=x+8; j(x)=2x; j(i(h(g(f(8))))) =", "target": "26", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+8; g(x)=x-5; h(x)=x-3; i(x)=1x; j(x)=9x; k(x)=2x; l(x)=x-8; m(x)=5x; n(x)=x+6; o(x)=x+4; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "60", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=x-1; h(x)=x+5; i(x)=2x; j(x)=x-4; k(x)=x+1; k(j(i(h(g(f(9)))))) =", "target": "131", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x-2; h(x)=x+3; i(x)=x-2; j(x)=6x; k(x)=1x; l(x)=x+6; m(x)=3x; n(x)=9x; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "651", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-9; g(x)=6x; h(x)=x-4; i(x)=x+7; j(x)=x-3; k(x)=x-1; k(j(i(h(g(f(7)))))) =", "target": "-13", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-9; g(x)=x-9; h(x)=8x; i(x)=x+3; j(x)=6x; k(x)=x-8; l(x)=x-9; m(x)=x+2; n(x)=3x; o(x)=x-5; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "-2012", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=x+9; h(x)=x-3; i(x)=x+6; j(x)=4x; k(x)=x-2; l(x)=9x; m(x)=x-4; n(x)=8x; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "3280", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=x-7; h(x)=6x; i(x)=x+2; j(x)=2x; k(x)=x+3; k(j(i(h(g(f(2)))))) =", "target": "43", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+2; g(x)=x-4; h(x)=x+1; i(x)=7x; j(x)=8x; j(i(h(g(f(8))))) =", "target": "392", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x+6; h(x)=x+2; i(x)=x+4; j(x)=8x; k(x)=x+8; l(x)=1x; m(x)=x-9; n(x)=7x; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "2065", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+5; g(x)=1x; h(x)=2x; i(x)=x-2; j(x)=x+9; k(x)=x+2; l(x)=4x; m(x)=7x; n(x)=x+4; o(x)=4x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "4160", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+9; g(x)=9x; h(x)=x-2; i(x)=6x; j(x)=8x; k(x)=7x; l(x)=x+3; m(x)=x+9; n(x)=x-9; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "50736", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x-9; h(x)=x-6; i(x)=x-7; j(x)=6x; k(x)=4x; l(x)=9x; m(x)=x+7; n(x)=5x; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "-24805", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=x+1; h(x)=x-1; i(x)=3x; j(x)=x-1; k(x)=x-4; l(x)=x+6; m(x)=x+5; m(l(k(j(i(h(g(f(8)))))))) =", "target": "9", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=3x; g(x)=x+1; h(x)=x-6; i(x)=x+3; j(x)=x-6; k(x)=4x; l(x)=x+5; m(x)=x-2; n(x)=7x; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "553", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=6x; h(x)=x-3; i(x)=x-2; j(x)=5x; k(x)=x+7; k(j(i(h(g(f(1)))))) =", "target": "42", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=x-7; h(x)=x+4; i(x)=1x; j(x)=7x; j(i(h(g(f(0))))) =", "target": "-63", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=1x; g(x)=x-9; h(x)=3x; i(x)=x-9; j(x)=4x; k(x)=x+1; l(x)=7x; l(k(j(i(h(g(f(7))))))) =", "target": "-413", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=9x; g(x)=x+4; h(x)=x-5; i(x)=x-3; j(x)=x+6; k(x)=x+8; l(x)=1x; m(x)=7x; n(x)=x-2; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "446", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-3; g(x)=x+8; h(x)=4x; i(x)=x-7; j(x)=4x; k(x)=9x; l(x)=x+4; m(x)=x+5; n(x)=x-6; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "1767", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+7; g(x)=x-6; h(x)=x-4; i(x)=x-6; j(x)=1x; j(i(h(g(f(4))))) =", "target": "-5", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=3x; h(x)=x-1; i(x)=x+4; j(x)=6x; k(x)=x+2; k(j(i(h(g(f(1)))))) =", "target": "-106", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+4; g(x)=3x; h(x)=x-1; i(x)=x-2; j(x)=x-8; k(x)=x-1; l(x)=x-4; m(x)=9x; n(x)=x+4; o(x)=9x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "684", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=1x; h(x)=x-9; i(x)=x+5; j(x)=x+1; k(x)=x-4; l(x)=5x; m(x)=x+8; n(x)=1x; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-37", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=6x; h(x)=x+1; i(x)=x-7; j(x)=x+7; k(x)=2x; l(x)=x-8; m(x)=9x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "486", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+9; g(x)=x-9; h(x)=1x; i(x)=x+4; j(x)=5x; k(x)=x-8; k(j(i(h(g(f(6)))))) =", "target": "42", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=x-6; h(x)=x-5; i(x)=x+9; j(x)=x-1; k(x)=5x; l(x)=x-1; m(x)=5x; n(x)=x+3; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=4x; h(x)=x-4; i(x)=3x; j(x)=x-5; j(i(h(g(f(9))))) =", "target": "739", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-9; g(x)=x+4; h(x)=3x; i(x)=9x; j(x)=4x; k(x)=x+5; l(x)=9x; l(k(j(i(h(g(f(2))))))) =", "target": "-2871", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+3; g(x)=x-2; h(x)=9x; i(x)=2x; j(x)=x+6; k(x)=x+1; l(x)=x-7; m(x)=x-5; m(l(k(j(i(h(g(f(7)))))))) =", "target": "139", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=5x; g(x)=x+4; h(x)=x+3; i(x)=x+1; j(x)=5x; k(x)=4x; l(x)=4x; m(x)=x+1; n(x)=x-2; o(x)=8x; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "11512", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=8x; g(x)=6x; h(x)=x+7; i(x)=x-8; j(x)=x+3; k(x)=x+4; l(x)=x+7; m(x)=x+5; n(x)=x-4; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "158", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+3; g(x)=x-8; h(x)=6x; i(x)=x-4; j(x)=x-7; k(x)=x+7; k(j(i(h(g(f(5)))))) =", "target": "-4", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=1x; h(x)=2x; i(x)=x-8; j(x)=x+4; k(x)=9x; l(x)=x-1; m(x)=7x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "8813", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x-8; h(x)=x-5; i(x)=x-8; j(x)=x+7; k(x)=x-1; l(x)=9x; m(x)=x+8; n(x)=8x; o(x)=x+9; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-647", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=x+7; h(x)=x-6; i(x)=x-1; j(x)=x+8; k(x)=4x; k(j(i(h(g(f(7)))))) =", "target": "284", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=3x; h(x)=2x; i(x)=x+2; j(x)=8x; j(i(h(g(f(5))))) =", "target": "-32", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=9x; h(x)=3x; i(x)=x-9; j(x)=x-1; j(i(h(g(f(2))))) =", "target": "368", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=x+3; h(x)=x+1; i(x)=x-5; j(x)=x-8; k(x)=x-3; l(x)=x+3; l(k(j(i(h(g(f(3))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=5x; g(x)=x+8; h(x)=x-8; i(x)=1x; j(x)=8x; j(i(h(g(f(3))))) =", "target": "120", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=8x; g(x)=x-7; h(x)=x-2; i(x)=1x; j(x)=x+9; k(x)=x-9; k(j(i(h(g(f(3)))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x+6; h(x)=x+3; i(x)=x+5; j(x)=x-2; j(i(h(g(f(0))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-3; g(x)=x+5; h(x)=9x; i(x)=x+8; j(x)=6x; j(i(h(g(f(0))))) =", "target": "156", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=x-7; h(x)=x+7; i(x)=2x; j(x)=x-8; j(i(h(g(f(2))))) =", "target": "-16", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x-9; h(x)=x-9; i(x)=x+4; j(x)=1x; j(i(h(g(f(1))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=9x; g(x)=x+8; h(x)=5x; i(x)=x-6; j(x)=x-9; k(x)=6x; l(x)=x+8; m(x)=8x; n(x)=x-3; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "20701", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=x+1; h(x)=x+1; i(x)=x-2; j(x)=4x; k(x)=7x; k(j(i(h(g(f(6)))))) =", "target": "840", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=4x; h(x)=x+4; i(x)=5x; j(x)=x-2; j(i(h(g(f(4))))) =", "target": "-22", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=9x; g(x)=x-1; h(x)=x+6; i(x)=x-7; j(x)=1x; k(x)=x+4; l(x)=x-6; l(k(j(i(h(g(f(7))))))) =", "target": "59", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+3; g(x)=x-3; h(x)=8x; i(x)=6x; j(x)=x-7; k(x)=1x; l(x)=5x; m(x)=6x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "11310", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=6x; h(x)=x-2; i(x)=x+5; j(x)=x+6; k(x)=x-9; l(x)=x+7; m(x)=x+2; n(x)=x-6; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "27", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=x-4; h(x)=x-8; i(x)=x-4; j(x)=5x; k(x)=x+2; l(x)=x-1; l(k(j(i(h(g(f(3))))))) =", "target": "-74", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-9; g(x)=x+8; h(x)=3x; i(x)=x+6; j(x)=x-9; j(i(h(g(f(4))))) =", "target": "6", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=3x; h(x)=x+1; i(x)=x-7; j(x)=9x; k(x)=x+1; l(x)=x-1; l(k(j(i(h(g(f(9))))))) =", "target": "243", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-8; g(x)=x+2; h(x)=5x; i(x)=x+5; j(x)=4x; j(i(h(g(f(5))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+5; g(x)=x-9; h(x)=x-8; i(x)=2x; j(x)=x-3; k(x)=x+5; k(j(i(h(g(f(1)))))) =", "target": "-20", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=2x; h(x)=x+9; i(x)=x-9; j(x)=x-5; j(i(h(g(f(2))))) =", "target": "31", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=x+2; h(x)=x-6; i(x)=8x; j(x)=x+3; k(x)=x+8; l(x)=1x; m(x)=x+7; n(x)=x+2; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-35", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=8x; g(x)=6x; h(x)=x-6; i(x)=x+9; j(x)=x+8; k(x)=3x; l(x)=x+8; m(x)=x+8; n(x)=x-8; o(x)=x-4; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "469", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=x-7; h(x)=x+6; i(x)=x-8; j(x)=x-1; k(x)=x+8; k(j(i(h(g(f(1)))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-8; g(x)=x+5; h(x)=x-3; i(x)=2x; j(x)=x-2; k(x)=x-9; l(x)=2x; l(k(j(i(h(g(f(4))))))) =", "target": "-30", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=7x; h(x)=x+4; i(x)=3x; j(x)=x-7; k(x)=x+6; l(x)=x+7; m(x)=x-6; n(x)=4x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-372", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=8x; h(x)=x+8; i(x)=x-9; j(x)=x+8; k(x)=x+5; l(x)=x-2; m(x)=2x; n(x)=7x; o(x)=x-8; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "132", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+3; g(x)=1x; h(x)=x+3; i(x)=x-9; j(x)=x-7; j(i(h(g(f(9))))) =", "target": "-1", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=x+6; h(x)=x-5; i(x)=x-6; j(x)=x+1; k(x)=9x; l(x)=x-3; m(x)=x-1; n(x)=x-9; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-85", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=x-2; h(x)=x-1; i(x)=x+7; j(x)=7x; j(i(h(g(f(5))))) =", "target": "343", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=x-7; h(x)=4x; i(x)=3x; j(x)=x-3; k(x)=x+9; l(x)=x-6; m(x)=x-3; n(x)=x-3; o(x)=x+1; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-161", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+3; g(x)=8x; h(x)=7x; i(x)=x+2; j(x)=x+7; k(x)=x-7; l(x)=3x; m(x)=x-9; n(x)=x-9; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "1325", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=1x; h(x)=8x; i(x)=4x; j(x)=9x; k(x)=x-7; k(j(i(h(g(f(8)))))) =", "target": "4313", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-1; g(x)=x+8; h(x)=6x; i(x)=x+8; j(x)=2x; k(x)=x+9; l(x)=x-8; m(x)=2x; n(x)=2x; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "548", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=9x; h(x)=5x; i(x)=1x; j(x)=x-9; k(x)=x+8; l(x)=x-9; m(x)=x-6; m(l(k(j(i(h(g(f(6)))))))) =", "target": "524", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=x+1; h(x)=5x; i(x)=5x; j(x)=x+8; k(x)=3x; l(x)=1x; l(k(j(i(h(g(f(4))))))) =", "target": "24", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=x-8; h(x)=x+3; i(x)=2x; j(x)=x-5; k(x)=x+5; l(x)=x-5; m(x)=x+2; n(x)=3x; o(x)=3x; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "9", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+5; g(x)=4x; h(x)=x-3; i(x)=1x; j(x)=x-2; k(x)=x+3; l(x)=x-7; l(k(j(i(h(g(f(6))))))) =", "target": "35", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=3x; h(x)=x+6; i(x)=x+5; j(x)=x+1; k(x)=x+8; k(j(i(h(g(f(6)))))) =", "target": "164", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-8; g(x)=9x; h(x)=x+7; i(x)=7x; j(x)=x-5; k(x)=x+9; l(x)=x-1; m(x)=x-8; m(l(k(j(i(h(g(f(6)))))))) =", "target": "-82", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-9; g(x)=1x; h(x)=x+9; i(x)=6x; j(x)=x-5; k(x)=x-5; l(x)=x-2; m(x)=x-7; n(x)=x-4; o(x)=4x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "100", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=3x; g(x)=x-9; h(x)=x+1; i(x)=x+1; j(x)=x-2; k(x)=2x; l(x)=8x; l(k(j(i(h(g(f(5))))))) =", "target": "96", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=5x; g(x)=x-4; h(x)=x+1; i(x)=2x; j(x)=x+4; k(x)=2x; k(j(i(h(g(f(1)))))) =", "target": "16", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x-3; h(x)=x+3; i(x)=x-5; j(x)=x-2; j(i(h(g(f(7))))) =", "target": "14", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=x-3; h(x)=x+5; i(x)=x+7; j(x)=x-6; k(x)=x+5; l(x)=x-3; l(k(j(i(h(g(f(7))))))) =", "target": "6", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-4; g(x)=7x; h(x)=x+8; i(x)=x+3; j(x)=7x; j(i(h(g(f(3))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x-5; h(x)=x+1; i(x)=x+2; j(x)=5x; k(x)=x-1; l(x)=x-3; m(x)=1x; n(x)=x+7; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "33", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=x-1; h(x)=8x; i(x)=x-7; j(x)=x-2; k(x)=4x; k(j(i(h(g(f(0)))))) =", "target": "-68", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=8x; g(x)=x+9; h(x)=x-6; i(x)=5x; j(x)=x-1; k(x)=2x; l(x)=x-9; m(x)=x-2; m(l(k(j(i(h(g(f(7)))))))) =", "target": "577", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=4x; g(x)=x+9; h(x)=x+7; i(x)=4x; j(x)=x-7; k(x)=x+6; l(x)=x-2; l(k(j(i(h(g(f(7))))))) =", "target": "173", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+3; g(x)=x+4; h(x)=x+4; i(x)=x-7; j(x)=x+9; k(x)=5x; l(x)=x-9; m(x)=x-1; n(x)=x+6; o(x)=x+6; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "67", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+4; g(x)=9x; h(x)=x-9; i(x)=x+4; j(x)=x+1; k(x)=3x; l(x)=x-1; m(x)=x-1; m(l(k(j(i(h(g(f(3)))))))) =", "target": "175", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=3x; g(x)=x+3; h(x)=1x; i(x)=x-2; j(x)=x-3; k(x)=2x; l(x)=x+2; m(x)=x-4; n(x)=x+4; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+9; g(x)=x+6; h(x)=x+1; i(x)=3x; j(x)=x-2; k(x)=x+5; l(x)=x+7; l(k(j(i(h(g(f(2))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-9; g(x)=x+8; h(x)=x+1; i(x)=x+2; j(x)=7x; k(x)=x+1; l(x)=x-2; m(x)=x+1; n(x)=x+2; o(x)=5x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "290", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=x+3; h(x)=5x; i(x)=8x; j(x)=x-4; k(x)=x+1; l(x)=3x; m(x)=8x; n(x)=2x; o(x)=5x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "47280", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+9; g(x)=x+4; h(x)=x+9; i(x)=x+6; j(x)=9x; k(x)=x+8; l(x)=4x; m(x)=x-1; m(l(k(j(i(h(g(f(3)))))))) =", "target": "1147", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+8; g(x)=x-3; h(x)=x+1; i(x)=x+6; j(x)=x-4; j(i(h(g(f(6))))) =", "target": "14", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=x+2; h(x)=1x; i(x)=3x; j(x)=x+1; k(x)=x-9; l(x)=x+2; l(k(j(i(h(g(f(3))))))) =", "target": "-15", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-6; g(x)=x-4; h(x)=6x; i(x)=x+2; j(x)=x-4; k(x)=x+4; l(x)=7x; m(x)=x+7; n(x)=x+2; o(x)=x-8; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-405", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+4; g(x)=8x; h(x)=x+7; i(x)=x-3; j(x)=x-4; k(x)=6x; l(x)=x-4; m(x)=x-3; m(l(k(j(i(h(g(f(0)))))))) =", "target": "185", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=x-3; h(x)=x+8; i(x)=x-7; j(x)=x+6; k(x)=x+5; l(x)=3x; m(x)=3x; n(x)=9x; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "1217", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=8x; h(x)=x-5; i(x)=x+7; j(x)=4x; k(x)=x+6; l(x)=x-4; m(x)=3x; n(x)=1x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "222", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+8; g(x)=9x; h(x)=x+7; i(x)=7x; j(x)=x-2; j(i(h(g(f(7))))) =", "target": "992", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=1x; h(x)=7x; i(x)=x+3; j(x)=x-5; k(x)=x+2; l(x)=x+8; m(x)=5x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "180", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-1; g(x)=x-8; h(x)=x+7; i(x)=x+6; j(x)=8x; k(x)=1x; l(x)=2x; m(x)=x-6; n(x)=1x; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "115", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=4x; h(x)=2x; i(x)=6x; j(x)=1x; k(x)=6x; l(x)=x+2; m(x)=x-6; n(x)=x-1; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "5173", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=2x; g(x)=4x; h(x)=x+6; i(x)=x+9; j(x)=x+8; k(x)=4x; l(x)=4x; m(x)=x-6; n(x)=x-9; o(x)=7x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "6055", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=x-8; h(x)=x-9; i(x)=2x; j(x)=x-9; j(i(h(g(f(8))))) =", "target": "-15", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=2x; h(x)=x+8; i(x)=x+2; j(x)=x-3; k(x)=x-2; l(x)=x+3; l(k(j(i(h(g(f(4))))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=3x; g(x)=x-3; h(x)=x+9; i(x)=1x; j(x)=x-7; j(i(h(g(f(8))))) =", "target": "23", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=x-8; h(x)=1x; i(x)=x-4; j(x)=x+1; k(x)=x+9; k(j(i(h(g(f(5)))))) =", "target": "-3", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=6x; g(x)=6x; h(x)=x-9; i(x)=8x; j(x)=x-5; k(x)=3x; l(x)=x-3; m(x)=x-4; m(l(k(j(i(h(g(f(7)))))))) =", "target": "5810", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-1; g(x)=x+6; h(x)=x-8; i(x)=x+3; j(x)=9x; k(x)=x-3; l(x)=x+3; l(k(j(i(h(g(f(2))))))) =", "target": "18", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+1; g(x)=x-3; h(x)=x-5; i(x)=x-3; j(x)=x+9; k(x)=1x; k(j(i(h(g(f(5)))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+6; g(x)=x-9; h(x)=x+9; i(x)=x-2; j(x)=x+7; k(x)=x-3; l(x)=x-6; l(k(j(i(h(g(f(2))))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=9x; g(x)=6x; h(x)=5x; i(x)=x-5; j(x)=3x; j(i(h(g(f(9))))) =", "target": "7275", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=2x; h(x)=8x; i(x)=x+3; j(x)=9x; k(x)=x+5; l(x)=x+7; m(x)=4x; n(x)=x-6; o(x)=x+6; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-3300", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=9x; h(x)=x+5; i(x)=x+1; j(x)=x+9; k(x)=x-2; l(x)=7x; m(x)=x+8; n(x)=x-9; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "90", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=x+7; h(x)=x-7; i(x)=x-1; j(x)=x-6; k(x)=x-5; l(x)=x-9; m(x)=x+4; n(x)=8x; o(x)=7x; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "-952", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=7x; h(x)=x+2; i(x)=x+4; j(x)=x-8; k(x)=6x; l(x)=x+7; l(k(j(i(h(g(f(1))))))) =", "target": "331", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=8x; i(x)=3x; j(x)=x+3; j(i(h(g(f(6))))) =", "target": "-45", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=8x; g(x)=x+5; h(x)=5x; i(x)=x-9; j(x)=8x; k(x)=x+1; l(x)=x+3; l(k(j(i(h(g(f(4))))))) =", "target": "1412", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=x+5; h(x)=x-3; i(x)=x-4; j(x)=x+2; k(x)=x-8; l(x)=x+6; l(k(j(i(h(g(f(9))))))) =", "target": "70", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=7x; g(x)=x-8; h(x)=2x; i(x)=x-9; j(x)=1x; k(x)=x-3; l(x)=1x; m(x)=x+6; m(l(k(j(i(h(g(f(7)))))))) =", "target": "76", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+6; g(x)=x+1; h(x)=x-6; i(x)=x-6; j(x)=x+5; k(x)=x-9; l(x)=2x; m(x)=4x; n(x)=3x; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "-21", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=x-6; h(x)=x+9; i(x)=6x; j(x)=x+1; k(x)=x+9; l(x)=x-6; l(k(j(i(h(g(f(7))))))) =", "target": "34", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=x+4; h(x)=x+9; i(x)=x+4; j(x)=9x; k(x)=9x; l(x)=2x; m(x)=x-8; m(l(k(j(i(h(g(f(1)))))))) =", "target": "2422", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x-6; h(x)=x-6; i(x)=x+8; j(x)=9x; j(i(h(g(f(5))))) =", "target": "18", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x+2; h(x)=x+3; i(x)=3x; j(x)=4x; k(x)=x-3; k(j(i(h(g(f(3)))))) =", "target": "237", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+7; g(x)=2x; h(x)=x+1; i(x)=x-7; j(x)=x+4; k(x)=x+1; k(j(i(h(g(f(8)))))) =", "target": "29", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+8; g(x)=x+5; h(x)=x+2; i(x)=x-1; j(x)=x+2; k(x)=4x; l(x)=4x; m(x)=x+6; n(x)=x+2; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "296", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-6; g(x)=x-3; h(x)=4x; i(x)=2x; j(x)=x+1; k(x)=4x; l(x)=4x; m(x)=x-3; n(x)=1x; o(x)=2x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "-1510", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=8x; g(x)=x-3; h(x)=x-2; i(x)=x+6; j(x)=x-7; k(x)=x+9; l(x)=x+7; m(x)=x+6; n(x)=x+8; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "32", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+8; g(x)=x-5; h(x)=1x; i(x)=x+6; j(x)=x-2; k(x)=x-5; l(x)=x-5; m(x)=8x; n(x)=x+9; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "33", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=x+8; h(x)=6x; i(x)=x+1; j(x)=8x; k(x)=2x; l(x)=x-8; l(k(j(i(h(g(f(8))))))) =", "target": "1160", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=x+3; h(x)=x-7; i(x)=2x; j(x)=3x; k(x)=x+6; l(x)=x+6; m(x)=x+7; n(x)=x+4; o(x)=x-8; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "39", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=7x; h(x)=x-8; i(x)=7x; j(x)=x-9; k(x)=x-3; l(x)=x-2; m(x)=x+5; n(x)=x-8; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-70", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=1x; g(x)=x+8; h(x)=1x; i(x)=x+7; j(x)=6x; j(i(h(g(f(2))))) =", "target": "102", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=x-8; i(x)=x+5; j(x)=8x; k(x)=x-9; l(x)=x-9; l(k(j(i(h(g(f(5))))))) =", "target": "110", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=x+7; h(x)=x+7; i(x)=x-6; j(x)=x-8; k(x)=x-1; l(x)=x+3; m(x)=5x; n(x)=3x; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "135", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+5; g(x)=7x; h(x)=x-2; i(x)=8x; j(x)=9x; k(x)=9x; l(x)=8x; m(x)=x-9; m(l(k(j(i(h(g(f(2)))))))) =", "target": "243639", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+7; g(x)=x-8; h(x)=7x; i(x)=6x; j(x)=x-6; k(x)=x+1; l(x)=1x; m(x)=x+6; n(x)=x-1; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "168", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+7; g(x)=x-6; h(x)=x-6; i(x)=x+4; j(x)=x+4; k(x)=5x; l(x)=2x; m(x)=2x; m(l(k(j(i(h(g(f(4)))))))) =", "target": "140", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=x+9; h(x)=x-1; i(x)=x-7; j(x)=9x; j(i(h(g(f(6))))) =", "target": "36", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+8; g(x)=1x; h(x)=x-7; i(x)=7x; j(x)=x-2; k(x)=x-2; l(x)=4x; l(k(j(i(h(g(f(5))))))) =", "target": "152", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=x+5; h(x)=x-7; i(x)=x+8; j(x)=2x; k(x)=4x; l(x)=x-5; m(x)=x+5; m(l(k(j(i(h(g(f(9)))))))) =", "target": "480", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+2; g(x)=2x; h(x)=6x; i(x)=x-2; j(x)=9x; k(x)=x-7; l(x)=x+6; m(x)=x+5; m(l(k(j(i(h(g(f(8)))))))) =", "target": "1066", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-9; g(x)=x-4; h(x)=x-7; i(x)=x-9; j(x)=x-9; k(x)=x+1; l(x)=9x; l(k(j(i(h(g(f(2))))))) =", "target": "-315", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-4; g(x)=8x; h(x)=x-9; i(x)=7x; j(x)=1x; k(x)=4x; l(x)=x-8; m(x)=x+4; n(x)=x+5; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "197", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=4x; h(x)=x-5; i(x)=x-3; j(x)=x-4; k(x)=x-4; l(x)=x+3; m(x)=x+1; m(l(k(j(i(h(g(f(3)))))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=7x; h(x)=x-1; i(x)=x+3; j(x)=x-3; k(x)=x+5; l(x)=x-9; l(k(j(i(h(g(f(2))))))) =", "target": "-47", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+8; g(x)=x+1; h(x)=x+6; i(x)=5x; j(x)=x+7; k(x)=x-2; l(x)=x-3; m(x)=x+2; n(x)=9x; o(x)=x+9; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "1125", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=x+4; h(x)=2x; i(x)=x-6; j(x)=7x; k(x)=4x; l(x)=x-4; m(x)=x+2; n(x)=x+4; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "-166", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-5; g(x)=1x; h(x)=x-9; i(x)=x-2; j(x)=x-9; k(x)=x-8; l(x)=4x; m(x)=x-3; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-115", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=6x; g(x)=x-1; h(x)=1x; i(x)=1x; j(x)=4x; k(x)=x-9; l(x)=x-5; m(x)=6x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "36", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+8; g(x)=x-1; h(x)=x-5; i(x)=x-2; j(x)=x+5; k(x)=x+3; l(x)=x-6; m(x)=7x; n(x)=x+5; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "26", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=x-7; h(x)=x+3; i(x)=5x; j(x)=2x; k(x)=x-7; l(x)=9x; m(x)=6x; m(l(k(j(i(h(g(f(7)))))))) =", "target": "-2538", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=3x; h(x)=8x; i(x)=3x; j(x)=x+7; k(x)=x+5; l(x)=x-2; m(x)=x+3; n(x)=x+9; o(x)=3x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "2226", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x-8; h(x)=3x; i(x)=x-3; j(x)=6x; k(x)=x-4; l(x)=x+7; m(x)=x-3; n(x)=x-7; o(x)=4x; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-1108", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=x+8; h(x)=x+5; i(x)=3x; j(x)=x+7; j(i(h(g(f(9))))) =", "target": "154", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x+2; h(x)=x-3; i(x)=2x; j(x)=x+9; k(x)=x-8; l(x)=8x; m(x)=x+4; m(l(k(j(i(h(g(f(3)))))))) =", "target": "236", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=8x; h(x)=x-3; i(x)=x-4; j(x)=4x; k(x)=x-4; k(j(i(h(g(f(6)))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x+5; h(x)=x-4; i(x)=8x; j(x)=x+6; k(x)=8x; k(j(i(h(g(f(1)))))) =", "target": "-16", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x-7; h(x)=4x; i(x)=7x; j(x)=7x; j(i(h(g(f(9))))) =", "target": "-196", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=1x; h(x)=x+6; i(x)=x+8; j(x)=x-1; k(x)=x+5; l(x)=7x; l(k(j(i(h(g(f(4))))))) =", "target": "168", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=x+9; h(x)=x+3; i(x)=x-3; j(x)=8x; k(x)=x-8; l(x)=x+2; m(x)=x-9; m(l(k(j(i(h(g(f(6)))))))) =", "target": "345", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x-1; h(x)=x+8; i(x)=x-6; j(x)=x-5; k(x)=x-5; k(j(i(h(g(f(8)))))) =", "target": "-3", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x-8; h(x)=x+9; i(x)=8x; j(x)=x+4; k(x)=x+1; l(x)=x+3; l(k(j(i(h(g(f(0))))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=8x; h(x)=x-2; i(x)=x-1; j(x)=x-6; k(x)=9x; l(x)=x-8; m(x)=x-2; m(l(k(j(i(h(g(f(2)))))))) =", "target": "-163", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x+5; h(x)=x+3; i(x)=9x; j(x)=x-4; j(i(h(g(f(9))))) =", "target": "131", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=x-2; h(x)=x+8; i(x)=2x; j(x)=x-1; j(i(h(g(f(4))))) =", "target": "35", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x-6; h(x)=2x; i(x)=x-3; j(x)=x+2; k(x)=x-8; l(x)=x-5; m(x)=1x; n(x)=x-1; o(x)=8x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "-56", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=3x; g(x)=x+1; h(x)=5x; i(x)=x-1; j(x)=2x; k(x)=7x; l(x)=x+7; m(x)=x-3; n(x)=x+7; o(x)=x+1; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "698", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=x-3; h(x)=x+5; i(x)=x-7; j(x)=5x; k(x)=3x; k(j(i(h(g(f(5)))))) =", "target": "-105", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+6; g(x)=4x; h(x)=x-8; i(x)=x-8; j(x)=x-7; k(x)=x+7; l(x)=x-3; m(x)=x-7; n(x)=x+1; o(x)=6x; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "162", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+3; g(x)=x-9; h(x)=9x; i(x)=x+5; j(x)=x-7; k(x)=x+8; l(x)=x-3; m(x)=x+5; n(x)=x+9; o(x)=x-5; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "39", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=x+9; i(x)=x-7; j(x)=x+8; j(i(h(g(f(9))))) =", "target": "37", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=2x; h(x)=1x; i(x)=x+8; j(x)=x+3; k(x)=x-1; l(x)=x+7; l(k(j(i(h(g(f(4))))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=8x; h(x)=5x; i(x)=x-3; j(x)=x+3; k(x)=x+5; l(x)=2x; l(k(j(i(h(g(f(6))))))) =", "target": "3850", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+1; g(x)=x-2; h(x)=x+3; i(x)=8x; j(x)=x-7; k(x)=8x; l(x)=x-6; m(x)=7x; n(x)=x-2; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "1356", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=x+1; h(x)=4x; i(x)=x+4; j(x)=x-3; k(x)=4x; k(j(i(h(g(f(6)))))) =", "target": "180", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=x+5; h(x)=x-3; i(x)=x-7; j(x)=x+2; k(x)=x+3; l(x)=8x; m(x)=x-8; n(x)=x+8; o(x)=4x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "384", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=x+6; h(x)=x+2; i(x)=7x; j(x)=x-8; k(x)=9x; l(x)=x-1; l(k(j(i(h(g(f(7))))))) =", "target": "3518", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-9; g(x)=8x; h(x)=x+1; i(x)=1x; j(x)=x-6; k(x)=2x; l(x)=x-7; m(x)=x-2; m(l(k(j(i(h(g(f(7)))))))) =", "target": "-51", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=6x; g(x)=x-7; h(x)=x+3; i(x)=x-4; j(x)=x-6; k(x)=x-4; l(x)=4x; m(x)=6x; n(x)=8x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-1152", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=x-6; h(x)=x-3; i(x)=4x; j(x)=x-2; k(x)=8x; l(x)=x+3; l(k(j(i(h(g(f(3))))))) =", "target": "371", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=x+7; h(x)=x-5; i(x)=x+4; j(x)=1x; k(x)=x+6; k(j(i(h(g(f(4)))))) =", "target": "44", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x+9; h(x)=x+2; i(x)=x-7; j(x)=x+4; k(x)=x+9; l(x)=x+8; l(k(j(i(h(g(f(4))))))) =", "target": "37", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=5x; h(x)=x+9; i(x)=2x; j(x)=1x; k(x)=x-8; l(x)=x+2; l(k(j(i(h(g(f(9))))))) =", "target": "92", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=x+9; h(x)=x+3; i(x)=2x; j(x)=x+6; k(x)=x+5; l(x)=8x; m(x)=8x; n(x)=2x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "7296", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-6; g(x)=x+2; h(x)=x+8; i(x)=x-1; j(x)=x+8; k(x)=x-5; l(x)=3x; m(x)=x+5; n(x)=x-7; o(x)=x-4; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "18", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=x+7; h(x)=x-7; i(x)=x-9; j(x)=6x; k(x)=x+8; l(x)=x+1; m(x)=9x; n(x)=x+2; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "-349", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-3; g(x)=x-1; h(x)=x-1; i(x)=3x; j(x)=1x; k(x)=9x; l(x)=x-7; l(k(j(i(h(g(f(6))))))) =", "target": "20", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=9x; g(x)=x-6; h(x)=x-1; i(x)=x-9; j(x)=3x; k(x)=7x; l(x)=x-4; m(x)=8x; n(x)=6x; o(x)=7x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "76272", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+1; g(x)=6x; h(x)=x-3; i(x)=9x; j(x)=x-4; k(x)=x+9; l(x)=5x; l(k(j(i(h(g(f(8))))))) =", "target": "2320", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=3x; g(x)=x+1; h(x)=5x; i(x)=x+5; j(x)=7x; k(x)=2x; l(x)=1x; l(k(j(i(h(g(f(5))))))) =", "target": "1190", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=9x; g(x)=x-2; h(x)=x+2; i(x)=x-5; j(x)=1x; k(x)=x-6; l(x)=x+9; l(k(j(i(h(g(f(9))))))) =", "target": "79", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=7x; i(x)=4x; j(x)=x+6; k(x)=4x; k(j(i(h(g(f(5)))))) =", "target": "-312", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=7x; h(x)=x-2; i(x)=x+1; j(x)=x-3; k(x)=x-4; l(x)=x-2; m(x)=x-9; m(l(k(j(i(h(g(f(6)))))))) =", "target": "44", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=9x; g(x)=x-5; h(x)=8x; i(x)=7x; j(x)=x-8; k(x)=7x; l(x)=x+3; m(x)=3x; n(x)=x-8; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "15121", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=x+4; h(x)=x-8; i(x)=x+3; j(x)=6x; k(x)=x+7; l(x)=x+2; m(x)=x-5; n(x)=x+9; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "279", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=x-8; h(x)=x+3; i(x)=x+7; j(x)=x+5; k(x)=x-4; l(x)=x+8; l(k(j(i(h(g(f(0))))))) =", "target": "6", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=x+1; h(x)=x-8; i(x)=5x; j(x)=8x; j(i(h(g(f(5))))) =", "target": "920", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-3; g(x)=x+9; h(x)=8x; i(x)=x-8; j(x)=x+6; k(x)=x+7; l(x)=x-4; m(x)=x-6; m(l(k(j(i(h(g(f(8)))))))) =", "target": "107", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=5x; h(x)=2x; i(x)=x+1; j(x)=5x; j(i(h(g(f(8))))) =", "target": "3205", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+9; g(x)=x+4; h(x)=9x; i(x)=1x; j(x)=9x; k(x)=x+8; l(x)=1x; m(x)=x+9; n(x)=x+1; o(x)=x-4; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "1310", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=8x; g(x)=x+9; h(x)=6x; i(x)=x-1; j(x)=x-1; k(x)=x-7; l(x)=x+7; m(x)=x+9; n(x)=x-7; o(x)=x-2; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "100", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=3x; g(x)=x-3; h(x)=x+5; i(x)=x+3; j(x)=x-7; j(i(h(g(f(2))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=6x; g(x)=x+1; h(x)=1x; i(x)=x-7; j(x)=x+6; j(i(h(g(f(2))))) =", "target": "12", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=x-2; h(x)=x+4; i(x)=x+4; j(x)=x-9; k(x)=7x; l(x)=x+5; m(x)=x+6; m(l(k(j(i(h(g(f(7)))))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x-1; h(x)=x-4; i(x)=x+5; j(x)=2x; k(x)=x+9; l(x)=3x; m(x)=x-7; n(x)=x-2; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "54", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+6; g(x)=3x; h(x)=x+9; i(x)=x-9; j(x)=x-1; k(x)=x+8; k(j(i(h(g(f(9)))))) =", "target": "52", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x+1; h(x)=x-5; i(x)=5x; j(x)=7x; k(x)=x-4; l(x)=9x; l(k(j(i(h(g(f(4))))))) =", "target": "2484", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=2x; h(x)=x-2; i(x)=x-2; j(x)=x+9; j(i(h(g(f(4))))) =", "target": "31", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+9; g(x)=x-6; h(x)=5x; i(x)=8x; j(x)=x-4; k(x)=6x; l(x)=x-4; m(x)=x-6; m(l(k(j(i(h(g(f(0)))))))) =", "target": "686", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=8x; h(x)=x+1; i(x)=3x; j(x)=x-9; k(x)=8x; l(x)=x-9; m(x)=x+2; n(x)=1x; o(x)=8x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "2632", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x-3; h(x)=1x; i(x)=x+8; j(x)=x-4; k(x)=x-1; l(x)=x+1; l(k(j(i(h(g(f(4))))))) =", "target": "-1", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=x+2; h(x)=5x; i(x)=4x; j(x)=x+8; k(x)=x-1; l(x)=x-8; m(x)=4x; n(x)=x+4; o(x)=7x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "4480", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=x-3; h(x)=4x; i(x)=3x; j(x)=x+3; k(x)=2x; l(x)=x+5; l(k(j(i(h(g(f(9))))))) =", "target": "1883", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=5x; g(x)=x+1; h(x)=9x; i(x)=5x; j(x)=9x; k(x)=x-1; k(j(i(h(g(f(6)))))) =", "target": "12554", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=1x; g(x)=x-7; h(x)=x-5; i(x)=x+9; j(x)=x-8; k(x)=x-9; l(x)=x+4; m(x)=x+5; n(x)=x-9; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-26", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=x+1; h(x)=4x; i(x)=7x; j(x)=x+4; k(x)=x+3; l(x)=x-5; m(x)=x+2; m(l(k(j(i(h(g(f(0)))))))) =", "target": "200", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-1; g(x)=6x; h(x)=x-4; i(x)=x+8; j(x)=x+6; k(x)=x+6; l(x)=4x; m(x)=x+8; m(l(k(j(i(h(g(f(1)))))))) =", "target": "72", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x+1; h(x)=x+7; i(x)=x-2; j(x)=x+1; k(x)=x-1; l(x)=x-7; m(x)=x+2; n(x)=1x; o(x)=1x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=7x; h(x)=x+1; i(x)=x-7; j(x)=x-7; k(x)=2x; l(x)=x-1; m(x)=x-9; m(l(k(j(i(h(g(f(5)))))))) =", "target": "6", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+2; g(x)=x+1; h(x)=2x; i(x)=4x; j(x)=3x; k(x)=9x; l(x)=x-6; m(x)=x-8; n(x)=8x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "8528", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=x-7; i(x)=6x; j(x)=x-9; k(x)=x+3; k(j(i(h(g(f(7)))))) =", "target": "18", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=6x; g(x)=x-6; h(x)=x+9; i(x)=3x; j(x)=x+4; k(x)=9x; l(x)=x+7; l(k(j(i(h(g(f(5))))))) =", "target": "934", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+4; g(x)=x+6; h(x)=x+8; i(x)=8x; j(x)=6x; k(x)=6x; k(j(i(h(g(f(9)))))) =", "target": "7776", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=x+2; h(x)=x-1; i(x)=x-4; j(x)=x+4; k(x)=4x; l(x)=x-4; l(k(j(i(h(g(f(3))))))) =", "target": "-12", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=7x; h(x)=x+7; i(x)=x+1; j(x)=x-1; k(x)=x+6; l(x)=x+9; m(x)=x+3; m(l(k(j(i(h(g(f(4)))))))) =", "target": "193", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+6; g(x)=x+1; h(x)=x+4; i(x)=x-3; j(x)=x+5; k(x)=3x; l(x)=x-9; m(x)=x+3; m(l(k(j(i(h(g(f(3)))))))) =", "target": "42", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x+1; h(x)=3x; i(x)=x-2; j(x)=x-4; j(i(h(g(f(4))))) =", "target": "24", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=x-3; h(x)=7x; i(x)=2x; j(x)=x+3; k(x)=x+4; l(x)=x+9; m(x)=x-6; m(l(k(j(i(h(g(f(5)))))))) =", "target": "122", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-4; g(x)=x+4; h(x)=5x; i(x)=x+6; j(x)=x+1; k(x)=5x; l(x)=x+9; m(x)=8x; n(x)=x+2; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "1754", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=x-9; i(x)=x-8; j(x)=8x; k(x)=x+6; l(x)=6x; m(x)=8x; n(x)=8x; o(x)=x-5; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "33019", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=1x; g(x)=x+4; h(x)=x+8; i(x)=x+7; j(x)=x+5; k(x)=x-7; l(x)=3x; m(x)=x-5; m(l(k(j(i(h(g(f(8)))))))) =", "target": "70", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+2; g(x)=x-8; h(x)=6x; i(x)=x+1; j(x)=x-9; j(i(h(g(f(9))))) =", "target": "10", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=x-7; h(x)=x-6; i(x)=x-6; j(x)=x-7; k(x)=x+3; l(x)=x-4; l(k(j(i(h(g(f(4))))))) =", "target": "-31", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+6; g(x)=x+5; h(x)=9x; i(x)=2x; j(x)=x-4; k(x)=x+2; l(x)=x+6; m(x)=x+9; n(x)=x+6; o(x)=x+6; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "295", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=x+3; h(x)=9x; i(x)=x-1; j(x)=x-5; k(x)=x-7; l(x)=x-1; l(k(j(i(h(g(f(7))))))) =", "target": "328", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=3x; g(x)=x-4; h(x)=x+4; i(x)=x-4; j(x)=9x; k(x)=x-8; l(x)=x-2; m(x)=x-4; n(x)=x-7; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "140", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=x+3; h(x)=x-1; i(x)=x-6; j(x)=x-4; k(x)=x-7; l(x)=7x; m(x)=9x; n(x)=x-6; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=1x; g(x)=x+3; h(x)=x-7; i(x)=x-4; j(x)=x-2; j(i(h(g(f(8))))) =", "target": "-2", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+8; g(x)=x+6; h(x)=8x; i(x)=5x; j(x)=x+3; k(x)=x+9; l(x)=x+1; m(x)=8x; m(l(k(j(i(h(g(f(0)))))))) =", "target": "4584", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+2; g(x)=x-5; h(x)=x+4; i(x)=x-9; j(x)=x+8; k(x)=x+6; k(j(i(h(g(f(8)))))) =", "target": "14", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+6; g(x)=x-7; h(x)=x+2; i(x)=x+9; j(x)=x-8; j(i(h(g(f(1))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=x+5; h(x)=x-8; i(x)=x+5; j(x)=4x; k(x)=8x; l(x)=x-4; m(x)=x+3; m(l(k(j(i(h(g(f(7)))))))) =", "target": "383", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-4; g(x)=6x; h(x)=8x; i(x)=x-8; j(x)=1x; j(i(h(g(f(1))))) =", "target": "-152", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=8x; g(x)=x-5; h(x)=x-3; i(x)=x-4; j(x)=x+7; k(x)=x-7; l(x)=3x; l(k(j(i(h(g(f(9))))))) =", "target": "180", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=x+3; h(x)=x-9; i(x)=x-2; j(x)=4x; j(i(h(g(f(7))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x-2; h(x)=x+9; i(x)=x-7; j(x)=x-3; k(x)=x-4; l(x)=1x; m(x)=x-1; m(l(k(j(i(h(g(f(1)))))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=x-6; h(x)=7x; i(x)=x+7; j(x)=x+1; k(x)=x-2; l(x)=3x; m(x)=x-8; n(x)=x-8; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "1222", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+8; g(x)=x+8; h(x)=x-3; i(x)=x+1; j(x)=2x; k(x)=x+5; l(x)=x+9; m(x)=7x; n(x)=x+2; o(x)=1x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "352", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x+4; h(x)=1x; i(x)=9x; j(x)=x+8; k(x)=1x; k(j(i(h(g(f(8)))))) =", "target": "62", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=2x; g(x)=x-5; h(x)=x-1; i(x)=1x; j(x)=x+7; k(x)=x+4; l(x)=x-4; m(x)=x+2; n(x)=x+7; o(x)=x+1; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "21", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=2x; g(x)=x+2; h(x)=3x; i(x)=3x; j(x)=x+7; k(x)=2x; k(j(i(h(g(f(5)))))) =", "target": "230", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=4x; h(x)=7x; i(x)=x-2; j(x)=x+4; k(x)=x+6; l(x)=x-3; l(k(j(i(h(g(f(0))))))) =", "target": "5", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=6x; g(x)=x+7; h(x)=x+8; i(x)=x+2; j(x)=5x; k(x)=6x; l(x)=x+2; m(x)=x+7; m(l(k(j(i(h(g(f(4)))))))) =", "target": "1239", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=9x; h(x)=3x; i(x)=x-2; j(x)=6x; k(x)=7x; l(x)=3x; m(x)=x-3; n(x)=6x; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "100530", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=8x; h(x)=x-9; i(x)=4x; j(x)=1x; j(i(h(g(f(3))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=x-4; h(x)=7x; i(x)=x+2; j(x)=x+3; j(i(h(g(f(5))))) =", "target": "47", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=x+7; h(x)=x+1; i(x)=x+8; j(x)=6x; k(x)=x+5; l(x)=x-1; m(x)=7x; m(l(k(j(i(h(g(f(4)))))))) =", "target": "700", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+6; g(x)=x-4; h(x)=x+9; i(x)=x+4; j(x)=4x; j(i(h(g(f(9))))) =", "target": "96", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=6x; g(x)=x+8; h(x)=1x; i(x)=x+8; j(x)=x+4; k(x)=x+3; l(x)=x+3; m(x)=x+3; m(l(k(j(i(h(g(f(9)))))))) =", "target": "83", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=2x; h(x)=x-8; i(x)=x-3; j(x)=4x; k(x)=x+7; l(x)=x+4; m(x)=x-5; n(x)=8x; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "144", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=x-7; h(x)=x-3; i(x)=x-8; j(x)=x-9; k(x)=7x; l(x)=x+8; l(k(j(i(h(g(f(0))))))) =", "target": "-195", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x-9; h(x)=x+9; i(x)=3x; j(x)=x-7; k(x)=x-5; l(x)=x-5; m(x)=x-9; m(l(k(j(i(h(g(f(9)))))))) =", "target": "-5", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+6; g(x)=x+8; h(x)=x+3; i(x)=x+1; j(x)=x+9; k(x)=6x; l(x)=x-7; m(x)=x-7; m(l(k(j(i(h(g(f(5)))))))) =", "target": "178", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=2x; h(x)=x-1; i(x)=x+7; j(x)=3x; k(x)=x+7; l(x)=x-6; m(x)=8x; m(l(k(j(i(h(g(f(5)))))))) =", "target": "152", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+7; g(x)=x-4; h(x)=x+8; i(x)=x+6; j(x)=1x; k(x)=3x; l(x)=x-8; m(x)=3x; n(x)=x-4; o(x)=3x; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "375", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=x-2; h(x)=4x; i(x)=x-3; j(x)=x-5; j(i(h(g(f(4))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=5x; h(x)=7x; i(x)=2x; j(x)=x+6; k(x)=x+5; l(x)=4x; m(x)=7x; n(x)=5x; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "1540", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=x+2; h(x)=7x; i(x)=7x; j(x)=5x; k(x)=7x; k(j(i(h(g(f(2)))))) =", "target": "5145", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=3x; h(x)=x+8; i(x)=x+9; j(x)=x+8; k(x)=4x; k(j(i(h(g(f(2)))))) =", "target": "88", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x+5; h(x)=x-8; i(x)=2x; j(x)=3x; k(x)=x+5; k(j(i(h(g(f(1)))))) =", "target": "11", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=x+6; h(x)=x+4; i(x)=x-8; j(x)=2x; k(x)=x+1; l(x)=x-1; m(x)=1x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "16", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=x-9; h(x)=x-8; i(x)=x-6; j(x)=7x; k(x)=x-6; k(j(i(h(g(f(5)))))) =", "target": "-132", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+6; g(x)=7x; h(x)=x-1; i(x)=x-6; j(x)=x+1; k(x)=x-7; l(x)=3x; l(k(j(i(h(g(f(0))))))) =", "target": "87", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=x-4; h(x)=x-8; i(x)=8x; j(x)=7x; k(x)=4x; l(x)=x+6; m(x)=x+6; n(x)=x+6; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "914", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=8x; g(x)=x-2; h(x)=x-7; i(x)=x-2; j(x)=7x; k(x)=x-4; k(j(i(h(g(f(2)))))) =", "target": "31", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=x+3; h(x)=x-2; i(x)=x-9; j(x)=x-3; k(x)=x-2; l(x)=x-9; m(x)=x+4; n(x)=x+3; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=x+6; h(x)=x-5; i(x)=x+5; j(x)=8x; j(i(h(g(f(1))))) =", "target": "48", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+9; g(x)=8x; h(x)=x+6; i(x)=x+2; j(x)=6x; k(x)=x-7; l(x)=9x; m(x)=x-4; n(x)=x+5; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "4695", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=4x; h(x)=2x; i(x)=6x; j(x)=x+6; j(i(h(g(f(6))))) =", "target": "582", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=1x; g(x)=x-1; h(x)=9x; i(x)=x+7; j(x)=x-6; k(x)=x-3; l(x)=4x; m(x)=x+7; n(x)=x+9; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "224", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+5; g(x)=x+8; h(x)=8x; i(x)=x+5; j(x)=x+1; k(x)=6x; l(x)=x-9; l(k(j(i(h(g(f(1))))))) =", "target": "699", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=4x; h(x)=x-5; i(x)=7x; j(x)=x+6; k(x)=x+4; l(x)=4x; l(k(j(i(h(g(f(0))))))) =", "target": "-100", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=x-3; h(x)=x+9; i(x)=x-6; j(x)=x-8; k(x)=x-7; k(j(i(h(g(f(6)))))) =", "target": "-16", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=x-4; h(x)=9x; i(x)=x-2; j(x)=x+6; j(i(h(g(f(9))))) =", "target": "373", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x-3; h(x)=3x; i(x)=x-8; j(x)=x-3; j(i(h(g(f(3))))) =", "target": "25", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=4x; g(x)=1x; h(x)=x-2; i(x)=3x; j(x)=x-7; k(x)=3x; k(j(i(h(g(f(0)))))) =", "target": "-39", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-8; g(x)=x+1; h(x)=x+9; i(x)=6x; j(x)=7x; j(i(h(g(f(2))))) =", "target": "168", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=x+1; h(x)=x+4; i(x)=x-8; j(x)=x-3; k(x)=7x; l(x)=2x; m(x)=x-7; n(x)=x-8; o(x)=x-1; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-2", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=x+1; i(x)=8x; j(x)=x-2; j(i(h(g(f(9))))) =", "target": "22", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=7x; h(x)=x-3; i(x)=x+6; j(x)=x+9; k(x)=x+7; k(j(i(h(g(f(0)))))) =", "target": "-37", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=8x; h(x)=x+9; i(x)=9x; j(x)=2x; k(x)=x+2; l(x)=x+3; m(x)=x+9; m(l(k(j(i(h(g(f(7)))))))) =", "target": "9248", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x+4; h(x)=3x; i(x)=x+9; j(x)=x-1; k(x)=x+2; l(x)=5x; l(k(j(i(h(g(f(5))))))) =", "target": "200", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+7; g(x)=1x; h(x)=x+5; i(x)=x+9; j(x)=x-9; k(x)=x-3; l(x)=8x; m(x)=6x; n(x)=6x; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "5184", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=4x; g(x)=2x; h(x)=1x; i(x)=x+1; j(x)=x+3; k(x)=x-4; l(x)=x+9; m(x)=x+6; n(x)=x-3; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "84", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+9; g(x)=x-5; h(x)=x-3; i(x)=x-8; j(x)=x+5; k(x)=7x; l(x)=3x; m(x)=4x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "-84", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=5x; g(x)=4x; h(x)=6x; i(x)=9x; j(x)=3x; k(x)=x-3; l(x)=x-7; m(x)=x-1; n(x)=4x; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "12921", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+9; g(x)=x-2; h(x)=x-2; i(x)=x-6; j(x)=x-3; k(x)=x+5; l(x)=x+2; m(x)=x-4; n(x)=x-2; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-2", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=5x; g(x)=8x; h(x)=x+9; i(x)=x-5; j(x)=5x; k(x)=2x; k(j(i(h(g(f(0)))))) =", "target": "40", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-7; g(x)=x+6; h(x)=9x; i(x)=7x; j(x)=x-3; k(x)=x-1; k(j(i(h(g(f(8)))))) =", "target": "437", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x+7; h(x)=5x; i(x)=x+6; j(x)=4x; k(x)=7x; l(x)=8x; m(x)=x+8; n(x)=x-8; o(x)=5x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "85120", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=x-2; h(x)=x-7; i(x)=x-2; j(x)=2x; k(x)=x+4; l(x)=x+3; m(x)=1x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "-7", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-9; g(x)=x-1; h(x)=x-9; i(x)=3x; j(x)=x-8; k(x)=9x; l(x)=2x; m(x)=x-1; n(x)=4x; o(x)=1x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-3388", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=x+9; h(x)=1x; i(x)=8x; j(x)=x+9; k(x)=x+3; l(x)=x+6; m(x)=x+9; n(x)=x-1; o(x)=x-8; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "378", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=x-4; h(x)=2x; i(x)=x-5; j(x)=x-5; k(x)=x-4; k(j(i(h(g(f(0)))))) =", "target": "-26", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=x+5; h(x)=9x; i(x)=x+8; j(x)=8x; k(x)=x+6; l(x)=x+8; m(x)=x-5; n(x)=x-2; o(x)=x+6; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "1445", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-1; g(x)=x+7; h(x)=x-4; i(x)=x+9; j(x)=3x; k(x)=x-2; l(x)=x-1; m(x)=x+5; m(l(k(j(i(h(g(f(3)))))))) =", "target": "44", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-6; g(x)=x-6; h(x)=x-3; i(x)=5x; j(x)=x+8; k(x)=8x; l(x)=x+3; m(x)=x-7; m(l(k(j(i(h(g(f(0)))))))) =", "target": "-540", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=4x; g(x)=x+4; h(x)=x-1; i(x)=x+7; j(x)=x-6; k(x)=x+3; l(x)=4x; l(k(j(i(h(g(f(7))))))) =", "target": "140", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=8x; i(x)=3x; j(x)=x-7; k(x)=7x; l(x)=x+2; m(x)=x+1; n(x)=x+3; o(x)=x-9; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-1732", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+1; g(x)=6x; h(x)=x-1; i(x)=x-8; j(x)=x-5; k(x)=x-2; l(x)=x-4; m(x)=3x; n(x)=9x; o(x)=x+4; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "274", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=7x; h(x)=x+8; i(x)=2x; j(x)=9x; j(i(h(g(f(9))))) =", "target": "774", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=x+2; h(x)=x+7; i(x)=x+5; j(x)=x+3; k(x)=x-1; k(j(i(h(g(f(9)))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=x-7; h(x)=5x; i(x)=4x; j(x)=x+6; k(x)=x-8; k(j(i(h(g(f(0)))))) =", "target": "-122", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-1; g(x)=x-2; h(x)=x-6; i(x)=x-6; j(x)=7x; k(x)=x+6; l(x)=x+3; m(x)=x+1; n(x)=x+6; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "-68", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-5; g(x)=2x; h(x)=x-3; i(x)=x-8; j(x)=x-6; k(x)=x-2; l(x)=x+1; l(k(j(i(h(g(f(8))))))) =", "target": "-12", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-6; g(x)=6x; h(x)=9x; i(x)=6x; j(x)=x+5; k(x)=x+7; k(j(i(h(g(f(1)))))) =", "target": "-1608", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+2; g(x)=x+4; h(x)=x+8; i(x)=x+2; j(x)=6x; j(i(h(g(f(4))))) =", "target": "120", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=3x; h(x)=x+3; i(x)=x+7; j(x)=5x; k(x)=6x; l(x)=x-8; m(x)=2x; n(x)=x-2; o(x)=x-7; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "1295", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+3; g(x)=5x; h(x)=3x; i(x)=x-1; j(x)=1x; k(x)=4x; l(x)=7x; m(x)=x-9; n(x)=2x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "4126", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x-5; i(x)=x+3; j(x)=x+3; k(x)=4x; l(x)=1x; m(x)=8x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "12576", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=9x; g(x)=x-5; h(x)=x+5; i(x)=5x; j(x)=2x; k(x)=x+4; l(x)=x+9; m(x)=x+5; n(x)=x+3; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "378", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=x+9; h(x)=x+1; i(x)=6x; j(x)=6x; j(i(h(g(f(5))))) =", "target": "1080", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=9x; g(x)=x-3; h(x)=x-5; i(x)=x-1; j(x)=1x; j(i(h(g(f(5))))) =", "target": "36", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x+5; h(x)=x+9; i(x)=2x; j(x)=7x; k(x)=5x; k(j(i(h(g(f(9)))))) =", "target": "4130", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+8; g(x)=x+6; h(x)=x-4; i(x)=7x; j(x)=x+8; k(x)=x+7; l(x)=x-3; m(x)=x-2; n(x)=x-3; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "126", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=8x; h(x)=3x; i(x)=5x; j(x)=x+5; k(x)=x+3; k(j(i(h(g(f(6)))))) =", "target": "1208", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=x+3; h(x)=x+7; i(x)=x+8; j(x)=7x; k(x)=x+9; l(x)=x+1; m(x)=2x; n(x)=x-7; o(x)=x+2; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "267", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+3; g(x)=x+2; h(x)=x-3; i(x)=1x; j(x)=x+2; k(x)=6x; l(x)=2x; m(x)=x+3; n(x)=x-8; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "108", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+4; g(x)=x+9; h(x)=5x; i(x)=9x; j(x)=x+1; k(x)=x+2; l(x)=5x; m(x)=x+9; m(l(k(j(i(h(g(f(6)))))))) =", "target": "4299", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x+4; h(x)=x-7; i(x)=x+6; j(x)=5x; k(x)=x+7; k(j(i(h(g(f(1)))))) =", "target": "47", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+2; g(x)=x+2; h(x)=x-6; i(x)=x+6; j(x)=x+6; k(x)=x+1; l(x)=3x; m(x)=x+7; m(l(k(j(i(h(g(f(8)))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=3x; g(x)=7x; h(x)=x+5; i(x)=5x; j(x)=x-2; k(x)=x-8; l(x)=6x; l(k(j(i(h(g(f(4))))))) =", "target": "2610", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=x-3; i(x)=x-8; j(x)=8x; k(x)=x+2; l(x)=7x; m(x)=5x; n(x)=x+2; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-1331", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-6; g(x)=x-7; h(x)=x-7; i(x)=6x; j(x)=x+4; k(x)=x-7; l(x)=8x; m(x)=9x; m(l(k(j(i(h(g(f(7)))))))) =", "target": "-5832", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=4x; g(x)=x-2; h(x)=7x; i(x)=4x; j(x)=2x; k(x)=x+6; l(x)=x+4; m(x)=x+6; n(x)=8x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "2816", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+6; g(x)=x-3; h(x)=x-8; i(x)=x+9; j(x)=x-4; j(i(h(g(f(3))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=x+3; h(x)=x-1; i(x)=7x; j(x)=x-1; k(x)=2x; k(j(i(h(g(f(9)))))) =", "target": "194", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=x+3; h(x)=x-3; i(x)=x+4; j(x)=x+1; j(i(h(g(f(9))))) =", "target": "11", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=x-3; h(x)=9x; i(x)=5x; j(x)=x-7; k(x)=6x; l(x)=x-1; m(x)=x-2; m(l(k(j(i(h(g(f(2)))))))) =", "target": "495", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=3x; i(x)=x+7; j(x)=x-8; j(i(h(g(f(8))))) =", "target": "71", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-9; g(x)=x-4; h(x)=x-3; i(x)=x-2; j(x)=7x; k(x)=x+4; l(x)=x-1; m(x)=x+7; n(x)=x+9; o(x)=2x; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "-116", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=x-3; h(x)=x+6; i(x)=7x; j(x)=x+5; k(x)=x+2; l(x)=x+6; m(x)=6x; m(l(k(j(i(h(g(f(0)))))))) =", "target": "-90", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=2x; h(x)=x+4; i(x)=1x; j(x)=x-4; k(x)=4x; k(j(i(h(g(f(0)))))) =", "target": "-24", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-2; g(x)=1x; h(x)=8x; i(x)=x+1; j(x)=x-2; k(x)=x-1; k(j(i(h(g(f(5)))))) =", "target": "22", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-9; g(x)=x+6; h(x)=x-6; i(x)=x+2; j(x)=x-7; k(x)=9x; l(x)=x+9; l(k(j(i(h(g(f(2))))))) =", "target": "-99", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=7x; g(x)=x-1; h(x)=x-3; i(x)=x+8; j(x)=x+2; j(i(h(g(f(3))))) =", "target": "27", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=3x; h(x)=9x; i(x)=9x; j(x)=x-8; k(x)=x+6; k(j(i(h(g(f(4)))))) =", "target": "2914", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=x+7; h(x)=x+4; i(x)=2x; j(x)=x+8; k(x)=x+1; l(x)=x+5; l(k(j(i(h(g(f(8))))))) =", "target": "148", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x-6; h(x)=x+5; i(x)=x+2; j(x)=x-6; j(i(h(g(f(5))))) =", "target": "-2", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=8x; h(x)=x-8; i(x)=x-8; j(x)=3x; j(i(h(g(f(1))))) =", "target": "48", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-1; g(x)=x-5; h(x)=x-7; i(x)=3x; j(x)=x-6; k(x)=6x; l(x)=x-2; m(x)=7x; n(x)=8x; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "-11200", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+1; g(x)=4x; h(x)=9x; i(x)=x+3; j(x)=x+5; k(x)=x-3; l(x)=7x; m(x)=x+4; n(x)=x-8; o(x)=2x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "3086", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-9; g(x)=x-2; h(x)=x+3; i(x)=2x; j(x)=x-7; k(x)=x+7; l(x)=x-2; m(x)=x-6; m(l(k(j(i(h(g(f(9)))))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+8; g(x)=x+5; h(x)=x-1; i(x)=3x; j(x)=x-3; k(x)=4x; l(x)=x-1; m(x)=7x; m(l(k(j(i(h(g(f(0)))))))) =", "target": "917", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=x+1; h(x)=x+1; i(x)=7x; j(x)=x-5; k(x)=3x; l(x)=x+3; l(k(j(i(h(g(f(1))))))) =", "target": "-117", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=x-9; i(x)=x+5; j(x)=x+1; k(x)=x+7; l(x)=x-5; l(k(j(i(h(g(f(2))))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=x-8; h(x)=3x; i(x)=7x; j(x)=x-7; k(x)=x+9; k(j(i(h(g(f(9)))))) =", "target": "-124", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x-6; h(x)=x+3; i(x)=x-3; j(x)=x-6; k(x)=x+7; k(j(i(h(g(f(4)))))) =", "target": "2", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=1x; g(x)=x-3; h(x)=8x; i(x)=2x; j(x)=x+4; k(x)=4x; l(x)=x-9; m(x)=x+7; n(x)=x+6; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "20", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=1x; g(x)=x-6; h(x)=x+5; i(x)=x-9; j(x)=x+8; k(x)=8x; k(j(i(h(g(f(6)))))) =", "target": "32", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=7x; h(x)=6x; i(x)=x+3; j(x)=x-7; k(x)=x-3; l(x)=3x; m(x)=7x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "-147", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=7x; g(x)=5x; h(x)=2x; i(x)=x+2; j(x)=x+1; k(x)=7x; l(x)=x+8; l(k(j(i(h(g(f(9))))))) =", "target": "4439", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+8; g(x)=1x; h(x)=5x; i(x)=x-4; j(x)=x+8; k(x)=7x; l(x)=x+4; m(x)=x-2; n(x)=x-8; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "512", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=x+6; h(x)=x+9; i(x)=x-5; j(x)=5x; k(x)=x-7; l(x)=4x; m(x)=x+7; n(x)=x+1; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "883", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=x-3; h(x)=7x; i(x)=x+9; j(x)=x-4; k(x)=7x; l(x)=x+7; m(x)=x+7; n(x)=3x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "4998", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=x-4; h(x)=x+3; i(x)=2x; j(x)=7x; k(x)=5x; l(x)=3x; l(k(j(i(h(g(f(5))))))) =", "target": "2940", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+2; g(x)=x+7; h(x)=x+3; i(x)=x+9; j(x)=x+7; k(x)=x+3; k(j(i(h(g(f(7)))))) =", "target": "38", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=6x; g(x)=x+4; h(x)=4x; i(x)=x-4; j(x)=4x; k(x)=7x; l(x)=x-1; m(x)=x-2; n(x)=x+1; o(x)=2x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "2012", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=2x; g(x)=x+3; h(x)=x-5; i(x)=x+2; j(x)=x+8; k(x)=x-4; l(x)=x-2; m(x)=x-1; m(l(k(j(i(h(g(f(6)))))))) =", "target": "13", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x+7; h(x)=x-6; i(x)=8x; j(x)=x+3; j(i(h(g(f(4))))) =", "target": "27", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+1; g(x)=x+6; h(x)=x-8; i(x)=9x; j(x)=x+3; j(i(h(g(f(8))))) =", "target": "66", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-2; g(x)=x+1; h(x)=1x; i(x)=9x; j(x)=x+4; k(x)=x-2; l(x)=x+1; m(x)=x-3; n(x)=x+2; o(x)=3x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "87", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=x+6; h(x)=9x; i(x)=5x; j(x)=x-8; k(x)=x-9; l(x)=x-4; l(k(j(i(h(g(f(4))))))) =", "target": "249", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+5; g(x)=x-2; h(x)=5x; i(x)=x+4; j(x)=8x; k(x)=x-8; k(j(i(h(g(f(6)))))) =", "target": "384", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=x-2; h(x)=7x; i(x)=x-4; j(x)=6x; k(x)=x-2; l(x)=x-3; m(x)=x+9; n(x)=x-7; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "729", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=x-7; h(x)=x+2; i(x)=x+6; j(x)=x-3; k(x)=x-4; l(x)=x+4; m(x)=6x; n(x)=x-3; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "255", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+6; g(x)=1x; h(x)=6x; i(x)=x+8; j(x)=6x; j(i(h(g(f(3))))) =", "target": "372", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+7; g(x)=x-4; h(x)=4x; i(x)=x+9; j(x)=x-2; k(x)=7x; l(x)=7x; m(x)=x-6; n(x)=x+4; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "929", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-1; g(x)=x-7; h(x)=x+2; i(x)=x-3; j(x)=6x; k(x)=7x; l(x)=x+1; m(x)=x-1; m(l(k(j(i(h(g(f(9)))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=x+7; h(x)=x+9; i(x)=1x; j(x)=x-1; j(i(h(g(f(1))))) =", "target": "11", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+7; g(x)=5x; h(x)=x-6; i(x)=x-7; j(x)=x+9; k(x)=x-8; l(x)=1x; m(x)=x-5; m(l(k(j(i(h(g(f(7)))))))) =", "target": "53", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=2x; g(x)=x-2; h(x)=x+4; i(x)=x+1; j(x)=x+2; k(x)=x-7; l(x)=x+3; m(x)=x+4; m(l(k(j(i(h(g(f(5)))))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+1; g(x)=x-1; h(x)=x+1; i(x)=x-2; j(x)=x-6; k(x)=7x; l(x)=x-3; m(x)=x+8; n(x)=x+3; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=8x; h(x)=2x; i(x)=9x; j(x)=x+8; k(x)=8x; k(j(i(h(g(f(4)))))) =", "target": "32320", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=x-5; i(x)=2x; j(x)=x-9; k(x)=x+4; l(x)=2x; l(k(j(i(h(g(f(1))))))) =", "target": "10", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+4; g(x)=x+4; h(x)=x-7; i(x)=x+8; j(x)=x+6; k(x)=x+9; l(x)=6x; m(x)=x-8; m(l(k(j(i(h(g(f(2)))))))) =", "target": "148", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+3; g(x)=x+6; h(x)=x-8; i(x)=9x; j(x)=x+7; k(x)=x+2; l(x)=x-7; m(x)=x+5; n(x)=2x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "68", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+2; g(x)=x+1; h(x)=x-3; i(x)=x-1; j(x)=x-9; k(x)=x-6; l(x)=x-2; m(x)=2x; m(l(k(j(i(h(g(f(5)))))))) =", "target": "-26", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+3; g(x)=x-9; h(x)=x-9; i(x)=x-1; j(x)=x-5; k(x)=x-2; l(x)=x+7; m(x)=7x; m(l(k(j(i(h(g(f(3)))))))) =", "target": "-91", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+7; g(x)=x+5; h(x)=8x; i(x)=7x; j(x)=x+1; k(x)=4x; l(x)=x+4; l(k(j(i(h(g(f(1))))))) =", "target": "2920", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+5; g(x)=x+2; h(x)=2x; i(x)=x-4; j(x)=7x; j(i(h(g(f(6))))) =", "target": "154", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+4; g(x)=5x; h(x)=x-4; i(x)=x+4; j(x)=x-5; k(x)=5x; l(x)=1x; m(x)=x+3; m(l(k(j(i(h(g(f(8)))))))) =", "target": "278", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=5x; h(x)=4x; i(x)=x+6; j(x)=2x; k(x)=x+3; l(x)=x-8; m(x)=x+1; n(x)=8x; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "58", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=x+1; h(x)=6x; i(x)=x-1; j(x)=x-4; k(x)=x-2; k(j(i(h(g(f(0)))))) =", "target": "-13", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=3x; i(x)=x+2; j(x)=x+5; j(i(h(g(f(5))))) =", "target": "109", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=5x; h(x)=8x; i(x)=x-6; j(x)=x-1; k(x)=x-5; l(x)=6x; m(x)=8x; m(l(k(j(i(h(g(f(1)))))))) =", "target": "-10176", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=9x; g(x)=1x; h(x)=x+7; i(x)=x+3; j(x)=x-8; k(x)=x+4; l(x)=7x; l(k(j(i(h(g(f(5))))))) =", "target": "357", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=x+7; h(x)=2x; i(x)=x-9; j(x)=x-9; k(x)=x+5; k(j(i(h(g(f(5)))))) =", "target": "21", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-7; g(x)=x-5; h(x)=x+1; i(x)=9x; j(x)=6x; k(x)=2x; l(x)=x-8; l(k(j(i(h(g(f(9))))))) =", "target": "-224", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x+8; h(x)=3x; i(x)=x-3; j(x)=5x; k(x)=9x; l(x)=3x; l(k(j(i(h(g(f(4))))))) =", "target": "3645", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=x-1; h(x)=x-1; i(x)=x+5; j(x)=2x; k(x)=x+8; l(x)=x-1; m(x)=x-6; m(l(k(j(i(h(g(f(0)))))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=x-5; h(x)=9x; i(x)=x+2; j(x)=5x; j(i(h(g(f(2))))) =", "target": "-260", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+7; g(x)=2x; h(x)=x-4; i(x)=x+8; j(x)=x-4; k(x)=7x; l(x)=x-7; m(x)=x+5; n(x)=x-5; o(x)=x+7; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "168", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+4; g(x)=x-3; h(x)=x-9; i(x)=x+5; j(x)=x-2; k(x)=x-8; l(x)=3x; m(x)=x-7; n(x)=x+3; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "-19", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=6x; h(x)=x-6; i(x)=x-8; j(x)=x-7; k(x)=x-1; l(x)=1x; m(x)=x-2; m(l(k(j(i(h(g(f(2)))))))) =", "target": "48", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-4; g(x)=9x; h(x)=x-3; i(x)=9x; j(x)=5x; k(x)=x+7; l(x)=x+7; m(x)=1x; n(x)=x-9; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "1085", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+1; g(x)=x-2; h(x)=x-2; i(x)=x-8; j(x)=6x; j(i(h(g(f(0))))) =", "target": "-66", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=9x; g(x)=1x; h(x)=4x; i(x)=3x; j(x)=8x; j(i(h(g(f(2))))) =", "target": "1728", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=x-5; h(x)=1x; i(x)=x-4; j(x)=x+2; k(x)=x+3; k(j(i(h(g(f(9)))))) =", "target": "23", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=2x; g(x)=x+4; h(x)=x+8; i(x)=x+9; j(x)=x-7; j(i(h(g(f(0))))) =", "target": "14", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=x-3; h(x)=x+9; i(x)=x-8; j(x)=2x; j(i(h(g(f(6))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=1x; g(x)=x+3; h(x)=4x; i(x)=x+9; j(x)=9x; k(x)=x+8; k(j(i(h(g(f(7)))))) =", "target": "449", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-2; g(x)=8x; h(x)=x-5; i(x)=x-7; j(x)=2x; k(x)=x-7; l(x)=x-3; l(k(j(i(h(g(f(0))))))) =", "target": "-66", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=7x; h(x)=x+5; i(x)=x+8; j(x)=x+6; k(x)=x+8; l(x)=8x; l(k(j(i(h(g(f(4))))))) =", "target": "328", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+6; g(x)=9x; h(x)=x+6; i(x)=9x; j(x)=x-9; j(i(h(g(f(1))))) =", "target": "612", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=x-6; h(x)=x-3; i(x)=x-5; j(x)=x-2; k(x)=8x; k(j(i(h(g(f(6)))))) =", "target": "16", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=9x; h(x)=9x; i(x)=x-3; j(x)=6x; k(x)=6x; l(x)=7x; m(x)=x+1; m(l(k(j(i(h(g(f(0)))))))) =", "target": "-755", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x+2; h(x)=x-8; i(x)=x-4; j(x)=4x; k(x)=x+3; l(x)=7x; m(x)=x-2; n(x)=x+5; o(x)=x+1; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-115", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-1; g(x)=x+6; h(x)=x+8; i(x)=x-3; j(x)=9x; k(x)=x+4; l(x)=x-8; m(x)=x-5; m(l(k(j(i(h(g(f(3)))))))) =", "target": "108", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=3x; g(x)=x-9; h(x)=x+2; i(x)=1x; j(x)=2x; k(x)=x+1; k(j(i(h(g(f(2)))))) =", "target": "-1", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-7; g(x)=9x; h(x)=x+6; i(x)=x+9; j(x)=x-4; j(i(h(g(f(3))))) =", "target": "-25", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-9; g(x)=x-6; h(x)=9x; i(x)=x+2; j(x)=x-7; k(x)=7x; l(x)=x+2; m(x)=x+9; n(x)=x-2; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-908", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+1; g(x)=9x; h(x)=x-1; i(x)=x+5; j(x)=x-7; k(x)=6x; l(x)=x+3; m(x)=x-2; m(l(k(j(i(h(g(f(8)))))))) =", "target": "469", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+9; g(x)=9x; h(x)=x-7; i(x)=1x; j(x)=2x; k(x)=8x; l(x)=x-1; m(x)=x+6; n(x)=x-5; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "1616", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+3; g(x)=x+9; h(x)=6x; i(x)=1x; j(x)=x+8; k(x)=x+1; l(x)=x-2; l(k(j(i(h(g(f(6))))))) =", "target": "115", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=8x; h(x)=x+5; i(x)=1x; j(x)=x+1; k(x)=x-9; l(x)=x+6; m(x)=x-8; n(x)=x-4; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=7x; h(x)=1x; i(x)=8x; j(x)=x+7; j(i(h(g(f(6))))) =", "target": "567", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+7; g(x)=7x; h(x)=3x; i(x)=x+8; j(x)=x+6; k(x)=x-4; l(x)=x-7; m(x)=x+4; n(x)=x+2; o(x)=1x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "219", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=1x; h(x)=x+4; i(x)=x+2; j(x)=x+3; k(x)=x-3; l(x)=x-1; m(x)=x-6; m(l(k(j(i(h(g(f(9)))))))) =", "target": "80", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x+7; h(x)=x-2; i(x)=2x; j(x)=x+5; k(x)=4x; l(x)=x-6; m(x)=x+8; n(x)=5x; o(x)=x-9; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "661", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+9; g(x)=x-6; h(x)=9x; i(x)=2x; j(x)=x+6; k(x)=x-8; l(x)=x-2; m(x)=x+3; n(x)=4x; o(x)=x-9; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "419", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=x+4; h(x)=8x; i(x)=8x; j(x)=x+1; j(i(h(g(f(7))))) =", "target": "513", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=7x; h(x)=x-2; i(x)=x+5; j(x)=7x; j(i(h(g(f(7))))) =", "target": "119", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=x-1; h(x)=x+4; i(x)=x-3; j(x)=7x; j(i(h(g(f(8))))) =", "target": "7", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=x-1; i(x)=6x; j(x)=x-4; j(i(h(g(f(0))))) =", "target": "44", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=x-1; h(x)=x+9; i(x)=x-5; j(x)=8x; k(x)=x-9; l(x)=x-3; l(k(j(i(h(g(f(6))))))) =", "target": "348", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=4x; g(x)=x+1; h(x)=x-5; i(x)=x+4; j(x)=5x; k(x)=x-7; l(x)=x+5; m(x)=x-5; m(l(k(j(i(h(g(f(4)))))))) =", "target": "73", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=x+5; h(x)=6x; i(x)=x-3; j(x)=x-8; k(x)=x+8; l(x)=x+8; m(x)=x+6; n(x)=x-9; o(x)=x+7; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "39", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+5; g(x)=9x; h(x)=x-2; i(x)=x-3; j(x)=x-5; k(x)=x-8; l(x)=x+4; m(x)=3x; n(x)=x+1; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "175", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=1x; g(x)=x+9; h(x)=x-6; i(x)=x+9; j(x)=4x; j(i(h(g(f(0))))) =", "target": "48", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=x+6; h(x)=1x; i(x)=4x; j(x)=x-2; k(x)=x+9; l(x)=x-2; m(x)=2x; n(x)=x+4; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "64", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=x-3; h(x)=x+6; i(x)=6x; j(x)=x-7; j(i(h(g(f(5))))) =", "target": "221", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-1; g(x)=x+6; h(x)=x+5; i(x)=x+1; j(x)=x+4; k(x)=x-9; l(x)=9x; m(x)=6x; m(l(k(j(i(h(g(f(3)))))))) =", "target": "486", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=x-2; i(x)=x+4; j(x)=9x; k(x)=9x; l(x)=7x; m(x)=2x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "29484", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=9x; h(x)=8x; i(x)=x-5; j(x)=x+5; j(i(h(g(f(3))))) =", "target": "1728", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=x+8; h(x)=x-2; i(x)=4x; j(x)=x-7; k(x)=x-2; l(x)=x-9; l(k(j(i(h(g(f(8))))))) =", "target": "62", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-8; g(x)=4x; h(x)=x-7; i(x)=x+3; j(x)=4x; j(i(h(g(f(6))))) =", "target": "-48", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=5x; h(x)=x-6; i(x)=x-2; j(x)=x+7; k(x)=x-9; l(x)=x+8; m(x)=4x; n(x)=x+8; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "63", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-9; g(x)=8x; h(x)=2x; i(x)=x+1; j(x)=x-1; k(x)=3x; l(x)=x+3; m(x)=9x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "-1269", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=x-9; h(x)=x+5; i(x)=x+6; j(x)=x-2; k(x)=1x; l(x)=x+6; m(x)=x-7; m(l(k(j(i(h(g(f(7)))))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=3x; i(x)=9x; j(x)=x+3; k(x)=x+6; l(x)=8x; m(x)=x-6; n(x)=x-3; o(x)=5x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-7245", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=x-1; h(x)=9x; i(x)=9x; j(x)=x-5; k(x)=x-7; k(j(i(h(g(f(5)))))) =", "target": "-336", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=4x; h(x)=x-9; i(x)=x-6; j(x)=x+6; k(x)=x-3; k(j(i(h(g(f(1)))))) =", "target": "-4", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-8; g(x)=x-4; h(x)=x+5; i(x)=x-2; j(x)=x+5; k(x)=x+2; l(x)=x+9; l(k(j(i(h(g(f(8))))))) =", "target": "15", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+1; g(x)=9x; h(x)=x+1; i(x)=x-1; j(x)=x-4; k(x)=x-7; k(j(i(h(g(f(7)))))) =", "target": "61", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+8; g(x)=x-2; h(x)=2x; i(x)=x-7; j(x)=x-5; k(x)=x+3; l(x)=x-2; m(x)=x-2; n(x)=4x; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+9; g(x)=x-5; h(x)=x-9; i(x)=2x; j(x)=6x; k(x)=x+7; l(x)=x+9; l(k(j(i(h(g(f(5))))))) =", "target": "16", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=1x; h(x)=x+3; i(x)=7x; j(x)=x+4; k(x)=x-8; k(j(i(h(g(f(2)))))) =", "target": "31", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+8; g(x)=x-3; h(x)=x+2; i(x)=4x; j(x)=x+7; k(x)=x+8; l(x)=4x; m(x)=3x; m(l(k(j(i(h(g(f(0)))))))) =", "target": "516", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=5x; g(x)=7x; h(x)=4x; i(x)=6x; j(x)=x-9; k(x)=3x; l(x)=x-4; m(x)=x-8; m(l(k(j(i(h(g(f(7)))))))) =", "target": "17601", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-6; g(x)=8x; h(x)=x-2; i(x)=x+2; j(x)=x-7; k(x)=x-6; l(x)=x+7; m(x)=x+3; n(x)=x-6; o(x)=2x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "-34", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=x-8; h(x)=7x; i(x)=4x; j(x)=x+5; k(x)=x-9; l(x)=x+7; m(x)=x+9; n(x)=x-5; o(x)=6x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-798", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=x-5; h(x)=x+5; i(x)=x-4; j(x)=x-1; k(x)=x-8; l(x)=x-4; m(x)=3x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "-48", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=2x; g(x)=6x; h(x)=x+9; i(x)=x+1; j(x)=x-2; k(x)=6x; k(j(i(h(g(f(5)))))) =", "target": "408", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+1; g(x)=4x; h(x)=x-9; i(x)=x+3; j(x)=7x; k(x)=4x; l(x)=x-3; m(x)=x-6; n(x)=x-4; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "827", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+1; g(x)=x+1; h(x)=2x; i(x)=7x; j(x)=x-1; k(x)=x+5; l(x)=x-1; m(x)=x+4; n(x)=x+5; o(x)=2x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "248", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=5x; h(x)=x+2; i(x)=x+9; j(x)=7x; k(x)=x+1; l(x)=9x; m(x)=3x; n(x)=x+7; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "4008", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=1x; g(x)=x-5; h(x)=x-4; i(x)=x+5; j(x)=8x; k(x)=x-5; l(x)=x-2; m(x)=x+7; m(l(k(j(i(h(g(f(8)))))))) =", "target": "32", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=9x; h(x)=4x; i(x)=x-1; j(x)=x-7; k(x)=x-9; l(x)=2x; l(k(j(i(h(g(f(7))))))) =", "target": "110", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=x-4; h(x)=x-6; i(x)=x-2; j(x)=5x; k(x)=x-3; k(j(i(h(g(f(1)))))) =", "target": "-58", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x+8; h(x)=4x; i(x)=x+3; j(x)=x-8; j(i(h(g(f(8))))) =", "target": "123", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=4x; g(x)=x+8; h(x)=x-7; i(x)=x-6; j(x)=x+1; k(x)=x-7; l(x)=x+5; m(x)=4x; n(x)=8x; o(x)=8x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "3584", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=x-8; h(x)=9x; i(x)=2x; j(x)=x+7; k(x)=2x; l(x)=x-3; m(x)=x+3; n(x)=2x; o(x)=x+4; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "392", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=x-3; h(x)=9x; i(x)=x-3; j(x)=9x; j(i(h(g(f(6))))) =", "target": "783", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+5; g(x)=x+7; h(x)=x-5; i(x)=6x; j(x)=6x; k(x)=3x; l(x)=x+5; m(x)=4x; m(l(k(j(i(h(g(f(9)))))))) =", "target": "6932", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-9; g(x)=5x; h(x)=x-8; i(x)=x+6; j(x)=3x; k(x)=x+9; l(x)=8x; m(x)=x+6; n(x)=x-3; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-925", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=x+2; h(x)=8x; i(x)=x-2; j(x)=x+8; j(i(h(g(f(9))))) =", "target": "62", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=9x; h(x)=x+6; i(x)=1x; j(x)=x+5; k(x)=x-7; k(j(i(h(g(f(9)))))) =", "target": "139", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=7x; h(x)=x-9; i(x)=4x; j(x)=x+3; k(x)=x+4; l(x)=x-3; m(x)=x-2; n(x)=x+9; o(x)=7x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "-371", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=8x; h(x)=x+3; i(x)=x+4; j(x)=x+2; k(x)=3x; l(x)=x+3; m(x)=x-1; n(x)=x-2; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "27", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=8x; g(x)=x-8; h(x)=x-5; i(x)=2x; j(x)=x+9; k(x)=x-7; k(j(i(h(g(f(6)))))) =", "target": "72", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=x-9; h(x)=x-9; i(x)=x+4; j(x)=x+5; k(x)=3x; l(x)=x-9; m(x)=x-8; n(x)=5x; o(x)=2x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "-380", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=x+1; h(x)=x-8; i(x)=6x; j(x)=7x; k(x)=x+9; l(x)=x+7; m(x)=x-3; m(l(k(j(i(h(g(f(0)))))))) =", "target": "-281", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-6; g(x)=4x; h(x)=x+5; i(x)=x-2; j(x)=x-5; k(x)=1x; k(j(i(h(g(f(9)))))) =", "target": "10", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=8x; h(x)=x-1; i(x)=5x; j(x)=x-1; k(x)=1x; l(x)=8x; l(k(j(i(h(g(f(9))))))) =", "target": "4432", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-8; g(x)=x+8; h(x)=9x; i(x)=x+1; j(x)=x-1; k(x)=3x; l(x)=3x; m(x)=x+2; n(x)=x-2; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "8", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+9; g(x)=x-4; h(x)=1x; i(x)=x-6; j(x)=3x; k(x)=6x; l(x)=1x; l(k(j(i(h(g(f(6))))))) =", "target": "90", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=x+4; h(x)=3x; i(x)=5x; j(x)=x+3; k(x)=x-1; l(x)=x-4; m(x)=9x; m(l(k(j(i(h(g(f(6)))))))) =", "target": "1332", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=x-5; h(x)=6x; i(x)=x+6; j(x)=x-2; k(x)=8x; k(j(i(h(g(f(1)))))) =", "target": "-160", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=2x; h(x)=x+6; i(x)=1x; j(x)=x+1; j(i(h(g(f(3))))) =", "target": "19", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=x+4; h(x)=x-4; i(x)=3x; j(x)=x-1; k(x)=x-5; l(x)=x+5; m(x)=x+6; n(x)=x-4; o(x)=x+5; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "-9", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-5; g(x)=8x; h(x)=x-2; i(x)=x-6; j(x)=6x; k(x)=x-9; k(j(i(h(g(f(7)))))) =", "target": "39", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x+7; h(x)=x+9; i(x)=4x; j(x)=7x; k(x)=x-5; l(x)=x+6; m(x)=9x; n(x)=5x; o(x)=x+9; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "31554", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+8; g(x)=x-1; h(x)=x+9; i(x)=3x; j(x)=x-3; k(x)=x-6; l(x)=x-7; l(k(j(i(h(g(f(9))))))) =", "target": "59", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-2; g(x)=6x; h(x)=x+3; i(x)=x-8; j(x)=x-6; j(i(h(g(f(1))))) =", "target": "-17", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-5; g(x)=x+8; h(x)=3x; i(x)=x+8; j(x)=8x; k(x)=7x; k(j(i(h(g(f(6)))))) =", "target": "1960", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=6x; h(x)=6x; i(x)=x-7; j(x)=x-1; k(x)=x+9; l(x)=x+7; m(x)=x-5; m(l(k(j(i(h(g(f(9)))))))) =", "target": "507", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=1x; g(x)=x+9; h(x)=x+5; i(x)=9x; j(x)=x+3; k(x)=x+6; l(x)=x+2; m(x)=x-3; m(l(k(j(i(h(g(f(5)))))))) =", "target": "179", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=x-1; h(x)=3x; i(x)=x+3; j(x)=x-5; k(x)=x+3; l(x)=x+4; m(x)=x-2; m(l(k(j(i(h(g(f(3)))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=9x; g(x)=x-1; h(x)=x-3; i(x)=x-2; j(x)=x-9; k(x)=7x; k(j(i(h(g(f(3)))))) =", "target": "84", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=x-4; h(x)=x+7; i(x)=x+6; j(x)=x+7; k(x)=x-5; l(x)=7x; m(x)=7x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "3283", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=1x; h(x)=x+3; i(x)=x+6; j(x)=x-6; j(i(h(g(f(8))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=x+4; h(x)=x+8; i(x)=x+1; j(x)=x+5; j(i(h(g(f(6))))) =", "target": "60", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=3x; h(x)=x-3; i(x)=x-5; j(x)=x-8; j(i(h(g(f(0))))) =", "target": "-37", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-3; g(x)=x+7; h(x)=9x; i(x)=x+8; j(x)=x+6; k(x)=2x; l(x)=7x; l(k(j(i(h(g(f(0))))))) =", "target": "700", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=9x; h(x)=x-8; i(x)=x+8; j(x)=7x; k(x)=x-1; k(j(i(h(g(f(4)))))) =", "target": "62", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-2; g(x)=8x; h(x)=6x; i(x)=x-6; j(x)=6x; k(x)=x+3; l(x)=x-9; m(x)=x-2; m(l(k(j(i(h(g(f(2)))))))) =", "target": "-44", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-5; g(x)=x+9; h(x)=8x; i(x)=x-1; j(x)=x-5; j(i(h(g(f(0))))) =", "target": "26", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-8; g(x)=x-1; h(x)=6x; i(x)=x-7; j(x)=x-5; j(i(h(g(f(0))))) =", "target": "-66", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-3; g(x)=x-6; h(x)=x-1; i(x)=x-6; j(x)=x-1; k(x)=2x; l(x)=x-1; m(x)=7x; n(x)=x+3; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-228", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+3; g(x)=3x; h(x)=8x; i(x)=x-5; j(x)=x-8; k(x)=4x; l(x)=9x; m(x)=8x; n(x)=x+2; n(m(l(k(j(i(h(g(f(5))))))))) =", "target": "51554", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+3; g(x)=2x; h(x)=x-9; i(x)=2x; j(x)=x-5; k(x)=x-7; l(x)=x+3; l(k(j(i(h(g(f(4))))))) =", "target": "1", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=x-2; h(x)=x+5; i(x)=x-9; j(x)=4x; k(x)=1x; l(x)=x-8; m(x)=x+7; n(x)=x-3; o(x)=x-9; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-37", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-3; g(x)=5x; h(x)=x-1; i(x)=x-4; j(x)=x+7; k(x)=3x; l(x)=x-5; m(x)=x-6; n(x)=x+4; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "-1", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=x+2; h(x)=5x; i(x)=8x; j(x)=7x; j(i(h(g(f(9))))) =", "target": "15680", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=x-9; h(x)=x+6; i(x)=x-6; j(x)=x-8; k(x)=x+8; l(x)=8x; l(k(j(i(h(g(f(3))))))) =", "target": "96", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=3x; g(x)=7x; h(x)=x-7; i(x)=x+2; j(x)=8x; k(x)=6x; l(x)=x+4; m(x)=9x; n(x)=x-5; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "34159", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-8; g(x)=x+3; h(x)=3x; i(x)=6x; j(x)=7x; k(x)=x-1; l(x)=x-9; l(k(j(i(h(g(f(7))))))) =", "target": "242", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-9; g(x)=x+7; h(x)=2x; i(x)=x+7; j(x)=x+4; k(x)=x+5; k(j(i(h(g(f(2)))))) =", "target": "16", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x-4; i(x)=x-5; j(x)=x-6; k(x)=2x; k(j(i(h(g(f(5)))))) =", "target": "460", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=x-4; h(x)=x-8; i(x)=x-5; j(x)=x-3; k(x)=x+7; l(x)=x-1; m(x)=6x; n(x)=x-3; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-33", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=x-7; h(x)=x+1; i(x)=4x; j(x)=x+9; k(x)=x+7; l(x)=x+6; m(x)=4x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "216", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=2x; h(x)=x-1; i(x)=7x; j(x)=9x; k(x)=x+3; l(x)=x-6; m(x)=4x; n(x)=x+8; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "11840", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+5; g(x)=x+1; h(x)=x+8; i(x)=x-4; j(x)=8x; k(x)=x+3; l(x)=x-9; l(k(j(i(h(g(f(1))))))) =", "target": "82", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=x+8; h(x)=2x; i(x)=x+1; j(x)=7x; k(x)=8x; l(x)=x-2; m(x)=x-5; n(x)=9x; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "6489", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=1x; h(x)=x-8; i(x)=1x; j(x)=x-7; k(x)=1x; l(x)=x-7; m(x)=9x; n(x)=8x; o(x)=x-2; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-938", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-2; g(x)=3x; h(x)=x-7; i(x)=6x; j(x)=x+4; k(x)=x-4; k(j(i(h(g(f(4)))))) =", "target": "-6", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=x+5; i(x)=x-5; j(x)=8x; j(i(h(g(f(5))))) =", "target": "-40", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=5x; h(x)=1x; i(x)=x+3; j(x)=5x; k(x)=x+4; l(x)=x-6; m(x)=5x; m(l(k(j(i(h(g(f(4)))))))) =", "target": "2565", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x-8; h(x)=5x; i(x)=x+3; j(x)=x+5; k(x)=x-5; l(x)=4x; m(x)=x+4; n(x)=5x; o(x)=x+1; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "181", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=9x; h(x)=x-8; i(x)=3x; j(x)=x-3; k(x)=9x; l(x)=x-9; l(k(j(i(h(g(f(5))))))) =", "target": "10683", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=8x; h(x)=x+8; i(x)=x-1; j(x)=2x; k(x)=x-4; l(x)=x-4; m(x)=x+3; m(l(k(j(i(h(g(f(4)))))))) =", "target": "25", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=2x; g(x)=4x; h(x)=x-8; i(x)=x-1; j(x)=9x; k(x)=x+4; l(x)=x-1; m(x)=x-2; n(x)=x-9; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "-17", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=9x; h(x)=x+1; i(x)=x-9; j(x)=x+4; k(x)=x-3; l(x)=4x; l(k(j(i(h(g(f(3))))))) =", "target": "944", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=x+1; h(x)=5x; i(x)=5x; j(x)=x+4; k(x)=2x; l(x)=x+9; m(x)=x-1; n(x)=x+4; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "2878", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=1x; g(x)=x-2; h(x)=x+8; i(x)=x+8; j(x)=x+8; j(i(h(g(f(3))))) =", "target": "25", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=4x; g(x)=8x; h(x)=x-1; i(x)=7x; j(x)=x+8; j(i(h(g(f(3))))) =", "target": "673", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=8x; g(x)=x+5; h(x)=x-5; i(x)=x-3; j(x)=x-9; k(x)=x-9; l(x)=x-5; m(x)=x-9; n(x)=x+6; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=9x; g(x)=x-8; h(x)=x+3; i(x)=x-1; j(x)=x-9; k(x)=x-8; l(x)=x+3; m(x)=x+7; n(x)=5x; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "168", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=9x; g(x)=x+4; h(x)=x+4; i(x)=x+5; j(x)=5x; k(x)=x-9; l(x)=x-2; m(x)=5x; n(x)=4x; o(x)=3x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "16740", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=x+3; h(x)=3x; i(x)=x-9; j(x)=x-7; k(x)=5x; k(j(i(h(g(f(3)))))) =", "target": "115", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=x-6; i(x)=6x; j(x)=6x; k(x)=x-5; l(x)=x-7; l(k(j(i(h(g(f(6))))))) =", "target": "-300", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-1; g(x)=x-6; h(x)=3x; i(x)=x-5; j(x)=x+4; j(i(h(g(f(3))))) =", "target": "-13", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x-6; h(x)=x+6; i(x)=x-7; j(x)=x-9; k(x)=4x; l(x)=x+9; m(x)=x-5; n(x)=x+2; o(x)=x+3; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "45", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=x+7; h(x)=8x; i(x)=x+5; j(x)=7x; k(x)=x+2; l(x)=x+6; m(x)=x-9; n(x)=x-8; o(x)=x-2; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "360", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=2x; g(x)=x-7; h(x)=x+3; i(x)=5x; j(x)=4x; k(x)=2x; k(j(i(h(g(f(7)))))) =", "target": "400", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-9; g(x)=5x; h(x)=9x; i(x)=x-1; j(x)=x+2; k(x)=6x; k(j(i(h(g(f(5)))))) =", "target": "-1074", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=x+6; h(x)=x-4; i(x)=x-6; j(x)=x-4; k(x)=5x; l(x)=x-1; m(x)=x+2; m(l(k(j(i(h(g(f(6)))))))) =", "target": "81", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=x+9; h(x)=x+9; i(x)=x-1; j(x)=7x; k(x)=x+9; l(x)=x-9; m(x)=x-5; m(l(k(j(i(h(g(f(9)))))))) =", "target": "121", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=2x; g(x)=2x; h(x)=2x; i(x)=2x; j(x)=3x; k(x)=2x; l(x)=8x; l(k(j(i(h(g(f(9))))))) =", "target": "6912", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+2; g(x)=7x; h(x)=x-8; i(x)=x-3; j(x)=6x; k(x)=x+3; l(x)=6x; m(x)=x-9; n(x)=7x; o(x)=x+7; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "16702", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+7; g(x)=x+1; h(x)=x+6; i(x)=x-3; j(x)=x-4; k(x)=6x; l(x)=8x; l(k(j(i(h(g(f(3))))))) =", "target": "480", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=x+3; h(x)=x+5; i(x)=x+2; j(x)=x+9; k(x)=1x; l(x)=x+9; m(x)=x-2; n(x)=x-6; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "20", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=x-3; h(x)=x-5; i(x)=x+4; j(x)=x-1; k(x)=x+8; l(x)=x+7; m(x)=x+8; n(x)=4x; o(x)=x-1; o(n(m(l(k(j(i(h(g(f(7)))))))))) =", "target": "115", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=x+7; h(x)=2x; i(x)=x+3; j(x)=9x; k(x)=x+3; l(x)=x+2; m(x)=x-6; m(l(k(j(i(h(g(f(5)))))))) =", "target": "170", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x+9; h(x)=x-8; i(x)=x-9; j(x)=x+8; k(x)=x+1; l(x)=x-7; m(x)=x-2; m(l(k(j(i(h(g(f(5)))))))) =", "target": "1", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-2; g(x)=x-5; h(x)=x+2; i(x)=7x; j(x)=x-1; k(x)=x-6; l(x)=x+3; l(k(j(i(h(g(f(3))))))) =", "target": "-18", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=x+9; h(x)=x+3; i(x)=8x; j(x)=x+1; k(x)=4x; k(j(i(h(g(f(4)))))) =", "target": "516", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=7x; g(x)=x+7; h(x)=x+3; i(x)=3x; j(x)=3x; k(x)=x-2; l(x)=x+1; l(k(j(i(h(g(f(7))))))) =", "target": "530", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=6x; h(x)=x-6; i(x)=x+1; j(x)=x-1; k(x)=x-1; k(j(i(h(g(f(2)))))) =", "target": "-37", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+9; g(x)=x-9; h(x)=x+3; i(x)=x+1; j(x)=x-4; k(x)=x+7; l(x)=x+2; m(x)=x-8; m(l(k(j(i(h(g(f(6)))))))) =", "target": "7", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-3; g(x)=1x; h(x)=x-8; i(x)=x-5; j(x)=x+6; k(x)=9x; l(x)=x-2; m(x)=x-8; n(x)=4x; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "-328", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=x+4; h(x)=2x; i(x)=2x; j(x)=7x; k(x)=x-2; k(j(i(h(g(f(3)))))) =", "target": "362", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=5x; h(x)=x-8; i(x)=9x; j(x)=5x; k(x)=x+6; k(j(i(h(g(f(6)))))) =", "target": "321", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=1x; h(x)=7x; i(x)=1x; j(x)=x+3; k(x)=x+3; l(x)=1x; l(k(j(i(h(g(f(3))))))) =", "target": "69", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-6; g(x)=x+8; h(x)=x-6; i(x)=x+7; j(x)=x-4; k(x)=x-5; k(j(i(h(g(f(8)))))) =", "target": "2", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=9x; h(x)=x-6; i(x)=x+5; j(x)=x-8; k(x)=8x; l(x)=2x; m(x)=6x; m(l(k(j(i(h(g(f(8)))))))) =", "target": "10368", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+6; g(x)=x-1; h(x)=3x; i(x)=x+4; j(x)=x-2; k(x)=x+9; l(x)=5x; l(k(j(i(h(g(f(2))))))) =", "target": "160", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-8; g(x)=x-9; h(x)=x+9; i(x)=x+7; j(x)=4x; k(x)=x+4; l(x)=x+4; l(k(j(i(h(g(f(5))))))) =", "target": "24", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=3x; g(x)=9x; h(x)=1x; i(x)=6x; j(x)=4x; k(x)=9x; l(x)=x+6; m(x)=x+2; n(x)=3x; n(m(l(k(j(i(h(g(f(9))))))))) =", "target": "157488", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=3x; g(x)=7x; h(x)=x+5; i(x)=x+7; j(x)=x-7; k(x)=7x; k(j(i(h(g(f(7)))))) =", "target": "1064", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-3; g(x)=5x; h(x)=x+2; i(x)=x-9; j(x)=5x; k(x)=x+2; l(x)=x+7; m(x)=x+3; m(l(k(j(i(h(g(f(7)))))))) =", "target": "77", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+7; g(x)=x+7; h(x)=x-4; i(x)=x+6; j(x)=x+4; k(x)=x-3; k(j(i(h(g(f(6)))))) =", "target": "23", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=x+8; h(x)=x+5; i(x)=x-1; j(x)=2x; j(i(h(g(f(8))))) =", "target": "72", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=2x; g(x)=8x; h(x)=x+8; i(x)=x-2; j(x)=8x; k(x)=x+2; l(x)=6x; l(k(j(i(h(g(f(4))))))) =", "target": "3372", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=x+8; h(x)=x-3; i(x)=8x; j(x)=x-4; j(i(h(g(f(8))))) =", "target": "60", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=x+8; h(x)=7x; i(x)=x-1; j(x)=2x; j(i(h(g(f(4))))) =", "target": "250", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=x-9; h(x)=x-7; i(x)=5x; j(x)=x-2; k(x)=x+2; l(x)=8x; m(x)=x+8; n(x)=x+7; o(x)=5x; o(n(m(l(k(j(i(h(g(f(1)))))))))) =", "target": "-2125", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-9; g(x)=7x; h(x)=9x; i(x)=7x; j(x)=x+2; k(x)=2x; l(x)=2x; m(x)=x+4; n(x)=x-7; o(x)=x-1; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "-7052", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=9x; h(x)=x+7; i(x)=7x; j(x)=1x; k(x)=x+3; l(x)=x+6; m(x)=x+5; n(x)=x-1; o(x)=8x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "-1520", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=x-4; h(x)=x-8; i(x)=x+6; j(x)=x-5; k(x)=x+4; l(x)=9x; l(k(j(i(h(g(f(5))))))) =", "target": "207", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-6; g(x)=x+8; h(x)=x+6; i(x)=x-9; j(x)=4x; k(x)=x-5; l(x)=x+2; m(x)=7x; n(x)=x-8; o(x)=3x; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "333", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-8; g(x)=x-6; h(x)=x-6; i(x)=x+3; j(x)=x-1; k(x)=x+4; k(j(i(h(g(f(9)))))) =", "target": "-5", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=x-9; h(x)=3x; i(x)=x-2; j(x)=x+2; k(x)=x+7; l(x)=x-3; l(k(j(i(h(g(f(5))))))) =", "target": "112", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=x+7; h(x)=x+5; i(x)=2x; j(x)=x-4; k(x)=x-1; l(x)=x+9; m(x)=x+5; n(x)=x+8; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "33", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+4; g(x)=x+8; h(x)=4x; i(x)=x+1; j(x)=x-4; k(x)=x+8; l(x)=x-7; m(x)=9x; n(x)=4x; o(x)=x-3; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "2805", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-7; g(x)=5x; h(x)=6x; i(x)=x-7; j(x)=x-6; k(x)=x+6; l(x)=6x; m(x)=x+3; n(x)=x-4; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "137", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+2; g(x)=8x; h(x)=6x; i(x)=x+4; j(x)=6x; k(x)=9x; l(x)=x+8; m(x)=x-1; n(x)=x-8; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "23543", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=x+1; h(x)=8x; i(x)=1x; j(x)=x-8; k(x)=3x; l(x)=x+6; m(x)=x+5; n(x)=5x; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-185", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=8x; g(x)=x-3; h(x)=x-4; i(x)=8x; j(x)=x-9; k(x)=5x; l(x)=x-4; m(x)=9x; n(x)=x-3; o(x)=6x; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "-17784", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+6; g(x)=2x; h(x)=x+2; i(x)=7x; j(x)=3x; k(x)=4x; l(x)=x+3; m(x)=x+1; n(x)=8x; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "10784", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+2; g(x)=x-7; h(x)=x-7; i(x)=8x; j(x)=x+6; k(x)=x+2; l(x)=x-6; l(k(j(i(h(g(f(2))))))) =", "target": "-78", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-5; g(x)=x-2; h(x)=x+5; i(x)=x-4; j(x)=x+6; k(x)=2x; l(x)=x-8; m(x)=x+9; n(x)=x-1; o(x)=1x; o(n(m(l(k(j(i(h(g(f(8)))))))))) =", "target": "16", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=6x; g(x)=x+3; h(x)=x+9; i(x)=x+1; j(x)=x-7; j(i(h(g(f(4))))) =", "target": "30", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=6x; g(x)=x+3; h(x)=x+8; i(x)=x+9; j(x)=x+6; j(i(h(g(f(1))))) =", "target": "32", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+6; g(x)=3x; h(x)=x-3; i(x)=3x; j(x)=x-1; k(x)=1x; l(x)=2x; m(x)=x-5; n(x)=x+6; o(x)=3x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "753", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=x-4; h(x)=3x; i(x)=6x; j(x)=x-9; k(x)=x-8; l(x)=x+9; m(x)=x+6; n(x)=x+6; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "4", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=x-1; h(x)=x-1; i(x)=x-2; j(x)=2x; k(x)=6x; k(j(i(h(g(f(8)))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=9x; g(x)=7x; h(x)=4x; i(x)=x-6; j(x)=x+8; k(x)=x+5; l(x)=7x; m(x)=x-7; n(x)=x-2; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "12388", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-2; g(x)=x-9; h(x)=x-7; i(x)=x-8; j(x)=x-1; j(i(h(g(f(8))))) =", "target": "-19", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=x+6; i(x)=1x; j(x)=1x; j(i(h(g(f(0))))) =", "target": "-1", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=x-9; h(x)=x+7; i(x)=9x; j(x)=3x; k(x)=6x; l(x)=1x; l(k(j(i(h(g(f(3))))))) =", "target": "-486", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-3; g(x)=x+6; h(x)=x+4; i(x)=x-4; j(x)=1x; j(i(h(g(f(0))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+2; g(x)=x-1; h(x)=x+6; i(x)=x+7; j(x)=x+6; k(x)=x-1; l(x)=x+3; m(x)=4x; m(l(k(j(i(h(g(f(9)))))))) =", "target": "124", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-7; g(x)=5x; h(x)=x+5; i(x)=x-1; j(x)=x-7; k(x)=x-5; l(x)=x+8; m(x)=x-1; n(x)=7x; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(2)))))))))) =", "target": "-174", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=4x; g(x)=x+2; h(x)=x+3; i(x)=x-2; j(x)=x+9; k(x)=x-3; l(x)=5x; m(x)=7x; n(x)=x-9; o(x)=x-5; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "1561", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=x-4; h(x)=x+9; i(x)=x-4; j(x)=x+9; k(x)=x+8; l(x)=x-2; l(k(j(i(h(g(f(1))))))) =", "target": "19", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+7; g(x)=x+2; h(x)=2x; i(x)=x+7; j(x)=6x; k(x)=x-3; k(j(i(h(g(f(7)))))) =", "target": "231", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+9; g(x)=x+4; h(x)=6x; i(x)=x+1; j(x)=x+6; k(x)=x-3; l(x)=x-8; m(x)=x+1; n(x)=x-7; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "80", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=2x; g(x)=x+3; h(x)=4x; i(x)=x-8; j(x)=x+8; k(x)=x+4; l(x)=9x; l(k(j(i(h(g(f(4))))))) =", "target": "432", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+3; g(x)=6x; h(x)=x+2; i(x)=2x; j(x)=x-9; k(x)=1x; l(x)=3x; m(x)=6x; n(x)=x-1; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "989", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=4x; g(x)=x+7; h(x)=x+1; i(x)=x-2; j(x)=x+1; j(i(h(g(f(9))))) =", "target": "43", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+1; g(x)=8x; h(x)=7x; i(x)=x-7; j(x)=x-4; k(x)=8x; l(x)=5x; m(x)=x-8; n(x)=x-3; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "17469", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-4; g(x)=x+5; h(x)=3x; i(x)=x-5; j(x)=x+6; k(x)=1x; l(x)=x-5; m(x)=x+1; n(x)=x-7; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "17", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-3; g(x)=6x; h(x)=x+7; i(x)=x-7; j(x)=x-8; k(x)=x-7; k(j(i(h(g(f(7)))))) =", "target": "9", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-6; g(x)=7x; h(x)=x+9; i(x)=x+4; j(x)=x+4; k(x)=4x; l(x)=6x; l(k(j(i(h(g(f(7))))))) =", "target": "576", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-6; g(x)=5x; h(x)=x+7; i(x)=x+8; j(x)=x+9; k(x)=8x; l(x)=x-7; m(x)=x+4; n(x)=x+6; n(m(l(k(j(i(h(g(f(8))))))))) =", "target": "275", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x+8; i(x)=x+4; j(x)=x-3; k(x)=x-3; k(j(i(h(g(f(6)))))) =", "target": "300", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+3; g(x)=x-6; h(x)=x-4; i(x)=3x; j(x)=x-6; k(x)=9x; l(x)=1x; m(x)=2x; n(x)=x+2; n(m(l(k(j(i(h(g(f(0))))))))) =", "target": "-484", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+6; g(x)=x+6; h(x)=x-4; i(x)=3x; j(x)=x+5; j(i(h(g(f(1))))) =", "target": "32", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=6x; g(x)=8x; h(x)=x-6; i(x)=3x; j(x)=x-5; k(x)=x+9; l(x)=x+3; l(k(j(i(h(g(f(2))))))) =", "target": "277", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+9; g(x)=7x; h(x)=x+9; i(x)=8x; j(x)=5x; k(x)=4x; l(x)=x+3; m(x)=x-2; m(l(k(j(i(h(g(f(0)))))))) =", "target": "11521", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=x-8; h(x)=x+1; i(x)=6x; j(x)=x-3; k(x)=x-1; k(j(i(h(g(f(7)))))) =", "target": "-52", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=6x; g(x)=x-2; h(x)=x-2; i(x)=x+3; j(x)=5x; k(x)=7x; l(x)=x+2; m(x)=4x; n(x)=6x; o(x)=x-2; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "24406", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-1; g(x)=7x; h(x)=x+6; i(x)=x-4; j(x)=5x; k(x)=1x; l(x)=x-6; m(x)=x+1; n(x)=4x; n(m(l(k(j(i(h(g(f(4))))))))) =", "target": "440", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-7; g(x)=x-1; h(x)=x-8; i(x)=2x; j(x)=x-9; k(x)=x+3; l(x)=1x; l(k(j(i(h(g(f(9))))))) =", "target": "-20", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x-7; g(x)=x+8; h(x)=x-7; i(x)=x+5; j(x)=7x; j(i(h(g(f(5))))) =", "target": "28", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=7x; g(x)=x-6; h(x)=x+6; i(x)=5x; j(x)=4x; k(x)=x-5; l(x)=x-2; l(k(j(i(h(g(f(7))))))) =", "target": "973", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+6; g(x)=2x; h(x)=x+3; i(x)=x+4; j(x)=x+3; k(x)=x-2; l(x)=x+4; m(x)=x+2; n(x)=x+1; o(x)=6x; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "270", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+8; g(x)=6x; h(x)=2x; i(x)=2x; j(x)=x+3; j(i(h(g(f(3))))) =", "target": "267", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+3; g(x)=x+2; h(x)=x+7; i(x)=4x; j(x)=x+1; k(x)=2x; l(x)=x-6; m(x)=9x; n(x)=x+8; o(x)=x+8; o(n(m(l(k(j(i(h(g(f(9)))))))))) =", "target": "1492", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+8; g(x)=x-1; h(x)=x-3; i(x)=1x; j(x)=x+3; k(x)=x+5; l(x)=x+9; m(x)=4x; n(x)=2x; o(x)=2x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "384", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-4; g(x)=x+7; h(x)=5x; i(x)=7x; j(x)=5x; k(x)=x+7; k(j(i(h(g(f(4)))))) =", "target": "1232", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=4x; g(x)=1x; h(x)=5x; i(x)=x-3; j(x)=x+1; k(x)=x+8; l(x)=x-1; l(k(j(i(h(g(f(9))))))) =", "target": "185", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+8; g(x)=x+2; h(x)=x-6; i(x)=2x; j(x)=5x; k(x)=6x; l(x)=x-6; m(x)=8x; m(l(k(j(i(h(g(f(5)))))))) =", "target": "4272", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x-8; g(x)=x-9; h(x)=4x; i(x)=x+3; j(x)=x+6; k(x)=x-8; l(x)=x-6; m(x)=x-8; m(l(k(j(i(h(g(f(7)))))))) =", "target": "-53", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+3; g(x)=7x; h(x)=x-1; i(x)=x+6; j(x)=x-3; k(x)=x-6; l(x)=x+7; m(x)=3x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "114", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+4; g(x)=x+1; h(x)=x-8; i(x)=x+5; j(x)=x-4; k(x)=x+8; l(x)=x-3; m(x)=x-9; n(x)=x-4; n(m(l(k(j(i(h(g(f(3))))))))) =", "target": "-7", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=8x; g(x)=x-7; h(x)=x+8; i(x)=1x; j(x)=x-2; k(x)=x+6; l(x)=8x; m(x)=5x; m(l(k(j(i(h(g(f(2)))))))) =", "target": "840", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=8x; g(x)=x+7; h(x)=x-1; i(x)=x-3; j(x)=x-5; k(x)=7x; k(j(i(h(g(f(9)))))) =", "target": "490", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=3x; g(x)=5x; h(x)=x-6; i(x)=3x; j(x)=x-8; j(i(h(g(f(1))))) =", "target": "19", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=x-4; h(x)=x+6; i(x)=4x; j(x)=x-8; j(i(h(g(f(4))))) =", "target": "-8", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-6; g(x)=4x; h(x)=x+6; i(x)=4x; j(x)=4x; k(x)=x+8; l(x)=8x; m(x)=x+6; n(x)=2x; n(m(l(k(j(i(h(g(f(6))))))))) =", "target": "1676", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=6x; g(x)=x+9; h(x)=x-8; i(x)=5x; j(x)=x+8; k(x)=x-4; k(j(i(h(g(f(4)))))) =", "target": "129", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+6; g(x)=x+8; h(x)=x+4; i(x)=1x; j(x)=x-6; k(x)=8x; l(x)=3x; m(x)=x-6; n(x)=x-6; o(x)=9x; o(n(m(l(k(j(i(h(g(f(3)))))))))) =", "target": "3132", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x+2; g(x)=x-1; h(x)=4x; i(x)=9x; j(x)=x-4; k(x)=x-7; l(x)=1x; m(x)=x-5; n(x)=x+3; o(x)=x-1; o(n(m(l(k(j(i(h(g(f(0)))))))))) =", "target": "22", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=7x; g(x)=x+6; h(x)=x-3; i(x)=x-7; j(x)=3x; k(x)=8x; l(x)=x-2; m(x)=x-8; n(x)=x-4; o(x)=8x; o(n(m(l(k(j(i(h(g(f(4)))))))))) =", "target": "4496", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=3x; g(x)=x-1; h(x)=x+1; i(x)=x-9; j(x)=x-6; k(x)=x+6; k(j(i(h(g(f(6)))))) =", "target": "9", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+7; g(x)=6x; h(x)=x-3; i(x)=x-1; j(x)=5x; k(x)=x-1; l(x)=1x; m(x)=3x; n(x)=x-2; n(m(l(k(j(i(h(g(f(1))))))))) =", "target": "655", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+2; g(x)=3x; h(x)=4x; i(x)=x+6; j(x)=x-6; k(x)=x+7; k(j(i(h(g(f(5)))))) =", "target": "91", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x-7; g(x)=1x; h(x)=7x; i(x)=7x; j(x)=3x; j(i(h(g(f(8))))) =", "target": "147", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x+8; g(x)=x+2; h(x)=x-4; i(x)=x+1; j(x)=9x; j(i(h(g(f(0))))) =", "target": "63", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=4x; g(x)=x-1; h(x)=x+4; i(x)=x+3; j(x)=x+9; j(i(h(g(f(5))))) =", "target": "35", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-7; g(x)=x+9; h(x)=x-8; i(x)=x+7; j(x)=2x; k(x)=x+4; l(x)=1x; l(k(j(i(h(g(f(3))))))) =", "target": "12", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=8x; g(x)=x+6; h(x)=2x; i(x)=6x; j(x)=3x; k(x)=x-4; k(j(i(h(g(f(2)))))) =", "target": "788", "task": "func", "split": "test_ood", "meta": {"depth": 6}}
+{"prompt": "f(x)=x+5; g(x)=x-9; h(x)=x-9; i(x)=x-3; j(x)=x+5; k(x)=x-4; l(x)=x-5; m(x)=x-2; n(x)=5x; n(m(l(k(j(i(h(g(f(7))))))))) =", "target": "-75", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x-9; g(x)=x-4; h(x)=x+2; i(x)=x+7; j(x)=x+4; j(i(h(g(f(3))))) =", "target": "3", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=5x; g(x)=4x; h(x)=5x; i(x)=x-8; j(x)=x+4; k(x)=5x; l(x)=x+9; m(x)=x+5; n(x)=x+4; n(m(l(k(j(i(h(g(f(2))))))))) =", "target": "998", "task": "func", "split": "test_ood", "meta": {"depth": 9}}
+{"prompt": "f(x)=x+8; g(x)=7x; h(x)=6x; i(x)=x-7; j(x)=3x; k(x)=x-8; l(x)=5x; l(k(j(i(h(g(f(3))))))) =", "target": "6785", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=x+1; h(x)=1x; i(x)=x+5; j(x)=x+5; j(i(h(g(f(7))))) =", "target": "25", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=x+1; h(x)=x-4; i(x)=4x; j(x)=x-6; k(x)=x+5; l(x)=x-1; m(x)=x-1; m(l(k(j(i(h(g(f(1)))))))) =", "target": "-3", "task": "func", "split": "test_ood", "meta": {"depth": 8}}
+{"prompt": "f(x)=x+5; g(x)=x-4; h(x)=x+1; i(x)=x-3; j(x)=x+2; k(x)=x+4; l(x)=x-9; l(k(j(i(h(g(f(4))))))) =", "target": "0", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=x+8; g(x)=x+3; h(x)=x+2; i(x)=x-7; j(x)=x+1; k(x)=x-7; l(x)=x-7; l(k(j(i(h(g(f(2))))))) =", "target": "-5", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=1x; g(x)=2x; h(x)=x-5; i(x)=8x; j(x)=x+5; j(i(h(g(f(0))))) =", "target": "-35", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=x-4; g(x)=x+8; h(x)=x+1; i(x)=7x; j(x)=8x; k(x)=x+1; l(x)=x-6; m(x)=x+6; n(x)=x-8; o(x)=3x; o(n(m(l(k(j(i(h(g(f(5)))))))))) =", "target": "1659", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=x-9; g(x)=3x; h(x)=x-6; i(x)=x-3; j(x)=7x; k(x)=x-8; l(x)=x-5; m(x)=x+8; n(x)=9x; o(x)=x-6; o(n(m(l(k(j(i(h(g(f(6)))))))))) =", "target": "-1185", "task": "func", "split": "test_ood", "meta": {"depth": 10}}
+{"prompt": "f(x)=5x; g(x)=x+6; h(x)=x-8; i(x)=x-9; j(x)=3x; j(i(h(g(f(0))))) =", "target": "-33", "task": "func", "split": "test_ood", "meta": {"depth": 5}}
+{"prompt": "f(x)=3x; g(x)=6x; h(x)=3x; i(x)=3x; j(x)=x+7; k(x)=x+7; l(x)=x+9; l(k(j(i(h(g(f(8))))))) =", "target": "1319", "task": "func", "split": "test_ood", "meta": {"depth": 7}}
+{"prompt": "f(x)=2x; g(x)=1x; h(x)=x-9; i(x)=3x; j(x)=4x; j(i(h(g(f(5))))) =", "target": "12", "task": "func", "split": "test_ood", "meta": {"depth": 5}}

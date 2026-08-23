@@ -1,0 +1,1000 @@
+{"prompt": "f(x)=x+5; g(x)=x+4; g(f(2)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(0)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x+9; g(f(9)) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=9x; g(f(6)) =", "target": "216", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x+3; g(f(6)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+6; h(x)=x+2; h(g(f(6))) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=5x; g(f(0)) =", "target": "-30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-2; h(x)=5x; h(g(f(9))) =", "target": "80", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=2x; h(x)=x+4; h(g(f(4))) =", "target": "36", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x-5; g(f(7)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x-4; h(x)=5x; h(g(f(1))) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x+8; g(f(6)) =", "target": "32", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+6; h(x)=x+4; h(g(f(0))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x+4; h(x)=6x; h(g(f(3))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+5; h(x)=x+4; h(g(f(8))) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x-4; h(g(f(2))) =", "target": "94", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=3x; h(g(f(6))) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=8x; g(f(8)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=2x; h(x)=9x; h(g(f(4))) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-3; h(x)=x-1; h(g(f(4))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=5x; g(f(8)) =", "target": "80", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+9; g(f(8)) =", "target": "23", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-1; g(f(1)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x+4; h(x)=2x; h(g(f(1))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+3; h(x)=8x; h(g(f(8))) =", "target": "160", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=7x; g(f(3)) =", "target": "-42", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-6; g(f(7)) =", "target": "29", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x+2; h(x)=x-1; h(g(f(9))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x+2; g(f(0)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-2; g(f(8)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x+9; g(f(2)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-4; h(x)=x+2; h(g(f(6))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x-1; h(x)=2x; h(g(f(0))) =", "target": "-16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x+4; h(x)=x+4; h(g(f(8))) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x+5; h(x)=x-4; h(g(f(1))) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=x+2; h(g(f(3))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x-4; g(f(6)) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x+7; g(f(4)) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=9x; h(x)=8x; h(g(f(2))) =", "target": "-360", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+9; g(f(0)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=8x; h(x)=9x; h(g(f(2))) =", "target": "216", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+2; g(f(9)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x-2; g(f(9)) =", "target": "34", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=2x; g(f(6)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=6x; h(x)=x+5; h(g(f(6))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x-6; g(f(1)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x+9; g(f(3)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+4; h(x)=x-5; h(g(f(2))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=9x; h(x)=x+9; h(g(f(4))) =", "target": "189", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+2; g(f(8)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=4x; g(f(5)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=8x; g(f(4)) =", "target": "160", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-1; g(f(0)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x+8; h(x)=7x; h(g(f(8))) =", "target": "147", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=3x; g(f(8)) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+7; g(f(2)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x+6; g(f(3)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-9; g(f(6)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+7; g(f(0)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-4; g(f(4)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-1; g(f(7)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-5; g(f(3)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-6; g(f(4)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=9x; g(f(6)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x-3; h(x)=5x; h(g(f(0))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-6; g(f(6)) =", "target": "36", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x-1; g(f(6)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=4x; g(f(5)) =", "target": "180", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=6x; h(x)=2x; h(g(f(4))) =", "target": "120", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-7; h(x)=5x; h(g(f(8))) =", "target": "245", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=7x; g(f(2)) =", "target": "63", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+5; h(x)=x-4; h(g(f(6))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x-4; h(x)=8x; h(g(f(2))) =", "target": "-80", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=6x; g(f(1)) =", "target": "-48", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+4; g(f(2)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-2; g(f(7)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=7x; h(x)=x-7; h(g(f(3))) =", "target": "77", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+7; g(f(3)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-1; g(f(8)) =", "target": "71", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x+8; g(f(8)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-9; h(x)=x-3; h(g(f(7))) =", "target": "-14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=5x; h(x)=8x; h(g(f(3))) =", "target": "-40", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=5x; h(x)=x+5; h(g(f(5))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+3; h(x)=x+7; h(g(f(2))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x-6; g(f(8)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x+7; h(x)=x-1; h(g(f(9))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-5; h(x)=x-7; h(g(f(8))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-7; g(f(7)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=7x; g(f(2)) =", "target": "-28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x+7; h(x)=1x; h(g(f(1))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x+1; h(x)=x-7; h(g(f(5))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x-7; g(f(4)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-1; h(x)=9x; h(g(f(0))) =", "target": "-27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=1x; h(x)=x+4; h(g(f(3))) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x+3; g(f(7)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x-5; g(f(5)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x+5; g(f(1)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-4; g(f(1)) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=2x; g(f(9)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-6; g(f(1)) =", "target": "-14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-2; h(x)=x-6; h(g(f(7))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=9x; g(f(4)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=5x; h(x)=x-4; h(g(f(1))) =", "target": "-34", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-7; h(x)=x-1; h(g(f(7))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x+6; h(x)=x-6; h(g(f(4))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=4x; h(x)=x+4; h(g(f(6))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=8x; h(x)=8x; h(g(f(7))) =", "target": "1792", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+7; g(f(3)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-9; h(x)=6x; h(g(f(6))) =", "target": "162", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x-5; h(x)=x-4; h(g(f(1))) =", "target": "-16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=9x; g(f(2)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-9; g(f(9)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-4; h(x)=x-3; h(g(f(4))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+5; g(f(0)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=3x; g(f(7)) =", "target": "105", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x-8; g(f(7)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-8; h(x)=x+2; h(g(f(6))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=5x; h(g(f(1))) =", "target": "25", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-4; g(f(8)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-7; h(x)=x-1; h(g(f(9))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x-2; g(f(2)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x+3; g(f(0)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-1; h(x)=x+5; h(g(f(4))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x-4; h(x)=x-2; h(g(f(8))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-3; g(f(1)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=5x; g(f(7)) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=7x; g(f(4)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=1x; h(x)=x-6; h(g(f(9))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+1; h(x)=5x; h(g(f(9))) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=8x; g(f(4)) =", "target": "96", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=8x; g(f(1)) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-6; h(x)=2x; h(g(f(2))) =", "target": "-22", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x-7; h(x)=1x; h(g(f(7))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x-2; g(f(6)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-7; g(f(0)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=8x; g(f(7)) =", "target": "336", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=3x; g(f(4)) =", "target": "27", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+1; h(x)=4x; h(g(f(2))) =", "target": "68", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=7x; h(x)=x+4; h(g(f(1))) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x-5; h(x)=5x; h(g(f(6))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-9; h(x)=x+7; h(g(f(3))) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-6; g(f(8)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=5x; h(x)=8x; h(g(f(2))) =", "target": "280", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x-6; h(x)=9x; h(g(f(6))) =", "target": "378", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=4x; h(x)=7x; h(g(f(3))) =", "target": "-28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=8x; h(x)=7x; h(g(f(6))) =", "target": "672", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x+9; g(f(9)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x+9; h(x)=x-1; h(g(f(2))) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x+8; h(x)=x-6; h(g(f(9))) =", "target": "29", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x-9; h(x)=x-6; h(g(f(7))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+5; g(f(3)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=2x; g(f(7)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+1; g(f(5)) =", "target": "26", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x-7; g(f(2)) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=3x; g(f(2)) =", "target": "42", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=4x; g(f(7)) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=5x; g(f(7)) =", "target": "75", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-5; h(x)=9x; h(g(f(2))) =", "target": "-27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=5x; g(f(6)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x+7; h(x)=x-2; h(g(f(3))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=5x; h(x)=5x; h(g(f(0))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=1x; h(x)=8x; h(g(f(4))) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x+4; g(f(9)) =", "target": "58", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=2x; h(x)=1x; h(g(f(4))) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=3x; h(x)=x+5; h(g(f(5))) =", "target": "38", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x+9; h(x)=x-9; h(g(f(8))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-5; h(x)=6x; h(g(f(1))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x+7; h(x)=6x; h(g(f(1))) =", "target": "66", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=2x; h(x)=x-6; h(g(f(4))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x+4; h(x)=x-1; h(g(f(9))) =", "target": "57", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=2x; h(x)=8x; h(g(f(4))) =", "target": "256", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x+1; h(x)=x-8; h(g(f(1))) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+7; g(f(7)) =", "target": "23", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-3; h(x)=x-2; h(g(f(7))) =", "target": "58", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=6x; h(x)=x+8; h(g(f(7))) =", "target": "44", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=6x; g(f(8)) =", "target": "36", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-4; h(x)=x+8; h(g(f(1))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+6; g(f(3)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x+9; g(f(3)) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+1; g(f(4)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x-3; g(f(1)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-4; g(f(9)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-1; h(x)=x+7; h(g(f(8))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x-8; g(f(5)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+1; g(f(8)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x+8; h(x)=x-7; h(g(f(1))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=x-3; h(g(f(1))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=6x; g(f(6)) =", "target": "-18", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=7x; h(x)=x+2; h(g(f(8))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+7; g(f(5)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=2x; h(x)=x-7; h(g(f(5))) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=8x; h(x)=x+2; h(g(f(1))) =", "target": "-14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=6x; g(f(2)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=6x; g(f(1)) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=1x; h(x)=x-5; h(g(f(5))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+3; g(f(7)) =", "target": "66", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=6x; g(f(1)) =", "target": "42", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x-9; h(x)=9x; h(g(f(0))) =", "target": "-81", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x-5; h(x)=x-6; h(g(f(0))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x+3; g(f(0)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(6)) =", "target": "61", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x-5; h(x)=6x; h(g(f(9))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x+1; g(f(1)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-8; h(x)=x-5; h(g(f(3))) =", "target": "-17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x+5; g(f(9)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+4; h(x)=x-1; h(g(f(0))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+5; g(f(4)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-7; h(x)=x+3; h(g(f(6))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=6x; g(f(1)) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-1; h(x)=x-2; h(g(f(5))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=7x; h(x)=x-2; h(g(f(6))) =", "target": "292", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=8x; g(f(5)) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x+7; g(f(9)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-5; h(x)=6x; h(g(f(3))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=2x; h(x)=9x; h(g(f(3))) =", "target": "90", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+2; h(x)=x+5; h(g(f(3))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=2x; g(f(2)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=6x; h(x)=6x; h(g(f(2))) =", "target": "-216", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x-5; h(x)=x-1; h(g(f(5))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x-1; g(f(0)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=2x; h(x)=9x; h(g(f(6))) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=1x; h(x)=x-4; h(g(f(5))) =", "target": "41", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x+8; h(x)=x+6; h(g(f(1))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=8x; g(f(7)) =", "target": "88", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x-7; g(f(6)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=6x; h(x)=x+6; h(g(f(1))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=3x; h(x)=x-2; h(g(f(9))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=7x; g(f(2)) =", "target": "-21", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-6; g(f(2)) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=6x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+6; h(x)=x-4; h(g(f(3))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x-2; g(f(8)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=3x; g(f(9)) =", "target": "162", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+3; h(x)=8x; h(g(f(0))) =", "target": "48", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-5; h(x)=8x; h(g(f(3))) =", "target": "-48", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+6; g(f(9)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x-9; h(x)=7x; h(g(f(2))) =", "target": "-84", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-1; g(f(7)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=9x; h(x)=x+5; h(g(f(1))) =", "target": "23", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=3x; g(f(6)) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-1; g(f(6)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-4; g(f(6)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x+6; g(f(1)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+5; h(x)=x-3; h(g(f(7))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+1; h(x)=x-4; h(g(f(2))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+5; h(x)=x+1; h(g(f(3))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=x-9; h(g(f(0))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-7; g(f(0)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x+2; h(x)=6x; h(g(f(1))) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+7; g(f(5)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-2; h(x)=x-4; h(g(f(1))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x-9; h(x)=x-3; h(g(f(7))) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x+2; h(x)=8x; h(g(f(0))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x+1; h(x)=x-5; h(g(f(8))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x-1; h(x)=4x; h(g(f(4))) =", "target": "124", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=x-2; h(x)=x-7; h(g(f(6))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x+8; h(x)=8x; h(g(f(5))) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x+7; h(x)=3x; h(g(f(8))) =", "target": "66", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+6; h(x)=5x; h(g(f(4))) =", "target": "40", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+8; h(x)=x-8; h(g(f(0))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-1; h(x)=x+7; h(g(f(5))) =", "target": "41", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=8x; g(f(0)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=6x; g(f(5)) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=8x; h(g(f(5))) =", "target": "120", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=3x; h(x)=6x; h(g(f(6))) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x+2; h(x)=x+3; h(g(f(7))) =", "target": "40", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x-5; h(x)=8x; h(g(f(3))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=x+2; h(g(f(7))) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+6; g(f(5)) =", "target": "46", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-5; g(f(2)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+2; g(f(3)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x+6; g(f(8)) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+2; h(x)=x+5; h(g(f(6))) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-2; h(x)=x+6; h(g(f(1))) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-3; h(x)=3x; h(g(f(2))) =", "target": "-30", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+9; h(x)=x+5; h(g(f(2))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-9; g(f(4)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=9x; g(f(4)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=9x; g(f(1)) =", "target": "45", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x+6; g(f(9)) =", "target": "33", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x+5; g(f(3)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-9; h(x)=x-5; h(g(f(7))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-8; g(f(1)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-8; g(f(7)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x-6; g(f(5)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=9x; h(x)=x+6; h(g(f(3))) =", "target": "87", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-4; h(x)=x+2; h(g(f(0))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x+3; h(x)=x-6; h(g(f(3))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-8; g(f(4)) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=x-4; h(g(f(3))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x-8; h(x)=8x; h(g(f(4))) =", "target": "-24", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x+5; g(f(5)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x-1; h(x)=9x; h(g(f(3))) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x+7; h(x)=8x; h(g(f(8))) =", "target": "376", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+2; h(x)=x-6; h(g(f(5))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=9x; h(x)=x-9; h(g(f(0))) =", "target": "27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=6x; g(f(7)) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x+6; h(x)=6x; h(g(f(2))) =", "target": "102", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=6x; h(x)=9x; h(g(f(8))) =", "target": "2160", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x-1; h(x)=x-6; h(g(f(1))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=1x; h(x)=8x; h(g(f(4))) =", "target": "160", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=8x; g(f(2)) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x+2; h(x)=x+1; h(g(f(7))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x-4; h(x)=x-9; h(g(f(9))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=3x; h(x)=4x; h(g(f(8))) =", "target": "96", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=7x; h(x)=x-3; h(g(f(7))) =", "target": "389", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=5x; h(x)=8x; h(g(f(3))) =", "target": "720", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-4; g(f(4)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=8x; h(x)=x-8; h(g(f(5))) =", "target": "152", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=9x; h(x)=x-7; h(g(f(5))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-2; g(f(5)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=8x; h(x)=x+4; h(g(f(8))) =", "target": "324", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x+2; h(x)=4x; h(g(f(3))) =", "target": "68", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+4; g(f(0)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=8x; g(f(1)) =", "target": "-40", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x+7; g(f(7)) =", "target": "23", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x-6; h(x)=x-1; h(g(f(1))) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+7; g(f(2)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x+5; g(f(0)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-5; g(f(7)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x-5; h(x)=x+2; h(g(f(5))) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=5x; g(f(2)) =", "target": "80", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-4; g(f(2)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-2; h(x)=x-2; h(g(f(2))) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x+1; g(f(4)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-6; h(x)=x-1; h(g(f(4))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x+2; h(x)=x-5; h(g(f(2))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=5x; h(x)=2x; h(g(f(4))) =", "target": "360", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x+3; h(x)=x-3; h(g(f(7))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-9; h(x)=4x; h(g(f(3))) =", "target": "-60", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=6x; g(f(1)) =", "target": "48", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=4x; g(f(9)) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=8x; g(f(1)) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+9; g(f(7)) =", "target": "65", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=7x; g(f(7)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=5x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=4x; h(x)=2x; h(g(f(0))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=1x; h(x)=x+8; h(g(f(0))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+7; h(x)=x-7; h(g(f(7))) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=9x; h(x)=x+6; h(g(f(1))) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=3x; g(f(3)) =", "target": "63", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x-9; g(f(6)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-6; h(x)=x+5; h(g(f(3))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=1x; g(f(3)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=1x; g(f(7)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-8; g(f(3)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=5x; g(f(3)) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x+5; h(x)=x+9; h(g(f(3))) =", "target": "32", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x+9; h(x)=3x; h(g(f(6))) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=7x; h(x)=6x; h(g(f(6))) =", "target": "504", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-3; h(x)=8x; h(g(f(3))) =", "target": "40", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x-1; g(f(8)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=3x; h(x)=x-4; h(g(f(4))) =", "target": "-19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-6; g(f(1)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x-1; g(f(1)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+8; g(f(3)) =", "target": "35", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x+4; h(x)=2x; h(g(f(7))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x-4; g(f(8)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-9; h(x)=6x; h(g(f(4))) =", "target": "-72", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-8; h(x)=x+8; h(g(f(5))) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x-1; g(f(9)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x+5; g(f(8)) =", "target": "29", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+6; h(x)=x+7; h(g(f(9))) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=6x; g(f(4)) =", "target": "-30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x-3; h(x)=6x; h(g(f(2))) =", "target": "78", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x-3; g(f(8)) =", "target": "69", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+1; g(f(0)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x+3; h(x)=x+4; h(g(f(8))) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=8x; h(x)=8x; h(g(f(0))) =", "target": "-64", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x-1; g(f(0)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=7x; h(g(f(2))) =", "target": "133", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+4; g(f(3)) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x-2; h(x)=x-7; h(g(f(7))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x-2; g(f(0)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-9; g(f(7)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=3x; g(f(1)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=2x; h(x)=1x; h(g(f(3))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x-1; g(f(1)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+6; h(x)=x+4; h(g(f(9))) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+5; g(f(2)) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=9x; g(f(5)) =", "target": "315", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=2x; h(x)=6x; h(g(f(0))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+6; g(f(9)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=5x; h(x)=x-8; h(g(f(3))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-3; h(x)=7x; h(g(f(1))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+5; h(x)=x+7; h(g(f(2))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x+2; h(x)=x+5; h(g(f(7))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+2; h(x)=x+7; h(g(f(7))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x+6; h(x)=2x; h(g(f(9))) =", "target": "32", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-7; h(x)=x-2; h(g(f(8))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(2)) =", "target": "25", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x-8; g(f(2)) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-7; g(f(4)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x-4; h(x)=8x; h(g(f(9))) =", "target": "88", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+5; g(f(0)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-8; h(x)=x-7; h(g(f(9))) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=4x; g(f(7)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-5; h(x)=8x; h(g(f(9))) =", "target": "88", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x-7; g(f(5)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=9x; g(f(2)) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=4x; g(f(7)) =", "target": "224", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-8; h(x)=x+5; h(g(f(3))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=7x; h(x)=x-2; h(g(f(7))) =", "target": "145", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=9x; h(x)=7x; h(g(f(8))) =", "target": "3528", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=2x; g(f(1)) =", "target": "-16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x+1; g(f(9)) =", "target": "55", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x+1; h(x)=x+5; h(g(f(3))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x-8; g(f(9)) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x-2; g(f(4)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=3x; h(x)=x-5; h(g(f(5))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-6; h(x)=x-2; h(g(f(7))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-1; h(x)=2x; h(g(f(0))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=3x; h(x)=4x; h(g(f(8))) =", "target": "192", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-9; g(f(6)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=3x; h(x)=x+7; h(g(f(6))) =", "target": "46", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x-7; g(f(6)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x+5; g(f(1)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x-6; g(f(3)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=8x; h(x)=6x; h(g(f(9))) =", "target": "672", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=2x; h(x)=x-6; h(g(f(7))) =", "target": "92", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=2x; g(f(2)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-2; h(x)=x+6; h(g(f(2))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=7x; h(x)=x-3; h(g(f(7))) =", "target": "25", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-5; g(f(2)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=1x; g(f(5)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+7; g(f(8)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-8; h(x)=x-3; h(g(f(1))) =", "target": "-18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+5; g(f(3)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=8x; h(x)=9x; h(g(f(1))) =", "target": "648", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-9; g(f(0)) =", "target": "-18", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x-2; h(x)=4x; h(g(f(4))) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x-2; g(f(7)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=6x; g(f(9)) =", "target": "78", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+4; h(x)=x+6; h(g(f(8))) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+6; h(x)=5x; h(g(f(4))) =", "target": "210", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+7; h(x)=x+5; h(g(f(2))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=6x; g(f(3)) =", "target": "36", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=5x; h(x)=7x; h(g(f(6))) =", "target": "105", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=5x; h(g(f(5))) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=1x; h(x)=2x; h(g(f(7))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-4; h(x)=x-4; h(g(f(7))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x-9; h(x)=3x; h(g(f(9))) =", "target": "-15", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x+2; h(x)=8x; h(g(f(0))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x-1; g(f(6)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=5x; g(f(2)) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x-2; h(x)=x-3; h(g(f(0))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=4x; h(x)=x-2; h(g(f(1))) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x+3; g(f(9)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+1; g(f(5)) =", "target": "41", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x-2; g(f(3)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x+6; h(x)=x-5; h(g(f(2))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x+9; h(x)=1x; h(g(f(9))) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=4x; g(f(2)) =", "target": "-16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=x+3; h(g(f(1))) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x-3; h(x)=x+5; h(g(f(1))) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=1x; g(f(4)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(4)) =", "target": "43", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-2; g(f(3)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=1x; h(x)=x-6; h(g(f(2))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x-9; h(x)=3x; h(g(f(7))) =", "target": "120", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+5; g(f(3)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=5x; g(f(8)) =", "target": "75", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x+9; h(x)=3x; h(g(f(4))) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=4x; g(f(2)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-7; h(x)=4x; h(g(f(0))) =", "target": "-36", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x+8; g(f(9)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+1; g(f(2)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-9; g(f(8)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+5; h(x)=2x; h(g(f(0))) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=2x; h(x)=x-2; h(g(f(7))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x+8; h(x)=3x; h(g(f(5))) =", "target": "114", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=2x; g(f(3)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+1; g(f(7)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+1; h(x)=7x; h(g(f(3))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=6x; h(x)=x-2; h(g(f(9))) =", "target": "94", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=1x; h(x)=x+4; h(g(f(8))) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-5; g(f(4)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x-1; h(x)=x-4; h(g(f(4))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x-6; h(x)=8x; h(g(f(3))) =", "target": "48", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x-1; g(f(3)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-1; h(x)=7x; h(g(f(4))) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+7; g(f(7)) =", "target": "23", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x+1; g(f(3)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-2; h(x)=2x; h(g(f(8))) =", "target": "92", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+1; g(f(6)) =", "target": "43", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x-6; g(f(6)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-4; h(x)=x+4; h(g(f(2))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+8; g(f(7)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=6x; h(x)=x+8; h(g(f(4))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+3; h(x)=5x; h(g(f(9))) =", "target": "50", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=x+2; g(f(3)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+5; h(x)=x-3; h(g(f(0))) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=9x; h(x)=x+2; h(g(f(7))) =", "target": "-16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+1; g(f(3)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-2; g(f(9)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+4; h(x)=8x; h(g(f(2))) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+8; g(f(0)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=7x; g(f(7)) =", "target": "343", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x+6; g(f(3)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x-3; g(f(0)) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-7; g(f(8)) =", "target": "33", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x-7; h(x)=x+7; h(g(f(3))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(5)) =", "target": "52", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x-9; h(x)=x-7; h(g(f(4))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=4x; g(f(0)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=6x; h(x)=4x; h(g(f(2))) =", "target": "240", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x-9; g(f(0)) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=x-3; g(f(2)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=6x; g(f(9)) =", "target": "324", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=3x; g(f(9)) =", "target": "162", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-3; g(f(7)) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+4; g(f(0)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=4x; h(x)=x+6; h(g(f(2))) =", "target": "38", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x+3; h(x)=x+9; h(g(f(5))) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=2x; g(f(5)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+7; h(x)=8x; h(g(f(5))) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=6x; g(f(3)) =", "target": "162", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=5x; g(f(2)) =", "target": "-15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=7x; g(f(9)) =", "target": "63", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=4x; g(f(9)) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x-2; g(f(3)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=2x; h(x)=6x; h(g(f(7))) =", "target": "48", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+2; g(f(5)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+7; h(x)=x-7; h(g(f(2))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x-9; h(x)=x-2; h(g(f(7))) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x+1; g(f(4)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x+2; g(f(5)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=2x; g(f(8)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=1x; g(f(6)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=x+1; g(f(1)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-9; h(x)=9x; h(g(f(4))) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+1; h(x)=x-9; h(g(f(7))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=x+7; g(f(1)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+2; h(x)=x+4; h(g(f(2))) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x+5; h(x)=x-8; h(g(f(7))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-3; h(x)=x-7; h(g(f(5))) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-8; g(f(7)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=1x; h(x)=x+2; h(g(f(1))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=4x; h(x)=1x; h(g(f(6))) =", "target": "168", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=4x; h(x)=x-5; h(g(f(1))) =", "target": "27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=9x; h(x)=3x; h(g(f(1))) =", "target": "27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x+4; h(x)=x+1; h(g(f(6))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+3; g(f(9)) =", "target": "66", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x+7; h(x)=7x; h(g(f(8))) =", "target": "91", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-1; h(x)=9x; h(g(f(6))) =", "target": "-36", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+2; g(f(1)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-7; g(f(4)) =", "target": "-12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=8x; h(x)=x+3; h(g(f(4))) =", "target": "259", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x+7; h(x)=x-4; h(g(f(0))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x+6; h(x)=x-5; h(g(f(4))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+3; h(x)=x-8; h(g(f(5))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=2x; h(x)=x+8; h(g(f(3))) =", "target": "50", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=6x; h(x)=x+9; h(g(f(2))) =", "target": "105", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-3; g(f(8)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x+1; g(f(3)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x-4; g(f(4)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-2; h(x)=1x; h(g(f(3))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+8; h(x)=9x; h(g(f(5))) =", "target": "45", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=2x; h(x)=x-1; h(g(f(6))) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x+4; g(f(3)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=1x; h(x)=1x; h(g(f(7))) =", "target": "49", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=1x; g(f(3)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=5x; h(x)=x-7; h(g(f(5))) =", "target": "118", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-5; h(x)=9x; h(g(f(9))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=6x; h(g(f(8))) =", "target": "150", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-2; h(x)=x-5; h(g(f(5))) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x+3; h(x)=4x; h(g(f(0))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=3x; h(x)=1x; h(g(f(7))) =", "target": "126", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x-7; h(x)=1x; h(g(f(9))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=9x; g(f(7)) =", "target": "27", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=x+5; h(g(f(1))) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=9x; h(x)=x+6; h(g(f(1))) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=5x; g(f(6)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=5x; h(x)=x-2; h(g(f(7))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x-4; g(f(8)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=5x; g(f(6)) =", "target": "210", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+6; g(f(6)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=3x; h(x)=x+8; h(g(f(5))) =", "target": "41", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x+8; g(f(4)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-2; g(f(2)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=x-7; h(x)=x-7; h(g(f(0))) =", "target": "-14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=6x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x+1; h(x)=4x; h(g(f(3))) =", "target": "52", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+7; h(x)=5x; h(g(f(2))) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-8; g(f(8)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x-8; h(x)=x-4; h(g(f(2))) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x+3; h(x)=x+1; h(g(f(9))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=1x; g(f(6)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=1x; h(x)=2x; h(g(f(0))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x-8; g(f(6)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-3; g(f(3)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=2x; g(f(8)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x-2; h(x)=2x; h(g(f(4))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x+4; g(f(4)) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-3; g(f(0)) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=x-4; h(x)=x+1; h(g(f(1))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+2; g(f(8)) =", "target": "66", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-4; g(f(7)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x+2; h(x)=x+1; h(g(f(4))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x-2; h(x)=x+1; h(g(f(0))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-6; g(f(7)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-6; h(x)=x+2; h(g(f(6))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x-8; h(x)=x-3; h(g(f(1))) =", "target": "-15", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+2; g(f(6)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+7; h(x)=x-1; h(g(f(2))) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=x+2; h(g(f(4))) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=4x; h(x)=6x; h(g(f(8))) =", "target": "408", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x-6; g(f(6)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+3; g(f(8)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+8; h(x)=x-4; h(g(f(5))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+9; h(x)=7x; h(g(f(6))) =", "target": "168", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x-8; g(f(1)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x+8; h(x)=1x; h(g(f(1))) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=9x; h(x)=x+2; h(g(f(9))) =", "target": "74", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+8; h(x)=x-6; h(g(f(0))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=8x; g(f(5)) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=4x; h(x)=x+6; h(g(f(5))) =", "target": "34", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x-2; h(x)=x+3; h(g(f(7))) =", "target": "64", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+5; g(f(9)) =", "target": "68", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x-4; g(f(7)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x+7; g(f(0)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=9x; g(f(2)) =", "target": "-54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=1x; h(x)=7x; h(g(f(9))) =", "target": "126", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=3x; h(x)=3x; h(g(f(1))) =", "target": "27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=7x; h(x)=x-4; h(g(f(4))) =", "target": "164", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x-3; h(x)=x+7; h(g(f(9))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x-9; h(x)=4x; h(g(f(3))) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=6x; g(f(2)) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=6x; g(f(1)) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=7x; h(x)=9x; h(g(f(4))) =", "target": "2016", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+1; h(x)=x-3; h(g(f(0))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+5; g(f(4)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x+9; g(f(0)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=9x; h(x)=x+9; h(g(f(6))) =", "target": "45", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=1x; g(f(6)) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=1x; h(x)=x+5; h(g(f(3))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=9x; h(x)=4x; h(g(f(3))) =", "target": "324", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=2x; h(x)=x+3; h(g(f(8))) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-5; g(f(8)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=5x; h(x)=x+6; h(g(f(7))) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=x-1; g(f(9)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-2; h(x)=6x; h(g(f(8))) =", "target": "-18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+9; g(f(2)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-2; h(x)=x-4; h(g(f(3))) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x-4; h(x)=9x; h(g(f(7))) =", "target": "-27", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=x-4; g(f(9)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x-2; g(f(6)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=x-9; h(g(f(8))) =", "target": "40", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-4; h(x)=x-9; h(g(f(1))) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=1x; g(f(1)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=7x; g(f(1)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=2x; g(f(2)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x+2; g(f(1)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=2x; g(f(9)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-8; g(f(6)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x-2; h(x)=1x; h(g(f(9))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=2x; g(f(5)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=2x; g(f(4)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=1x; h(x)=x-3; h(g(f(8))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=5x; g(f(2)) =", "target": "45", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x+9; h(x)=3x; h(g(f(1))) =", "target": "45", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=9x; g(f(1)) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+7; h(x)=9x; h(g(f(2))) =", "target": "135", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=5x; g(f(3)) =", "target": "35", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=8x; g(f(8)) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-2; g(f(3)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x+4; h(x)=x+5; h(g(f(9))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=x-8; g(f(5)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=6x; h(x)=x-7; h(g(f(2))) =", "target": "29", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+7; g(f(4)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x-8; h(x)=x-6; h(g(f(4))) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+2; h(x)=x-3; h(g(f(8))) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=2x; g(f(0)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=4x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-3; h(x)=x-7; h(g(f(3))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=9x; h(x)=x+7; h(g(f(5))) =", "target": "124", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=3x; g(f(8)) =", "target": "96", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+3; g(f(7)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-4; h(x)=x+5; h(g(f(5))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=6x; g(f(6)) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x+6; h(x)=x+9; h(g(f(4))) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=3x; h(x)=x-7; h(g(f(5))) =", "target": "128", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x-4; g(f(8)) =", "target": "36", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x-8; h(x)=1x; h(g(f(8))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+2; g(f(8)) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+3; h(x)=x-2; h(g(f(3))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-8; h(x)=x-4; h(g(f(9))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+4; g(f(0)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x+9; g(f(0)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-3; g(f(8)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=5x; h(x)=x+4; h(g(f(7))) =", "target": "39", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+7; h(x)=3x; h(g(f(9))) =", "target": "39", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x-3; g(f(5)) =", "target": "42", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x+7; h(x)=x-3; h(g(f(1))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=7x; g(f(2)) =", "target": "77", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=1x; g(f(8)) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=3x; g(f(9)) =", "target": "51", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=7x; g(f(5)) =", "target": "245", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-4; g(f(7)) =", "target": "59", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-3; h(x)=x-8; h(g(f(3))) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-5; g(f(3)) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=9x; g(f(1)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=6x; g(f(6)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-5; h(x)=x-9; h(g(f(6))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=7x; h(x)=x+7; h(g(f(8))) =", "target": "287", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=9x; h(x)=x-5; h(g(f(4))) =", "target": "85", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=3x; h(x)=2x; h(g(f(3))) =", "target": "126", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x+4; h(x)=7x; h(g(f(5))) =", "target": "133", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=1x; g(f(1)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x+2; g(f(4)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=1x; g(f(6)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-1; h(x)=x+8; h(g(f(7))) =", "target": "70", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-4; g(f(0)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=1x; g(f(5)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+2; g(f(4)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-4; h(x)=1x; h(g(f(1))) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=9x; g(f(9)) =", "target": "405", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x+4; h(x)=x-7; h(g(f(9))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x-9; g(f(1)) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-2; g(f(8)) =", "target": "38", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=8x; h(x)=x-8; h(g(f(3))) =", "target": "112", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=1x; h(x)=x-2; h(g(f(4))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=4x; g(f(5)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=1x; h(x)=5x; h(g(f(3))) =", "target": "-30", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=6x; h(x)=x+9; h(g(f(2))) =", "target": "63", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x+5; h(x)=x+4; h(g(f(7))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x-4; g(f(3)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+2; g(f(1)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=1x; g(f(8)) =", "target": "64", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=6x; g(f(7)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=5x; h(x)=x-4; h(g(f(9))) =", "target": "26", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-8; g(f(8)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-3; g(f(7)) =", "target": "39", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-6; g(f(0)) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x-2; g(f(5)) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x+9; h(x)=x-4; h(g(f(4))) =", "target": "25", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x-3; h(x)=x-7; h(g(f(3))) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x-7; h(x)=x-8; h(g(f(2))) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x+5; g(f(3)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x+3; h(x)=x-1; h(g(f(2))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=9x; h(x)=6x; h(g(f(7))) =", "target": "216", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=1x; h(x)=x-2; h(g(f(2))) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x-2; g(f(7)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x-9; h(x)=5x; h(g(f(5))) =", "target": "-50", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-4; g(f(9)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x-9; g(f(7)) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=5x; h(x)=x-3; h(g(f(2))) =", "target": "42", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x+2; h(x)=x+6; h(g(f(3))) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=5x; h(x)=7x; h(g(f(4))) =", "target": "-35", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-7; h(x)=x+3; h(g(f(0))) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=5x; g(f(1)) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x+2; g(f(1)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+7; h(x)=2x; h(g(f(1))) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x+7; h(x)=x-4; h(g(f(3))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+9; h(x)=x+1; h(g(f(0))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x-9; h(x)=x-9; h(g(f(7))) =", "target": "-19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+8; g(f(9)) =", "target": "89", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-6; h(x)=x-9; h(g(f(3))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x-7; g(f(4)) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x+9; g(f(2)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=1x; h(x)=8x; h(g(f(7))) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=x-4; h(x)=x+9; h(g(f(5))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-7; g(f(3)) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=x-4; g(f(4)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=5x; g(f(4)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x+3; h(x)=x+5; h(g(f(1))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x-8; h(x)=x+6; h(g(f(0))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+3; g(f(1)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=8x; h(x)=1x; h(g(f(3))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x-4; g(f(5)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-8; h(x)=1x; h(g(f(5))) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x-7; g(f(1)) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-7; h(x)=x+2; h(g(f(3))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=1x; h(x)=x+8; h(g(f(1))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=5x; g(f(5)) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=9x; g(f(8)) =", "target": "72", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=5x; g(f(3)) =", "target": "-25", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x+4; h(x)=7x; h(g(f(5))) =", "target": "91", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=2x; g(f(6)) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=8x; g(f(9)) =", "target": "80", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x+3; g(f(7)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=1x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=9x; h(x)=x+3; h(g(f(7))) =", "target": "192", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=6x; g(f(7)) =", "target": "-12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-3; g(f(4)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=5x; g(f(8)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=6x; h(x)=x-8; h(g(f(4))) =", "target": "34", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+8; g(f(4)) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-1; h(x)=9x; h(g(f(6))) =", "target": "315", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=4x; g(f(5)) =", "target": "44", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-4; g(f(8)) =", "target": "68", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=5x; h(x)=x-7; h(g(f(5))) =", "target": "68", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=2x; g(f(0)) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+2; g(f(7)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=7x; g(f(7)) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+2; h(x)=x+4; h(g(f(7))) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x-9; g(f(6)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=5x; h(x)=1x; h(g(f(1))) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=2x; h(x)=x+4; h(g(f(8))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=4x; h(x)=3x; h(g(f(8))) =", "target": "144", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=6x; h(x)=8x; h(g(f(6))) =", "target": "576", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+3; g(x)=7x; g(f(8)) =", "target": "77", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=8x; h(x)=x-6; h(g(f(8))) =", "target": "186", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=7x; h(x)=6x; h(g(f(9))) =", "target": "84", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(8)) =", "target": "79", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-7; h(x)=x+1; h(g(f(4))) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-1; g(f(4)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x+5; g(f(8)) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-6; g(f(2)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=4x; g(f(3)) =", "target": "-12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=7x; h(x)=4x; h(g(f(1))) =", "target": "-28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x-2; h(x)=5x; h(g(f(0))) =", "target": "-25", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x-6; h(x)=x-7; h(g(f(1))) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=7x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-9; h(x)=3x; h(g(f(5))) =", "target": "-12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=7x; g(f(7)) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-7; g(f(2)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-1; g(f(8)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-9; h(x)=x-3; h(g(f(2))) =", "target": "-12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x-7; h(x)=4x; h(g(f(8))) =", "target": "100", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x-7; g(f(5)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-6; g(f(5)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=1x; g(f(4)) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=3x; g(f(7)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=6x; g(f(2)) =", "target": "36", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+3; g(f(4)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x-8; g(f(7)) =", "target": "-3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=9x; g(f(3)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-9; g(f(7)) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-9; g(f(0)) =", "target": "-9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-4; h(x)=5x; h(g(f(0))) =", "target": "-15", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+7; h(x)=5x; h(g(f(5))) =", "target": "60", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=7x; g(f(3)) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-8; h(x)=9x; h(g(f(1))) =", "target": "-54", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-9; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x-6; g(f(7)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x+6; h(x)=6x; h(g(f(5))) =", "target": "126", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-1; h(x)=5x; h(g(f(6))) =", "target": "70", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x+3; g(f(5)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=x+7; h(x)=4x; h(g(f(6))) =", "target": "100", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=3x; g(x)=x-5; g(f(9)) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+4; h(x)=3x; h(g(f(9))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=9x; g(f(2)) =", "target": "63", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-2; h(x)=9x; h(g(f(1))) =", "target": "18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=1x; g(f(5)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x-5; h(x)=x+4; h(g(f(1))) =", "target": "-5", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=5x; g(f(9)) =", "target": "50", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x+1; g(f(5)) =", "target": "21", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+9; g(f(9)) =", "target": "81", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x+7; h(x)=x-8; h(g(f(2))) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x+7; g(f(0)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=4x; h(x)=x+2; h(g(f(2))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=6x; h(x)=x-4; h(g(f(6))) =", "target": "284", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+7; g(x)=6x; h(x)=x-9; h(g(f(8))) =", "target": "81", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x-8; g(f(0)) =", "target": "-8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x-1; g(f(8)) =", "target": "71", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+5; h(x)=x-7; h(g(f(4))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x-5; h(x)=1x; h(g(f(8))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+9; g(f(1)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+7; g(f(6)) =", "target": "61", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-1; g(x)=x+8; h(x)=4x; h(g(f(7))) =", "target": "56", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=3x; g(f(1)) =", "target": "-15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=6x; g(f(1)) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=3x; h(x)=x-9; h(g(f(6))) =", "target": "153", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=3x; g(f(2)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x-5; g(f(4)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+3; h(x)=x+1; h(g(f(9))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x-8; h(x)=1x; h(g(f(9))) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=8x; h(x)=x-7; h(g(f(7))) =", "target": "81", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+9; g(f(4)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x+1; g(f(5)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=5x; g(f(5)) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x-3; g(f(2)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+8; h(x)=6x; h(g(f(0))) =", "target": "48", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-6; g(x)=x-7; g(f(1)) =", "target": "-12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x-8; h(x)=x+2; h(g(f(4))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=4x; h(x)=4x; h(g(f(9))) =", "target": "1008", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x+8; g(f(9)) =", "target": "26", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=x-9; h(x)=6x; h(g(f(2))) =", "target": "-78", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x-3; h(x)=4x; h(g(f(4))) =", "target": "116", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+8; g(f(1)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=x-1; g(f(5)) =", "target": "34", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x+4; h(x)=5x; h(g(f(4))) =", "target": "100", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=9x; g(f(5)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=x-7; g(f(9)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-6; g(f(7)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-3; h(x)=8x; h(g(f(8))) =", "target": "64", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=1x; h(x)=5x; h(g(f(9))) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+4; h(x)=6x; h(g(f(5))) =", "target": "294", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+6; g(f(6)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=7x; g(x)=x+2; g(f(4)) =", "target": "30", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-7; h(x)=x+8; h(g(f(3))) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x+9; h(x)=x-3; h(g(f(1))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+4; g(x)=x+8; h(x)=1x; h(g(f(7))) =", "target": "19", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+6; g(x)=x-9; g(f(4)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=3x; h(x)=x+1; h(g(f(7))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=9x; g(x)=x+1; h(x)=x-1; h(g(f(9))) =", "target": "81", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+2; g(f(8)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=4x; h(x)=x-4; h(g(f(3))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-8; h(x)=2x; h(g(f(4))) =", "target": "-26", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+1; g(f(9)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x-9; g(f(5)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=4x; h(x)=x+2; h(g(f(4))) =", "target": "38", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+3; h(x)=x+8; h(g(f(0))) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-1; g(x)=x+7; g(f(6)) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=6x; g(f(4)) =", "target": "192", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x+8; h(x)=3x; h(g(f(1))) =", "target": "54", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x-8; h(x)=x-4; h(g(f(3))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x-7; g(f(2)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-8; g(x)=x-1; h(x)=x+8; h(g(f(1))) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+5; h(x)=x-3; h(g(f(8))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x-9; g(f(1)) =", "target": "-10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x-7; h(x)=x+4; h(g(f(8))) =", "target": "61", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x+6; g(f(3)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-6; g(x)=4x; h(x)=x+2; h(g(f(9))) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+8; g(x)=x-9; h(x)=x+8; h(g(f(2))) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=2x; h(x)=7x; h(g(f(5))) =", "target": "42", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x+4; h(x)=x+1; h(g(f(2))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x-7; g(f(9)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=6x; h(x)=x-5; h(g(f(6))) =", "target": "55", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=9x; h(x)=x-3; h(g(f(4))) =", "target": "42", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-9; g(x)=x+1; g(f(8)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=x+4; h(x)=x-7; h(g(f(5))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-7; g(x)=x-9; h(x)=x+3; h(g(f(7))) =", "target": "-6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+9; g(x)=x-6; g(f(6)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-3; g(x)=x+1; g(f(1)) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+8; g(x)=7x; g(f(2)) =", "target": "70", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x-7; g(f(9)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x-9; g(f(7)) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x+7; h(x)=1x; h(g(f(9))) =", "target": "12", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=9x; h(x)=x-7; h(g(f(8))) =", "target": "281", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=8x; h(x)=6x; h(g(f(1))) =", "target": "96", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+9; h(x)=x-8; h(g(f(8))) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=x+8; g(f(1)) =", "target": "10", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-9; h(x)=x+8; h(g(f(7))) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=x-6; h(x)=x-5; h(g(f(2))) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=5x; g(f(0)) =", "target": "0", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=3x; g(x)=1x; h(x)=5x; h(g(f(9))) =", "target": "135", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=x+3; g(f(8)) =", "target": "3", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x+5; g(f(4)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=3x; h(x)=3x; h(g(f(7))) =", "target": "81", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=4x; h(x)=x-3; h(g(f(8))) =", "target": "49", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+3; g(f(7)) =", "target": "8", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=8x; h(x)=3x; h(g(f(3))) =", "target": "-24", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+5; g(x)=x+1; h(x)=x+8; h(g(f(6))) =", "target": "20", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-8; g(x)=9x; h(x)=x+7; h(g(f(6))) =", "target": "-11", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=7x; h(x)=x+5; h(g(f(7))) =", "target": "33", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=6x; g(x)=1x; h(x)=x+9; h(g(f(5))) =", "target": "39", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x-5; h(x)=x-2; h(g(f(4))) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=4x; h(x)=6x; h(g(f(2))) =", "target": "-48", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=1x; h(x)=x+1; h(g(f(6))) =", "target": "7", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=2x; g(x)=8x; g(f(5)) =", "target": "80", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-4; g(f(0)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x+4; g(f(9)) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x+3; g(f(6)) =", "target": "15", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+3; g(x)=x-5; g(f(7)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x-7; g(f(5)) =", "target": "33", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=x-1; h(x)=x-7; h(g(f(5))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-5; g(x)=x+8; g(f(1)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x+8; h(x)=x+3; h(g(f(8))) =", "target": "26", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x-5; h(x)=x+1; h(g(f(1))) =", "target": "-1", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=5x; g(x)=x-1; g(f(7)) =", "target": "34", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x+7; g(f(4)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-1; g(f(8)) =", "target": "47", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x-2; h(x)=4x; h(g(f(0))) =", "target": "-36", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=8x; g(x)=x+9; h(x)=x-6; h(g(f(4))) =", "target": "35", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x-9; h(x)=x-2; h(g(f(7))) =", "target": "-2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=4x; g(x)=x+9; h(x)=x+7; h(g(f(3))) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=7x; g(x)=x+6; h(x)=x-2; h(g(f(7))) =", "target": "53", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+1; g(x)=x+1; g(f(9)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-7; g(x)=x+9; g(f(4)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=8x; g(x)=x+1; h(x)=x-1; h(g(f(5))) =", "target": "40", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+9; g(f(7)) =", "target": "14", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=4x; g(x)=x+1; g(f(2)) =", "target": "9", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=x-1; h(x)=x+3; h(g(f(0))) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=1x; g(x)=x-2; g(f(7)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=2x; g(x)=x+2; g(f(7)) =", "target": "16", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+4; g(x)=x-6; g(f(6)) =", "target": "4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+9; g(x)=x+6; h(x)=x+1; h(g(f(9))) =", "target": "25", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-2; g(x)=x+5; g(f(2)) =", "target": "5", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+6; g(x)=3x; h(x)=x-4; h(g(f(9))) =", "target": "41", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=7x; g(f(2)) =", "target": "28", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-2; g(x)=x+1; g(f(2)) =", "target": "1", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-8; g(f(2)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+5; g(x)=8x; g(f(6)) =", "target": "88", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=3x; g(f(7)) =", "target": "24", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=5x; g(x)=x-7; g(f(0)) =", "target": "-7", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+2; g(x)=2x; g(f(9)) =", "target": "22", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=9x; g(x)=x+8; h(x)=4x; h(g(f(4))) =", "target": "176", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x+2; g(x)=x+8; g(f(7)) =", "target": "17", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+1; g(x)=x+6; g(f(4)) =", "target": "11", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-5; g(x)=x-8; g(f(0)) =", "target": "-13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=1x; g(x)=3x; g(f(2)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-9; g(x)=x+2; g(f(3)) =", "target": "-4", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=6x; g(x)=x-4; h(x)=6x; h(g(f(3))) =", "target": "84", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-4; g(x)=x+4; g(f(6)) =", "target": "6", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x-4; g(x)=x+8; g(f(9)) =", "target": "13", "task": "func", "split": "val", "meta": {"depth": 2}}
+{"prompt": "f(x)=x+7; g(x)=x+4; h(x)=8x; h(g(f(2))) =", "target": "104", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x-4; h(x)=6x; h(g(f(4))) =", "target": "-18", "task": "func", "split": "val", "meta": {"depth": 3}}
+{"prompt": "f(x)=x-3; g(x)=x+1; g(f(4)) =", "target": "2", "task": "func", "split": "val", "meta": {"depth": 2}}
