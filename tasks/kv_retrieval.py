@@ -88,4 +88,13 @@ class KVRetrievalTask(Task):
         seq[-1] = keys[qi]
         answer = np.array([values[qi]], dtype=np.int64)
 
-        return DatasetItem(prompt=seq, answer=answer)
+        # axes for position-resolved analysis; metadata never touches the rng,
+        # so recording it leaves the generated stream unchanged
+        metadata = {
+            "sequence_length": len(seq),
+            "n_pairs": n_pairs,
+            "target_entry": qi,
+            "absolute_target_position": 1 + 4 * qi,  # the entry's BOE token
+            "normalized_target_position": qi / max(n_pairs - 1, 1),
+        }
+        return DatasetItem(prompt=seq, answer=answer, metadata=metadata)

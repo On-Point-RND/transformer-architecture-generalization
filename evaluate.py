@@ -31,7 +31,7 @@ from tasks import get_task
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
 CHECKPOINTS = ("best.pt", "last.pt", "ckpt.pt")  # ckpt.pt = pre-consolidation runs
 ROW_FIELDS = ("run", "checkpoint", "iter", "model", "positional_encoding", "task",
-              "label", "params", "n", "loss")
+              "label", "slice", "params", "n", "loss")
 
 
 def parse_args():
@@ -48,6 +48,12 @@ def parse_args():
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
     parser.add_argument("--dtype", help="default: the dtype the run used")
+    parser.add_argument("--by", help="metadata field to break the score down by, "
+                                     "e.g. normalized_target_position")
+    parser.add_argument("--bins", type=int, default=0,
+                        help="equal-width bins for --by; 0 groups by exact value")
+    parser.add_argument("--range", type=float, nargs=2, metavar=("LO", "HI"),
+                        help="bin edges for --by; default: the observed range")
     parser.add_argument("-o", "--out", type=Path, help="combined table for all runs")
     return parser.parse_args()
 
@@ -77,15 +83,40 @@ def build_task(sections, task_name, overrides, seed):
     return get_task(task_name or section["name"], {**params, "seed": seed}), params
 
 
+def group_items(items, field, bins, edges):
+    """[(slice label, items)] split by a metadata field; one group without --by.
+
+    Grouping happens before scoring, so a slice is scored by exactly the same
+    ``Task.metrics`` as the whole set — no per-example metric interface needed.
+    """
+    if not field:
+        return [("all", items)]
+    missing = [i for i in items if field not in i.metadata]
+    if missing:
+        raise KeyError(f"the task records no {field!r}; it has "
+                       f"{sorted(items[0].metadata)}")
+    values = [item.metadata[field] for item in items]
+    if not bins:
+        keys = sorted(set(values))
+        return [(f"{field}={key}", [i for i, v in zip(items, values) if v == key])
+                for key in keys]
+    lo, hi = edges if edges else (min(values), max(values))
+    width = (hi - lo) / bins or 1.0
+    labels = [f"{field}[{lo + b * width:.3g},{lo + (b + 1) * width:.3g})"
+              for b in range(bins)]
+    index = [min(int((v - lo) / width), bins - 1) for v in values]
+    groups = [(labels[b], [i for i, k in zip(items, index) if k == b]) for b in range(bins)]
+    return [(label, picked) for label, picked in groups if picked]
+
+
 @torch.no_grad()
-def score(model, task, n_eval, batch_size, device, ctx):
-    """Loss and the task's metrics over n_eval held-out examples, in batches.
+def score(model, task, items, batch_size, device, ctx):
+    """Loss and the task's metrics over the given examples, in batches.
 
     Batched on purpose: one forward over thousands of rows materialises a
     [rows, n_head, T, T] score matrix for the mechanisms that need explicit
     scores, which does not fit in memory.
     """
-    items = task.generate_val(n_eval)
     block_size = model.config.block_size
     totals, rows = {"loss": 0.0}, 0
     for start in range(0, len(items), batch_size):
@@ -127,7 +158,11 @@ def evaluate_run(run_dir, args, device):
         "label": args.label or ("ood" if shifted else "id"),
         "params": repr(params),
     }
-    return {**row, **score(model, task, args.n_eval, args.batch_size, device, ctx)}
+    items = task.generate_val(args.n_eval)
+    groups = group_items(items, args.by, args.bins, args.range)
+    return [{**row, "slice": label,
+             **score(model, task, chunk, args.batch_size, device, ctx)}
+            for label, chunk in groups]
 
 
 def write_table(rows, path):
@@ -150,16 +185,17 @@ def main():
     rows, failures = [], []
     for run_dir in args.runs:
         try:
-            row = evaluate_run(run_dir, args, device)
+            produced = evaluate_run(run_dir, args, device)
         except Exception as error:  # noqa: BLE001 - report and keep going
             failures.append(run_dir)
             print(f"FAILED {run_dir}: {type(error).__name__}: {error}", flush=True)
             continue
-        rows.append(row)
-        scores = " ".join(f"{k}={v:.4f}" for k, v in row.items() if isinstance(v, float))
-        print(f"{row['positional_encoding'] or row['model']:22s} {row['label']:8s} "
-              f"n={row['n']} {scores}", flush=True)
-        write_table([row], Path(run_dir) / "evaluations.csv")
+        rows += produced
+        for row in produced:
+            scores = " ".join(f"{k}={v:.4f}" for k, v in row.items() if isinstance(v, float))
+            print(f"{row['positional_encoding'] or row['model']:22s} {row['label']:10s} "
+                  f"{row['slice']:34s} n={row['n']:<5} {scores}", flush=True)
+        write_table(produced, Path(run_dir) / "evaluations.csv")
     if args.out and rows:
         print(f"combined table: {write_table(rows, args.out)}")
     return 1 if failures else 0

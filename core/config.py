@@ -53,7 +53,7 @@ class PathsConfig:
 class TrainConfig:
     init: str = "scratch"  # 'scratch' | 'resume' | 'auto' (resume if last.pt exists)
     seed: int = 1337  # initialisation/shuffling seed
-    data_seed: int = 42  # kept separate to preserve the legacy task stream
+    data_seed: Optional[int] = None  # None = follow train.seed
 
     batch_size: int = 12
     gradient_accumulation_steps: int = 40
@@ -77,6 +77,12 @@ class TrainConfig:
     diag_interval: int = 0  # weight/grad norms every N evals; 0 disables
     always_save_checkpoint: bool = True  # write last.pt at every eval
     reproducible_val: bool = False  # seeded val batches; off = legacy behaviour
+
+    def __post_init__(self):
+        # resolved here rather than in the training loop, so the number that was
+        # actually used lands in config.resolved.yaml and in the checkpoint
+        if self.data_seed is None:
+            self.data_seed = self.seed
 
 
 SECTIONS = ("model", "task", "train", "hardware", "paths")
