@@ -70,3 +70,33 @@ def check_architecture(run_dir, checkpoint, model_config, fields):
         f"cannot resume {run_dir}: the checkpoint was trained with a different "
         f"architecture ({detail}). Fix the config, or train into a new run_dir."
     )
+
+
+SECTION_NAMES = ("model", "task", "train", "optimizer", "hardware", "paths")
+
+# these lived under `train:` before the optimizer got a section of its own
+OPTIMIZER_FIELDS = ("learning_rate", "weight_decay", "beta1", "beta2", "grad_clip",
+                    "warmup_iters", "lr_decay_iters", "min_lr")
+
+
+def config_sections(checkpoint):
+    """The config of a saved run as sections, whatever layout it was written in.
+
+    Older runs differ in two ways: the first ones stored a flat dict with
+    `model_args`/`gen_params`, and later ones kept the optimizer fields under
+    `train:`. Both are normalised here so resume and evaluation read one shape.
+    """
+    config = checkpoint.get("config", {})
+    sections = {name: dict(config.get(name) or {}) for name in SECTION_NAMES}
+    sections["model"] = model_fields(checkpoint)
+    if not sections["task"]:  # flat, pre-sections layout
+        sections["task"] = {"name": config.get("dataset", "kv_retrieval"),
+                            "params": dict(config.get("gen_params") or {})}
+        sections["train"] = {k: v for k, v in config.items() if not isinstance(v, dict)}
+        sections["hardware"] = {"dtype": config.get("dtype", "float32")}
+    if not sections["optimizer"]:
+        sections["optimizer"] = {f: sections["train"][f]
+                                 for f in OPTIMIZER_FIELDS if f in sections["train"]}
+        if sections["train"].get("decay_lr") is False:
+            sections["optimizer"]["schedule"] = "constant"
+    return sections

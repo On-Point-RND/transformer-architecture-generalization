@@ -1,0 +1,18 @@
+# Control: addition is parallelisable (carry-lookahead), so depth should not
+# buy accuracy. add_seq carries, add_indep sums each digit independently —
+# same length, same vocabulary, no dependency between positions.
+include: base.yaml
+
+paths:
+  run_dir: runs/depth/add_depth
+
+model:
+  n_layer: [2, 4, 6, 8, 12]
+  block_size: 53  # 3N + 5
+
+task:
+  name: [add_seq, add_indep]
+  params: {n_digits: 16}
+
+train:
+  seed: [0, 1, 2]

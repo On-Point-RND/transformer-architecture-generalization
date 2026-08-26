@@ -1,0 +1,17 @@
+# Does the number of attention heads matter? Depth and width held fixed.
+include: base.yaml
+
+paths:
+  run_dir: runs/depth/head_ablation
+
+model:
+  n_layer: 2
+  n_head: [1, 2, 4, 8]
+  block_size: 53
+
+task:
+  name: [add_seq, add_indep]
+  params: {n_digits: 16}
+
+train:
+  seed: [0, 1, 2]

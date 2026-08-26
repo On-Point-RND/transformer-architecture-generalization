@@ -33,6 +33,13 @@ TASKS = {
     "nested_kv": ("tasks.nested_kv_retrieval", "NestedKVRetrievalTask", {}),  # alias
     "addition": ("tasks.addition", "AdditionTask", {}),
     "sorting": ("tasks.sorting", "SortingTask", {}),
+    "permutation": ("tasks.permutation", "PermutationTask", {}),
+    # Variants are first-class names so a config can sweep over them: a list
+    # inside task.params is data, only a list directly under a section is an axis.
+    "s5": ("tasks.permutation", "PermutationTask", {"variant": "S5"}),
+    "c5": ("tasks.permutation", "PermutationTask", {"variant": "C5"}),
+    "add_seq": ("tasks.addition", "AdditionTask", {"carry": True, "bos_eos": True}),
+    "add_indep": ("tasks.addition", "AdditionTask", {"carry": False, "bos_eos": True}),
     "indexing": ("tasks.indexing", "IndexingTask", {}),
     "dyck": ("tasks.dyck", "DyckTask", {}),
     "function_composition": ("tasks.function_composition", "FunctionCompositionTask", {}),

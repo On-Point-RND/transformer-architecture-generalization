@@ -103,4 +103,18 @@ class SortingTask(Task):
             np.int64
         )
 
-        return DatasetItem(prompt=prompt, answer=answer.astype(np.int64))
+        return DatasetItem(
+            prompt=prompt,
+            answer=answer.astype(np.int64),
+            metadata={"n_items": n, "inversions": _inversions(values)},
+        )
+
+
+def _inversions(values) -> int:
+    """Pairs that are out of order — the difficulty L(x) of a sort.
+
+    Counted on token ids, which is the same as counting on values: ids are
+    assigned in increasing order of value.
+    """
+    return int(sum(values[i] > values[j]
+                   for i in range(len(values)) for j in range(i + 1, len(values))))

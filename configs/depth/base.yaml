@@ -1,0 +1,38 @@
+# Depth vs sequentiality: how many layers a task needs, as a function of the
+# length L(x) of its sequential dependency chain. This file holds the protocol
+# every experiment of the study shares; each experiment file includes it and
+# sets only what its own question varies.
+model:
+  name: depth
+  n_embd: 128
+  n_head: 4
+  dropout: 0.0
+  bias: true
+
+task:
+  n_train: 100000  # finite training set: its size decides memorise vs generalise
+  n_val: 5000
+
+hardware:
+  device: gpu
+  gpu: 0
+  dtype: float32  # the study ran without autocast
+  compile: false
+
+train:
+  init: scratch
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 20000
+  eval_interval: 2000
+  eval_iters: 2  # 2 x batch_size = the 512-example eval subset of the study
+
+optimizer:
+  name: adamw
+  decay: all  # weight decay on every parameter, norms and biases included
+  learning_rate: 3.0e-4
+  min_lr: 0.0
+  weight_decay: 0.1
+  warmup_iters: 500
+  lr_decay_iters: 20000
+  grad_clip: 1.0

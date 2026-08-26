@@ -15,7 +15,7 @@ from tasks import get_task
 from models import get_model
 
 ARCHITECTURE_FIELDS = ("name", "n_layer", "n_head", "n_embd", "block_size",
-                       "bias", "vocab_size", "pos_encoding")
+                       "bias", "vocab_size", "pos_encoding", "n_loops")
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
 
 
@@ -34,15 +34,17 @@ def resolve_device(hardware):
     return f"cuda:{hardware.gpu}"
 
 
-def get_lr(it, train):
+def get_lr(it, opt):
     """Linear warmup, cosine decay to min_lr, then flat."""
-    if it < train.warmup_iters:
-        return train.learning_rate * (it + 1) / (train.warmup_iters + 1)
-    if it > train.lr_decay_iters:
-        return train.min_lr
-    decay_ratio = (it - train.warmup_iters) / (train.lr_decay_iters - train.warmup_iters)
+    if opt.schedule == "constant":
+        return opt.learning_rate
+    if it < opt.warmup_iters:
+        return opt.learning_rate * (it + 1) / (opt.warmup_iters + 1)
+    if it > opt.lr_decay_iters:
+        return opt.min_lr
+    decay_ratio = (it - opt.warmup_iters) / (opt.lr_decay_iters - opt.warmup_iters)
     coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio))  # 1 -> 0
-    return train.min_lr + coeff * (train.learning_rate - train.min_lr)
+    return opt.min_lr + coeff * (opt.learning_rate - opt.min_lr)
 
 
 def make_get_batch(task, val_items, config, device, val_rng):
@@ -209,7 +211,7 @@ def save_checkpoints(config, ckpt_dir, model, optimizer, scaler, task, metadata,
 
 def run(config):
     """Train one model. Returns the best val loss reached."""
-    train_cfg, hardware = config.train, config.hardware
+    train_cfg, opt_cfg, hardware = config.train, config.optimizer, config.hardware
     paths = run_paths(config.paths)
     device = resolve_device(hardware)
     steps = train_cfg.gradient_accumulation_steps
@@ -223,12 +225,13 @@ def run(config):
 
     task = get_task(config.task.name, {**config.task.params, "seed": train_cfg.data_seed})
     val_items = task.generate_val(config.task.n_val)
+    if config.task.n_train:
+        task.build_train_pool(config.task.n_train)
 
     resumed = pick_resume(train_cfg, paths.checkpoints, device)
     model = build_model(config, task, device, resumed, paths.checkpoints)
     scaler = torch.amp.GradScaler(device_type, enabled=hardware.dtype == "float16")
-    optimizer = model.configure_optimizers(train_cfg.weight_decay, train_cfg.learning_rate,
-                                           (train_cfg.beta1, train_cfg.beta2), device_type)
+    optimizer = model.configure_optimizers(opt_cfg, device_type)
     iter_num, best_val_loss = 0, float("inf")
     if resumed is not None:
         iter_num, best_val_loss = load_resume_state(config, resumed, optimizer, scaler, task)
@@ -254,7 +257,7 @@ def run(config):
     local_iter_num, running_mfu, evals = 0, -1.0, 0
 
     while True:
-        lr = get_lr(iter_num, train_cfg) if train_cfg.decay_lr else train_cfg.learning_rate
+        lr = get_lr(iter_num, opt_cfg)
         for group in optimizer.param_groups:
             group["lr"] = lr
 
@@ -278,7 +281,7 @@ def run(config):
             break
 
         loss, x, y = accumulate_gradients(model, x, y, get_batch, scaler, ctx, steps)
-        grad_norm = optimizer_step(model, optimizer, scaler, train_cfg.grad_clip)
+        grad_norm = optimizer_step(model, optimizer, scaler, opt_cfg.grad_clip)
 
         dt = time.time() - t0
         t0 = time.time()

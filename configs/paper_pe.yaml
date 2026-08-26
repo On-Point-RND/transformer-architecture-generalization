@@ -20,15 +20,17 @@ train:
   init: scratch
   seed: 1337          
   max_iters: 57000
-  lr_decay_iters: 57000
-  warmup_iters: 100
   batch_size: 256
   gradient_accumulation_steps: 1
-  learning_rate: 1.0e-4
-  min_lr: 1.0e-5
-  weight_decay: 0.1
   eval_interval: 250
   eval_iters: 100
 
 paths:
   run_dir: runs/paper_pe
+
+optimizer:
+  lr_decay_iters: 57000
+  warmup_iters: 100
+  learning_rate: 1.0e-4
+  min_lr: 1.0e-5
+  weight_decay: 0.1

@@ -24,6 +24,7 @@ class TaskConfig:
     name: str = "kv_retrieval"
     params: Dict[str, Any] = field(default_factory=dict)
     n_val: int = 1000  # size of the fixed held-out validation set
+    n_train: int = 0  # 0 = endless stream; >0 = train from that many examples
 
 
 @dataclass
@@ -50,6 +51,24 @@ class PathsConfig:
 
 
 @dataclass
+class OptimizerConfig:
+    """How the parameters are updated. Which algorithm, and on what schedule."""
+    name: str = "adamw"  # file/entry in optimizers/
+    learning_rate: float = 6e-4
+    # two scalars rather than a betas pair: a list written directly under a
+    # section is a sweep axis, so `betas: [0.9, 0.95]` would mean two runs
+    beta1: float = 0.9
+    beta2: float = 0.95
+    weight_decay: float = 1e-1
+    decay: str = "matrices"  # 'matrices' (2D tensors only) | 'all'
+    grad_clip: float = 1.0  # 0.0 disables
+    schedule: str = "cosine"  # 'cosine' | 'constant'
+    warmup_iters: int = 2000
+    lr_decay_iters: int = 600000
+    min_lr: float = 6e-5
+
+
+@dataclass
 class TrainConfig:
     init: str = "scratch"  # 'scratch' | 'resume' | 'auto' (resume if last.pt exists)
     seed: int = 1337  # initialisation/shuffling seed
@@ -58,16 +77,6 @@ class TrainConfig:
     batch_size: int = 12
     gradient_accumulation_steps: int = 40
     max_iters: int = 600000
-
-    learning_rate: float = 6e-4
-    weight_decay: float = 1e-1
-    beta1: float = 0.9
-    beta2: float = 0.95
-    grad_clip: float = 1.0  # 0.0 disables
-    decay_lr: bool = True
-    warmup_iters: int = 2000
-    lr_decay_iters: int = 600000
-    min_lr: float = 6e-5
 
     eval_interval: int = 2000
     eval_iters: int = 200
@@ -85,7 +94,7 @@ class TrainConfig:
             self.data_seed = self.seed
 
 
-SECTIONS = ("model", "task", "train", "hardware", "paths")
+SECTIONS = ("model", "task", "train", "optimizer", "hardware", "paths")
 
 
 @dataclass
@@ -93,6 +102,7 @@ class Config:
     model: ModelConfig
     task: TaskConfig
     train: TrainConfig
+    optimizer: OptimizerConfig
     hardware: HardwareConfig
     paths: PathsConfig
 
@@ -195,6 +205,7 @@ def _build_config(sections) -> Config:
         model=_build(model_cls, sections["model"], "model"),
         task=_build(TaskConfig, sections["task"], "task"),
         train=_build(TrainConfig, sections["train"], "train"),
+        optimizer=_build(OptimizerConfig, sections["optimizer"], "optimizer"),
         hardware=_build(HardwareConfig, sections["hardware"], "hardware"),
         paths=_build(PathsConfig, sections["paths"], "paths"),
     )

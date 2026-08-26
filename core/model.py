@@ -1,9 +1,10 @@
-import inspect
 import math
 
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
+
+from optimizers import get_optimizer
 
 
 class LayerNorm(nn.Module):
@@ -95,16 +96,16 @@ class CausalAttention(nn.Module):
 class Block(nn.Module):
     """Pre-LN block: x + attn(ln_1(x)), then x + mlp(ln_2(x)).
 
-    The attention sublayer is passed in, so an architecture varies it through
-    Transformer.build_attention without this class knowing about it.
+    Both sublayers are passed in, so an architecture varies them through
+    Transformer.build_attention / build_mlp without this class knowing about it.
     """
 
-    def __init__(self, config, attn):
+    def __init__(self, config, attn, mlp):
         super().__init__()
         self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
         self.attn = attn
         self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
-        self.mlp = MLP(config)
+        self.mlp = mlp
 
     def forward(self, x):
         x = x + self.attn(self.ln_1(x))
@@ -112,6 +113,11 @@ class Block(nn.Module):
 
 
 class Transformer(nn.Module):
+    # nanoGPT divides the std of every residual output projection by
+    # sqrt(2*n_layer). That is a choice, not a property of the architecture:
+    # a model whose published numbers were produced without it sets this False.
+    residual_init_scaling = True
+
     def __init__(self, config):
         super().__init__()
         assert config.vocab_size is not None and config.block_size is not None
@@ -120,8 +126,7 @@ class Transformer(nn.Module):
         modules = dict(
             wte=nn.Embedding(config.vocab_size, config.n_embd),
             drop=nn.Dropout(config.dropout),
-            h=nn.ModuleList([Block(config, self.build_attention(config, i))
-                             for i in range(config.n_layer)]),
+            h=self.build_blocks(config),
             ln_f=LayerNorm(config.n_embd, bias=config.bias),
         )
         if self.uses_pos_embedding(config):
@@ -130,13 +135,25 @@ class Transformer(nn.Module):
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
         self.transformer.wte.weight = self.lm_head.weight
         self.apply(self._init_weights)
-        for name, parameter in self.named_parameters():
-            if name.endswith("c_proj.weight"):
-                nn.init.normal_(parameter, mean=0.0, std=0.02 / math.sqrt(2 * config.n_layer))
+        if self.residual_init_scaling:
+            for name, parameter in self.named_parameters():
+                if name.endswith("c_proj.weight"):
+                    nn.init.normal_(parameter, mean=0.0,
+                                    std=0.02 / math.sqrt(2 * config.n_layer))
 
     # --- construction hooks ---------------------------------------------
+    def build_blocks(self, config):
+        """The stack. Override when layers share weights, e.g. a looped model
+        returns nn.ModuleList([block] * n_loops) holding one Block object."""
+        return nn.ModuleList([Block(config, self.build_attention(config, i),
+                                    self.build_mlp(config, i))
+                              for i in range(config.n_layer)])
+
     def build_attention(self, config, layer_idx):
         return CausalAttention(config, layer_idx)
+
+    def build_mlp(self, config, layer_idx):
+        return MLP(config)
 
     def uses_pos_embedding(self, config):
         return True
@@ -198,16 +215,26 @@ class Transformer(nn.Module):
         if "wpe" in self.transformer:
             self.transformer.wpe.weight = nn.Parameter(self.transformer.wpe.weight[:block_size])
 
-    def configure_optimizers(self, weight_decay, learning_rate, betas, device_type):
-        """Decay every 2D tensor (matmuls + embeddings); leave biases/norms alone."""
+    def configure_optimizers(self, optimizer, device_type):
+        """Parameter groups for this architecture, built by the named optimizer.
+
+        Grouping stays here because the model is what knows its parameters;
+        which algorithm updates them comes from the optimizer config section.
+        """
         params = {n: p for n, p in self.named_parameters() if p.requires_grad}
-        decay = [p for p in params.values() if p.dim() >= 2]
-        nodecay = [p for p in params.values() if p.dim() < 2]
-        groups = [{"params": decay, "weight_decay": weight_decay},
-                  {"params": nodecay, "weight_decay": 0.0}]
-        fused_available = "fused" in inspect.signature(torch.optim.AdamW).parameters
-        extra = {"fused": True} if fused_available and device_type == "cuda" else {}
-        return torch.optim.AdamW(groups, lr=learning_rate, betas=betas, **extra)
+        if optimizer.decay == "all":
+            groups = [{"params": list(params.values()),
+                       "weight_decay": optimizer.weight_decay}]
+        elif optimizer.decay == "matrices":
+            # 2D tensors are the matmuls and embeddings; biases and norms are 1D
+            groups = [{"params": [p for p in params.values() if p.dim() >= 2],
+                       "weight_decay": optimizer.weight_decay},
+                      {"params": [p for p in params.values() if p.dim() < 2],
+                       "weight_decay": 0.0}]
+        else:
+            raise ValueError(f"optimizer.decay must be 'matrices' or 'all', "
+                             f"got {optimizer.decay!r}")
+        return get_optimizer(optimizer.name)(groups, optimizer, device_type)
 
     def estimate_mfu(self, fwdbwd_per_iter, dt):
         """Model flops utilisation against A100 bf16 peak (PaLM appendix B)."""

@@ -25,9 +25,11 @@ train:
   batch_size: 256
   gradient_accumulation_steps: 1
   max_iters: 4500
+  eval_interval: 250
+  eval_iters: 200
+
+optimizer:
   lr_decay_iters: 4500
   warmup_iters: 225
   learning_rate: 6.0e-4
   min_lr: 6.0e-5
-  eval_interval: 250
-  eval_iters: 200

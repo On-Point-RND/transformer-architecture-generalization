@@ -23,6 +23,7 @@ class DatasetItem:
 
 class Task(ABC):
     PAD_ID: int = 0  # token used to right-pad inputs; subclasses may override
+    train_pool = None  # a finite training set, when build_train_pool was called
 
     # Subclasses set ``self.rng = np.random.default_rng(seed)`` and expose a
     # ``vocab_size`` property (the number of distinct token ids they emit).
@@ -85,14 +86,30 @@ class Task(ABC):
     def _hash(item: DatasetItem) -> bytes:
         return item.prompt.tobytes()
 
+    # Rejection sampling cannot tell "unlucky" from "nothing left to draw", so a
+    # split larger than the task's prompt space would spin here forever. Small
+    # spaces are easy to ask for by accident: C5 with 4 permutations has only
+    # 5**4 = 625 distinct prompts, well under the default n_val.
+    MAX_REJECTS = 10_000
+
+    def _draw_new(self, taken, what: str) -> DatasetItem:
+        """An example whose prompt is not already in ``taken``."""
+        for _ in range(self.MAX_REJECTS):
+            item = self._sample_one()
+            if self._hash(item) not in taken:
+                return item
+        raise ValueError(
+            f"{type(self).__name__} drew {self.MAX_REJECTS} duplicate prompts in a "
+            f"row while building {what}: the task has fewer distinct prompts than "
+            f"were asked of it. Request fewer examples (task.n_val / task.n_train) "
+            f"or widen the task, e.g. more items or a larger vocabulary."
+        )
+
     def generate_val(self, n: int) -> List[DatasetItem]:
         val, seen = [], set()
         while len(val) < n:
-            item = self._sample_one()
-            h = self._hash(item)
-            if h in seen:
-                continue
-            seen.add(h)
+            item = self._draw_new(seen, f"the {n}-example validation set")
+            seen.add(self._hash(item))
             val.append(item)
         self.val_hashes = seen
         return val
@@ -100,12 +117,20 @@ class Task(ABC):
     def sample_train(self, n: int = 1) -> List[DatasetItem]:
         if not hasattr(self, "val_hashes"):
             raise RuntimeError("Call `generate_val(...)' before sampling train")
-        out = []
-        while len(out) < n:
-            item = self._sample_one()
-            if self._hash(item) not in self.val_hashes:
-                out.append(item)
-        return out
+        if self.train_pool is not None:
+            return [self.train_pool[i] for i in self.rng.integers(len(self.train_pool), size=n)]
+        return [self._draw_new(self.val_hashes, "a training batch") for _ in range(n)]
+
+    def build_train_pool(self, n: int) -> None:
+        """Train from a fixed set of n examples instead of an endless stream.
+
+        The size of that set is an experimental variable, not an implementation
+        detail: the same model memorises 100k examples and generalises from 1M.
+        Batches are then drawn from the pool uniformly with replacement. The
+        pool is rebuilt from the seed on resume, like the val set, so nothing
+        extra goes into state_dict.
+        """
+        self.train_pool = self.sample_train(n)
 
     # --- resume ---------------------------------------------------------
     # The held-out val set is regenerated from the same seed on resume, so only

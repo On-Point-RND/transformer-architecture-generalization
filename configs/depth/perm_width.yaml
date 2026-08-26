@@ -1,0 +1,24 @@
+# Width alone does not substitute for depth: hold depth at 4 and grow n_embd.
+# For K=16 add: --set task.params="{'n_perms': 16}" --set model.block_size=24
+include: base.yaml
+
+paths:
+  run_dir: runs/depth/perm_width
+
+model:
+  n_layer: 4
+  n_embd: [128, 256, 512]
+  n_head: 0  # derived per width, so the sweep stays a single axis
+  block_size: 16
+
+task:
+  name: s5
+  params: {n_perms: 8}
+  n_train: 1000000
+
+train:
+  seed: [0, 1, 2]
+  max_iters: 60000
+
+optimizer:
+  lr_decay_iters: 60000
