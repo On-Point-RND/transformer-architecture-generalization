@@ -226,21 +226,11 @@ class NestedKVRetrievalTask(KVRetrievalTask):
         n_pairs, nested_slots, nested_lens = self._draw_layout()
         n_nested = len(nested_slots)
 
-        # Values are drawn globally without replacement so that the queried value
-        # occurs exactly once in the prompt and its key path is well defined. (The
-        # flat task can afford to draw with replacement: it queries keys.)
         n_values = (n_pairs - n_nested) + sum(nested_lens.values())
         self._check_value_budget(n_values, n_pairs, n_nested)
         values = iter(self.rng.choice(self.v_token_ids, size=n_values,
                                       replace=False).tolist())
 
-        # In key2value mode the answer is "the value stored under this key", so the
-        # queried key is picked up front and held out of every other draw: it then
-        # occurs exactly once in the whole prompt (no shadowing by a later duplicate
-        # and no same-named key hiding inside a nested dict), leaving one right
-        # answer. In value2keys mode the queried *value* is what has to be unique,
-        # which the global value draw above already guarantees, so keys stay free to
-        # repeat across nesting levels.
         key_pool = self.k_token_ids
         q_slot, q_key = None, None
         if self.query_mode == "key2value":

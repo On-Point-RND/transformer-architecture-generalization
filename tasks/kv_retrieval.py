@@ -69,9 +69,6 @@ class KVRetrievalTask(Task):
         )
         values = self.rng.choice(self.v_token_ids, size=n_pairs, replace=True)
 
-        # Each entry: BOE key value EOE  -> 4 tokens per pair.
-        # Dict: SOD <entries> EOD.
-        # Tail: query separator + query.
         seq = np.empty(4 * n_pairs + 2 + 2, dtype=np.int64)
 
         seq[0] = self.SOD_ID
@@ -88,8 +85,6 @@ class KVRetrievalTask(Task):
         seq[-1] = keys[qi]
         answer = np.array([values[qi]], dtype=np.int64)
 
-        # axes for position-resolved analysis; metadata never touches the rng,
-        # so recording it leaves the generated stream unchanged
         metadata = {
             "sequence_length": len(seq),
             "n_pairs": n_pairs,

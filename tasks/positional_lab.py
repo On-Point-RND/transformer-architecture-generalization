@@ -12,9 +12,7 @@ from .base import DatasetItem, Task
 
 MAX_ATTEMPTS = 1000
 
-# Every laboratory task is also registered as a standalone dataset name in
-# tasks/__init__.py.  Keeping the mapping here makes this file the single
-# source of truth for task discovery in training and orchestration scripts.
+
 POSITIONAL_TASK_DEFAULTS = {
     "content_addressed_retrieval": {"task": "content_addressed_retrieval"},
     "absolute_position_parity": {"task": "absolute_position_parity"},
@@ -137,12 +135,6 @@ class PositionalLabTask(Task):
                           distance_label=label)
 
     def _content_retrieval(self, distant=False, correlation=None):
-        # NOTE(frozen): the near distractor below writes prompt[-5:-3], which
-        # overlaps prompt[pos:pos+2] whenever pos is length-5 or length-4 — the
-        # target pair is then partly or fully overwritten and the example is
-        # unanswerable (188/2000 default draws, and 926/2000 in the correlated
-        # variants, where the "near" branch pins pos to length-5). Kept as-is:
-        # the published runs were trained on this stream.
         length = self._int(self.length_range)
         key = self._int((self.KEY_LOW, self.KEY_HIGH))
         value = self._int((self.VALUE_LOW, self.VALUE_HIGH))
@@ -156,7 +148,6 @@ class PositionalLabTask(Task):
         else:
             pos = self._int((1, length - 4))
         prompt[pos:pos + 2] = [key, value]
-        # A very near, semantically wrong distractor makes content-vs-distance explicit.
         wrong_key = self.KEY_LOW + ((key - self.KEY_LOW + 1) % (self.KEY_HIGH - self.KEY_LOW + 1))
         prompt[-5:-3] = [wrong_key, self._int((self.VALUE_LOW, self.VALUE_HIGH))]
         return self._item(prompt, [value], pos, length - 2 - pos,
@@ -176,11 +167,6 @@ class PositionalLabTask(Task):
         return self._item(prompt, [last_value], positions[-1], length - 2 - positions[-1])
 
     def _selective_count(self):
-        # NOTE(frozen): `positions` comes from rng.choice and is unsorted, so
-        # positions[-1] is a random relevant token rather than the last one; the
-        # reported target position / distance are wrong for ~2/3 of samples. The
-        # answer itself (the count) is correct. Kept as-is because the published
-        # per-position plots were produced from this metadata.
         length = self._int(self.length_range)
         count = min(self._int(self.relevant_count_range), length - 3)
         prompt = self._fill(length)
@@ -205,8 +191,6 @@ class PositionalLabTask(Task):
         item.metadata["threshold_label"] = int(pos >= self.threshold)
         return item
 
-    # One table instead of a twelve-branch if-chain; the value is the unbound
-    # method that draws this task's example.
     TASKS = {
         "absolute_position_parity": _absolute,
         "absolute_position_extrapolation": _absolute,
@@ -229,5 +213,4 @@ class PositionalLabTask(Task):
         return self.TASKS[self.task](self)
 
 
-# The dataset registry and the dispatch table must not drift apart.
 assert set(PositionalLabTask.TASKS) == set(POSITIONAL_TASK_DEFAULTS)

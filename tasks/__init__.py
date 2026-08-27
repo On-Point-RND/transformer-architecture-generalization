@@ -25,17 +25,14 @@ import importlib
 
 from tasks.positional_lab import POSITIONAL_TASK_DEFAULTS
 
-# name -> (module path, class name, default constructor params)
 TASKS = {
     "kv_retrieval": ("tasks.kv_retrieval", "KVRetrievalTask", {}),
-    "kv": ("tasks.kv_retrieval", "KVRetrievalTask", {}),  # alias used by configs
+    "kv": ("tasks.kv_retrieval", "KVRetrievalTask", {}),
     "nested_kv_retrieval": ("tasks.nested_kv_retrieval", "NestedKVRetrievalTask", {}),
-    "nested_kv": ("tasks.nested_kv_retrieval", "NestedKVRetrievalTask", {}),  # alias
+    "nested_kv": ("tasks.nested_kv_retrieval", "NestedKVRetrievalTask", {}),
     "addition": ("tasks.addition", "AdditionTask", {}),
     "sorting": ("tasks.sorting", "SortingTask", {}),
     "permutation": ("tasks.permutation", "PermutationTask", {}),
-    # Variants are first-class names so a config can sweep over them: a list
-    # inside task.params is data, only a list directly under a section is an axis.
     "s5": ("tasks.permutation", "PermutationTask", {"variant": "S5"}),
     "c5": ("tasks.permutation", "PermutationTask", {"variant": "C5"}),
     "add_seq": ("tasks.addition", "AdditionTask", {"carry": True, "bos_eos": True}),
@@ -46,9 +43,7 @@ TASKS = {
     "positional_lab": ("tasks.positional_lab", "PositionalLabTask", {}),
 }
 
-# Positional laboratory variants are first-class datasets. For example,
-# ``task.name: relative_offset_copy`` selects the task without an extra
-# ``params: {task: ...}`` layer.
+
 for _task_name, _task_defaults in POSITIONAL_TASK_DEFAULTS.items():
     TASKS[_task_name] = ("tasks.positional_lab", "PositionalLabTask", dict(_task_defaults))
 

@@ -58,8 +58,6 @@ class AdditionTask(Task):
         self.carry = carry
         self.bos_eos = bos_eos
 
-        # token ids follow the layout in use, so the plain task keeps the
-        # vocabulary of 13 it was published with and the wrapped one gets 15
         if bos_eos:
             self.BOS_ID, self.EOS_ID, self.PLUS_ID, self.EQ_ID = 1, 2, 3, 4
             self.n_special = 5
@@ -137,8 +135,6 @@ class AdditionTask(Task):
         if self.carry:
             s = self._add_digits(a, b)
         else:
-            # per-digit sums; the leading digit is always 0, so the answer keeps
-            # the width d+1 and the two conditions look identical from outside
             s = np.concatenate([[0], (a + b) % self.BASE]).astype(np.int64)
 
         if self.reverse:

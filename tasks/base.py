@@ -17,16 +17,12 @@ import numpy as np
 class DatasetItem:
     prompt: np.ndarray
     answer: np.ndarray
-    # Optional per-example axes for positional OOD analysis.
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 class Task(ABC):
     PAD_ID: int = 0  # token used to right-pad inputs; subclasses may override
     train_pool = None  # a finite training set, when build_train_pool was called
-
-    # Subclasses set ``self.rng = np.random.default_rng(seed)`` and expose a
-    # ``vocab_size`` property (the number of distinct token ids they emit).
 
     @abstractmethod
     def _sample_one(self) -> DatasetItem: ...
@@ -86,10 +82,6 @@ class Task(ABC):
     def _hash(item: DatasetItem) -> bytes:
         return item.prompt.tobytes()
 
-    # Rejection sampling cannot tell "unlucky" from "nothing left to draw", so a
-    # split larger than the task's prompt space would spin here forever. Small
-    # spaces are easy to ask for by accident: C5 with 4 permutations has only
-    # 5**4 = 625 distinct prompts, well under the default n_val.
     MAX_REJECTS = 10_000
 
     def _draw_new(self, taken, what: str) -> DatasetItem:
@@ -132,9 +124,6 @@ class Task(ABC):
         """
         self.train_pool = self.sample_train(n)
 
-    # --- resume ---------------------------------------------------------
-    # The held-out val set is regenerated from the same seed on resume, so only
-    # the generator position has to be restored — after generate_val, not before.
 
     def state_dict(self) -> Dict[str, Any]:
         return {"rng": self.rng.bit_generator.state}

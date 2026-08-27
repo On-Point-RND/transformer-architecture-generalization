@@ -111,9 +111,6 @@ class PermutationTask(Task):
         else:
             k = int(self.rng.integers(self.n_perms[0], self.n_perms[1]))
 
-        # L is drawn first and the factors are built to match, rather than
-        # sampling the group uniformly: otherwise L concentrates at K and the
-        # small-L end of the accuracy-vs-L plot falls outside training.
         chain = int(self.rng.integers(0, k + 1))
         perms = self._with_chain_length(k, chain)
         result = compose_all(perms)
