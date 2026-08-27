@@ -54,7 +54,6 @@ class CausalAttention(nn.Module):
         self.dropout = config.dropout
         self.head_dim = config.n_embd // config.n_head
 
-    # --- hooks ----------------------------------------------------------
     def transform_qk(self, q, k):
         return q, k
 
@@ -67,7 +66,6 @@ class CausalAttention(nn.Module):
         """
         return scores
 
-    # --- forward --------------------------------------------------------
     def forward(self, x):
         b, t, c = x.size()
         q, k, v = self.c_attn(x).split(self.n_embd, dim=2)
@@ -113,16 +111,12 @@ class Block(nn.Module):
 
 
 class Transformer(nn.Module):
-    # nanoGPT divides the std of every residual output projection by
-    # sqrt(2*n_layer). That is a choice, not a property of the architecture:
-    # a model whose published numbers were produced without it sets this False.
     residual_init_scaling = True
 
     def __init__(self, config):
         super().__init__()
         assert config.vocab_size is not None and config.block_size is not None
         self.config = config
-        # Construction order is part of the numerics — see the module docstring.
         modules = dict(
             wte=nn.Embedding(config.vocab_size, config.n_embd),
             drop=nn.Dropout(config.dropout),
@@ -141,7 +135,6 @@ class Transformer(nn.Module):
                     nn.init.normal_(parameter, mean=0.0,
                                     std=0.02 / math.sqrt(2 * config.n_layer))
 
-    # --- construction hooks ---------------------------------------------
     def build_blocks(self, config):
         """The stack. Override when layers share weights, e.g. a looped model
         returns nn.ModuleList([block] * n_loops) holding one Block object."""
@@ -158,13 +151,7 @@ class Transformer(nn.Module):
     def uses_pos_embedding(self, config):
         return True
 
-    # --- reporting hook -------------------------------------------------
     def param_report(self):
-        """What this architecture contributes positionally, for the run log.
-
-        The training loop reads the mechanism name from here instead of guessing
-        it from the config, so a new architecture is described by its own code.
-        """
         wpe = self.transformer.wpe.weight.numel() if "wpe" in self.transformer else 0
         return {"positional_encoding": "wpe" if wpe else "nope",
                 "positional_parameters": {"trainable": wpe, "frozen": 0, "total": wpe}}
@@ -190,7 +177,6 @@ class Transformer(nn.Module):
             x = block(x)
         x = self.transformer.ln_f(x)
         if targets is None:
-            # inference-time mini-optimization: only the last position is needed
             return self.lm_head(x[:, [-1], :]), None
         logits = self.lm_head(x)
         loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1),
@@ -198,35 +184,23 @@ class Transformer(nn.Module):
         return logits, loss
 
     def get_num_params(self, non_embedding=True):
-        """Parameter count; the position table is excluded by default.
-
-        Token embeddings are counted because weight tying makes them the output
-        layer as well.
-        """
         n_params = sum(p.numel() for p in self.parameters())
         if non_embedding and "wpe" in self.transformer:
             n_params -= self.transformer.wpe.weight.numel()
         return n_params
 
     def crop_block_size(self, block_size):
-        """Model surgery for loading a checkpoint trained with a longer context."""
         assert block_size <= self.config.block_size
         self.config.block_size = block_size
         if "wpe" in self.transformer:
             self.transformer.wpe.weight = nn.Parameter(self.transformer.wpe.weight[:block_size])
 
     def configure_optimizers(self, optimizer, device_type):
-        """Parameter groups for this architecture, built by the named optimizer.
-
-        Grouping stays here because the model is what knows its parameters;
-        which algorithm updates them comes from the optimizer config section.
-        """
         params = {n: p for n, p in self.named_parameters() if p.requires_grad}
         if optimizer.decay == "all":
             groups = [{"params": list(params.values()),
                        "weight_decay": optimizer.weight_decay}]
         elif optimizer.decay == "matrices":
-            # 2D tensors are the matmuls and embeddings; biases and norms are 1D
             groups = [{"params": [p for p in params.values() if p.dim() >= 2],
                        "weight_decay": optimizer.weight_decay},
                       {"params": [p for p in params.values() if p.dim() < 2],

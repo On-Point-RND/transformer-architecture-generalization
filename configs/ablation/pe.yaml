@@ -1,5 +1,4 @@
-# Axis 6: positional encoding. The five schemes of the source branch; the file
-# supports more (fope, relative_bias, cope, cape) and compositions with '+'.
+
 include: base.yaml
 
 model:

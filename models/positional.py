@@ -12,7 +12,7 @@ from core.model import CausalAttention, Transformer
 @dataclass
 class Config(ModelConfig):
     name: str = "positional"
-    pos_encoding: str = "nope"  # one name or e.g. 'rope+relative_bias'
+    pos_encoding: str = "nope"  
     rope_theta: float = 10000.0
     rpe_num_buckets: int = 32
     rpe_max_distance: int = 128
@@ -36,7 +36,6 @@ SLOTS = {
 
 @dataclass(frozen=True)
 class PositionalSpec:
-    """Which mechanism fills each slot; None means the slot is empty."""
     embedding: str | None = None
     qk: str | None = None
     bias: str | None = None
@@ -49,14 +48,13 @@ class PositionalSpec:
 
 
 def parse_positional_spec(value):
-    """Parse e.g. ``rope+relative_bias`` and reject ambiguous same-slot mixes."""
     raw = [p.strip().lower() for p in value.replace(",", "+").split("+") if p.strip()]
     selected = {slot: None for slot in ("embedding", "qk", "bias", "context")}
     for name in raw or ["nope"]:
         if name not in SLOTS:
             raise ValueError(f"unknown positional mechanism {name!r}; known: {sorted(SLOTS)}")
         slot = SLOTS[name]
-        if slot is None:  # nope fills nothing
+        if slot is None:  
             continue
         if selected[slot] not in (None, name):
             raise ValueError(f"cannot combine {selected[slot]!r} and {name!r}: "
@@ -66,7 +64,6 @@ def parse_positional_spec(value):
 
 
 def sinusoidal_table(block_size, n_embd):
-    """The original Transformer's fixed table: sin on even channels, cos on odd."""
     position = torch.arange(block_size).float().unsqueeze(1)
     angles = position * torch.exp(
         torch.arange(0, n_embd, 2).float() * (-math.log(10000.0) / n_embd))
@@ -89,7 +86,6 @@ def rope_cache(seq_len, head_dim, theta, device, dtype):
 
 
 def _alibi_slopes(n_head):
-    """Slopes from the reference ALiBi implementation, including non-powers of 2."""
     def power_of_two(n):
         start = 2 ** (-(2 ** -(math.log2(n) - 3)))
         return [start * start ** i for i in range(n)]
@@ -100,7 +96,6 @@ def _alibi_slopes(n_head):
 
 
 def t5_relative_position_bucket(relative_position, num_buckets=32, max_distance=128):
-    """T5's unidirectional log buckets for non-negative backward distances."""
     distance = relative_position.clamp_min(0)
     max_exact = num_buckets // 2
     is_small = distance < max_exact
@@ -128,14 +123,12 @@ class RelativeBias(nn.Module):
 
 
 class CoPE(nn.Module):
-    """Contextual Position Encoding, equations (3)--(9) of Golovneva et al."""
     def __init__(self, head_dim, max_position):
         super().__init__()
         self.max_position = max_position
         self.position_embeddings = nn.Embedding(max_position + 1, head_dim)
 
     def forward(self, q, semantic_scores):
-        # Gates above the causal diagonal cannot contribute to p_ij.
         t = semantic_scores.size(-1)
         causal = torch.ones(t, t, device=q.device, dtype=torch.bool).tril()
         gates = torch.sigmoid(semantic_scores) * causal
@@ -148,7 +141,6 @@ class CoPE(nn.Module):
 
 
 class CAPE(nn.Module):
-    """Context-Adaptive PE: per-head two-layer LeakyReLU f(attention, base_bias)."""
     def __init__(self, n_head, hidden_dim):
         super().__init__()
         self.mlps = nn.ModuleList([
@@ -167,7 +159,6 @@ class CAPE(nn.Module):
 
 
 class FoPE(nn.Module):
-    """Frozen Fourier-series rotary maps following Hua et al., Appendix B."""
     def __init__(self, n_head, head_dim, theta, train_length, init_gain):
         super().__init__()
         all_freq = 1.0 / (theta ** (torch.arange(0, head_dim, 2).float() / head_dim))
@@ -191,13 +182,7 @@ class FoPE(nn.Module):
         denom = coef.sum(dim=-2, keepdim=True)
         return coef / denom.where(denom.abs() > 1e-6, torch.full_like(denom, 1e-6))
 
-    def rotate(self, x):
-        """Apply the Fourier rotary map to x: [B, n_head, T, head_dim].
-
-        Named ``rotate`` rather than ``apply``: ``nn.Module.apply`` is the weight
-        initialisation walker, and shadowing it made ``self.apply(_init_weights)``
-        call this method with a function argument (crash on model construction).
-        """
+    def rotate(self, x):    
         t = x.size(-2)
         freqs = torch.outer(torch.arange(t, device=x.device).float(), self.inv_freq.to(x.device))
         pos_sin = freqs.sin().to(x.dtype).view(1, 1, t, -1).expand(x.size(0), x.size(1), -1, -1)
@@ -205,10 +190,6 @@ class FoPE(nn.Module):
         fourier_sin = torch.einsum("bhtD,hDd->bhtd", pos_sin, self._normalise(self.sin_coef).to(x.dtype))
         fourier_cos = torch.einsum("bhtD,hDd->bhtd", pos_cos, self._normalise(self.cos_coef).to(x.dtype))
         pad = self.head_dim // 2 - fourier_sin.size(-1)
-        # NOTE(frozen): the sin pad value is 1.0, so the untrained frequency band
-        # is not the identity map (that would need sin=0, cos=1) and rescales the
-        # head by sqrt(2). Frozen by analogy only: FoPE crashed on construction
-        # before this port, so no published run depends on the value.
         fourier_sin = F.pad(fourier_sin, (0, pad), value=1.0)
         fourier_cos = F.pad(fourier_cos, (0, pad), value=1.0)
         fourier_sin = torch.cat((fourier_sin, fourier_sin), dim=-1)
@@ -217,7 +198,6 @@ class FoPE(nn.Module):
 
 
 class PositionalAttention(nn.Module):
-    """Owns only PE-specific state and composes the four positional slots."""
     def __init__(self, config):
         super().__init__()
         self.spec = parse_positional_spec(config.pos_encoding)
@@ -276,8 +256,6 @@ class PositionalSelfAttention(CausalAttention):
         if self.head_dim % 2 and parse_positional_spec(config.pos_encoding).qk in ("rope", "fope"):
             raise ValueError(f"rotary PE needs an even head_dim, got {self.head_dim}")
         self.positioning = PositionalAttention(config)
-        # a bias or a context-dependent score needs the explicit T x T scores;
-        # plain wpe/rope/fope stay on the fused SDPA path
         self.needs_scores = not self.positioning.is_legacy_fast_path
 
     def transform_qk(self, q, k):
@@ -302,9 +280,6 @@ class Model(Transformer):
         super().__init__(config)
         self.positional_spec = parse_positional_spec(config.pos_encoding)
         if self.positional_spec.embedding == "sinusoidal":
-            # Fixed values in the wpe table rather than a separate code path: the
-            # core forward adds it like any position table, weight decay skips it
-            # for lack of a gradient, and param_report counts it as frozen.
             with torch.no_grad():
                 self.transformer.wpe.weight.copy_(
                     sinusoidal_table(config.block_size, config.n_embd))

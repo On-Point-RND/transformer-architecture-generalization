@@ -9,11 +9,6 @@ model:
 
 task:
   name: kv
-  # KV writes `BOE key value EOE` per pair, so prompt = 4*n_pairs+4 and
-  # 4*n_pairs+5 <= block_size+1 caps n_pairs at 31 for block_size=128. The old
-  # config asked for 48 (its comment assumed a 2-token layout) and raised in
-  # collate on the first batch, so no run ever used it. Raise block_size to 200
-  # instead if you want the full 48 pairs back.
   params: {k_card: 64, v_card: 64, n_pairs: 31}
   n_val: 1000
 

@@ -21,7 +21,5 @@ class Model(Transformer):
 
     def __init__(self, config):
         if not config.n_head:
-            # resolved on the config itself, so the checkpoint records the
-            # head count the run actually used
             config.n_head = default_n_heads(config.n_embd)
         super().__init__(config)

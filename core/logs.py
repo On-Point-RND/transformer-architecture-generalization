@@ -17,10 +17,9 @@ from pathlib import Path
 
 import matplotlib
 
-matplotlib.use("Agg")  # cluster nodes have no display
-import matplotlib.pyplot as plt  # noqa: E402
+matplotlib.use("Agg") 
+import matplotlib.pyplot as plt  
 
-# substring of the parameter name -> reporting group, first match wins
 GROUPS = (
     ("positioning", "pe"),
     ("wte", "embedding"),

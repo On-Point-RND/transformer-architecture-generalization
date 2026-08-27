@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-"""Redraw a run's curves, or compare several runs.
-
-    python plot.py runs/small                    # refresh curves.png
-    python plot.py --compare runs/pe_lab/*/*     # one figure, one line per run
-"""
-
 import argparse
 import sys
 from pathlib import Path
@@ -12,10 +5,10 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.pyplot as plt  
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from core.logs import read_metrics, series, write_curves  # noqa: E402
+from core.logs import read_metrics, series, write_curves  
 
 COMPARE_PANELS = (("val_loss", "validation loss"), ("val_acc", "validation exact-match"))
 

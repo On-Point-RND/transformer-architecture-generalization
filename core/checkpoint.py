@@ -74,7 +74,6 @@ def check_architecture(run_dir, checkpoint, model_config, fields):
 
 SECTION_NAMES = ("model", "task", "train", "optimizer", "hardware", "paths")
 
-# these lived under `train:` before the optimizer got a section of its own
 OPTIMIZER_FIELDS = ("learning_rate", "weight_decay", "beta1", "beta2", "grad_clip",
                     "warmup_iters", "lr_decay_iters", "min_lr")
 
@@ -89,7 +88,7 @@ def config_sections(checkpoint):
     config = checkpoint.get("config", {})
     sections = {name: dict(config.get(name) or {}) for name in SECTION_NAMES}
     sections["model"] = model_fields(checkpoint)
-    if not sections["task"]:  # flat, pre-sections layout
+    if not sections["task"]:  
         sections["task"] = {"name": config.get("dataset", "kv_retrieval"),
                             "params": dict(config.get("gen_params") or {})}
         sections["train"] = {k: v for k, v in config.items() if not isinstance(v, dict)}

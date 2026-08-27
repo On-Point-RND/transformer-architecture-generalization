@@ -1,5 +1,4 @@
-# Second parallel control: sorting is rank counting, constant depth.
-# For n=16 add: --set task.params="{'v_card': 52, 'n_items': 16}" --set model.block_size=33
+
 include: base.yaml
 
 paths:
@@ -8,8 +7,8 @@ paths:
 model:
   n_layer: [2, 4, 8]
   n_embd: [128, 256, 512]
-  n_head: 0  # derived per width
-  block_size: 17  # 2n + 1
+  n_head: 0  
+  block_size: 17  
 
 task:
   name: sorting

@@ -11,8 +11,6 @@ class Config(ModelConfig):
 
 
 class Attention(CausalAttention):
-    # False keeps the fused SDPA kernel, which never materialises the T x T
-    # score matrix. Set True when a hook below needs those scores.
     needs_scores = False
 
     def transform_qk(self, q, k):
@@ -29,8 +27,6 @@ class Attention(CausalAttention):
 
 
 class Model(Transformer):
-    # nanoGPT divides the std of each residual output projection by
-    # sqrt(2*n_layer). False for an architecture published without it.
     residual_init_scaling = True
 
     def build_blocks(self, config):

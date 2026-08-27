@@ -42,7 +42,6 @@ class Config(ModelConfig):
 
     def __post_init__(self):
         kv = self.n_kv_head or self.n_head
-        # divisibility also rules out kv > n_head: no integer above n_head divides it
         if self.n_head % kv:
             raise ValueError(f"n_head ({self.n_head}) must be divisible by "
                              f"n_kv_head ({kv})")
@@ -79,9 +78,6 @@ class DesignedAttention(nn.Module):
         self.n_global_tokens = config.n_global_tokens
         self.softmax = config.softmax
         self.dropout = config.dropout
-        # One fused projection, as in core.model.CausalAttention. Keys and values
-        # are narrower than queries under GQA/MQA, and there is no value block at
-        # all under K=V, so the split is uneven; at MHA it is exactly 3 * n_embd.
         kv_dim = self.n_kv_head * self.head_dim
         self.splits = ((config.n_embd, kv_dim) if config.share_kv
                        else (config.n_embd, kv_dim, kv_dim))
@@ -123,7 +119,6 @@ class DesignedAttention(nn.Module):
     def _mix_values(self, q, k, v, t, device):
         dropout_p = self.dropout if self.training else 0.0
         if self.softmax == "standard" and self.pattern == "full":
-            # the fused kernel, never materialising the T x T scores
             return F.scaled_dot_product_attention(q, k, v, is_causal=True,
                                                   dropout_p=dropout_p)
         bias = self._visibility(t, device, q.dtype)

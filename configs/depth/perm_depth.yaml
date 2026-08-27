@@ -1,8 +1,4 @@
-# The main plot: accuracy against difficulty L(x), by depth.
-# S5 is the sequential task (non-solvable group, word problem NC^1-complete);
-# C5 is the parallel control (abelian, so composition is a prefix scan).
-# Expect a staircase for S5 — each extra layer solves a longer chain — and a
-# flat line for C5. 1M examples: at 100k the model memorised instead.
+
 include: base.yaml
 
 paths:
@@ -10,7 +6,7 @@ paths:
 
 model:
   n_layer: [1, 2, 4, 8]
-  block_size: 16  # K + 8
+  block_size: 16  
 
 task:
   name: [s5, c5]

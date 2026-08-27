@@ -1,4 +1,4 @@
-# Does the number of attention heads matter? Depth and width held fixed.
+
 include: base.yaml
 
 paths:

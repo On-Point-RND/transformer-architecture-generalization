@@ -1,25 +1,3 @@
-#!/usr/bin/env python3
-"""Train the run — or the grid of runs — described by a config.
-
-    python main.py                                      # reads configs/main.yaml
-    python main.py --set model.pos_encoding=alibi
-    python main.py --config configs/my_experiment.yaml
-
-A config file pulls in others with `include:`; several --config files merge left
-to right, and --set overrides everything. Any field given a list of values
-becomes a sweep axis, so
-
-    model:
-      pos_encoding: [rope, alibi, cope]
-    train:
-      seed: [1, 2]
-
-is six runs, each in its own run_dir named after the axis values, with one
-collected summary.csv next to them. Finished runs are skipped unless --rerun,
-so an interrupted grid continues by running the same command again. Runs go one
-after another on the card named in hardware.gpu.
-"""
-
 import argparse
 from pathlib import Path
 
@@ -60,7 +38,7 @@ def train_one(config, position, rerun):
         return None
     print(f"{position} {run_dir}", flush=True)
     write_resolved(config)
-    from core import train as trainer  # local: --dry-run and --help need no torch
+    from core import train as trainer  
     return trainer.run(config)
 
 
@@ -68,7 +46,7 @@ def train_guarded(config, position, rerun, guard):
     """Train one config; in a grid a failure is reported instead of raised."""
     try:
         return train_one(config, position, rerun)
-    except Exception as error:  # noqa: BLE001 - one bad cell must not kill the grid
+    except Exception as error:  noqa: 
         if not guard:
             raise
         print(f"{position} FAILED: {type(error).__name__}: {error}", flush=True)
@@ -91,7 +69,6 @@ def main():
     args = parse_args()
     paths = args.config or [DEFAULT_CONFIG]
     if args.dry_run:
-        # deliberately the torch-free path: listing a grid needs no model code
         planned = planned_run_dirs(paths, args.overrides)
         print(f"{len(planned)} run(s):")
         print(*[f"  {run_dir}" for run_dir in planned], sep="\n")

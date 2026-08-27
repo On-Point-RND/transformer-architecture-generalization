@@ -1,7 +1,5 @@
-# Axis 5: FFN design (hypotheses 10 and 11). Widths are derived so all three
-# arms cost the same in parameters: 4*n_embd ungated, 8*n_embd/3 for SwiGLU.
 include: base.yaml
 
 model:
   name: ffn_gating
-  ffn: [gelu, relu, swiglu]   # gelu is the current baseline, kept as the control
+  ffn: [gelu, relu, swiglu]   

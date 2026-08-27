@@ -1,7 +1,4 @@
-# Axis 4: KV / projection design.
-#   n_kv_head 4 = MHA, 2 = GQA, 1 = MQA
-#   share_kv  true is the K=V ablation (hypothesis 9): one projection has to
-#             serve as both address and content
+
 include: base.yaml
 
 model:

@@ -31,7 +31,7 @@ from models import get_model
 from tasks import get_task
 
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
-CHECKPOINTS = ("best.pt", "last.pt", "ckpt.pt")  # ckpt.pt = pre-consolidation runs
+CHECKPOINTS = ("best.pt", "last.pt", "ckpt.pt") 
 ROW_FIELDS = ("run", "checkpoint", "iter", "model", "positional_encoding", "task",
               "label", "scoring", "slice", "params", "n", "loss")
 
@@ -230,7 +230,7 @@ def main():
     for run_dir in args.runs:
         try:
             produced = evaluate_run(run_dir, args, device)
-        except Exception as error:  # noqa: BLE001 - report and keep going
+        except Exception as error:  
             failures.append(run_dir)
             print(f"FAILED {run_dir}: {type(error).__name__}: {error}", flush=True)
             continue

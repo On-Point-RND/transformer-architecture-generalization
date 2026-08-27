@@ -1,7 +1,4 @@
-# Train at N=8, then score at lengths never seen. block_size sizes the position
-# table for the largest evaluation length (3*32+5), as the study did, so the
-# same checkpoint can be scored at N=32 without surgery:
-#   python evaluate.py runs/depth/add_length_gen/* --params "{'n_digits': 24}"
+
 include: base.yaml
 
 paths:
@@ -9,7 +6,7 @@ paths:
 
 model:
   n_layer: [2, 12]
-  block_size: 101  # 3 * 32 + 5, the largest evaluation length
+  block_size: 101  
 
 task:
   name: [add_seq, add_indep]

@@ -35,7 +35,6 @@ def resolve_device(hardware):
 
 
 def get_lr(it, opt):
-    """Linear warmup, cosine decay to min_lr, then flat."""
     if opt.schedule == "constant":
         return opt.learning_rate
     if it < opt.warmup_iters:
@@ -43,7 +42,7 @@ def get_lr(it, opt):
     if it > opt.lr_decay_iters:
         return opt.min_lr
     decay_ratio = (it - opt.warmup_iters) / (opt.lr_decay_iters - opt.warmup_iters)
-    coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio))  # 1 -> 0
+    coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio))  
     return opt.min_lr + coeff * (opt.learning_rate - opt.min_lr)
 
 
@@ -58,7 +57,6 @@ def make_get_batch(task, val_items, config, device, val_rng):
         x, y = torch.from_numpy(x_np), torch.from_numpy(y_np)
         if not on_cuda:
             return x.to(device), y.to(device)
-        # pinning lets the copies overlap with compute
         return (x.pin_memory().to(device, non_blocking=True),
                 y.pin_memory().to(device, non_blocking=True))
 
@@ -66,7 +64,6 @@ def make_get_batch(task, val_items, config, device, val_rng):
 
 
 def _eval_batch(model, get_batch, ctx, split, task, want_scores):
-    """(loss, scores) for one batch; scoring is the task's business, loss is not."""
     x, y = get_batch(split)
     with ctx:
         logits, loss = model(x, y)
@@ -82,7 +79,6 @@ def average_scores(split, batches):
 
 @torch.no_grad()
 def estimate_loss(model, get_batch, ctx, train, task):
-    """Mean loss and mean of the task's metrics over eval_iters fresh batches."""
     out = {}
     model.eval()
     for split in ("train", "val"):
@@ -95,34 +91,27 @@ def estimate_loss(model, get_batch, ctx, train, task):
 
 
 def accumulate_gradients(model, x, y, get_batch, scaler, ctx, steps):
-    """Run `steps` micro-batches; returns the last loss and the prefetched batch."""
     for _ in range(steps):
         with ctx:
             _, loss = model(x, y)
-            loss = loss / steps  # accumulate the mean, not the sum
-        x, y = get_batch("train")  # prefetch while the GPU is busy
+            loss = loss / steps  
+        x, y = get_batch("train")  
         scaler.scale(loss).backward()
     return loss, x, y
 
 
 def optimizer_step(model, optimizer, scaler, grad_clip):
-    """Clip, step, and return the pre-clip global grad norm (or None)."""
     grad_norm = None
     if grad_clip != 0.0:
         scaler.unscale_(optimizer)
         grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), grad_clip)
     scaler.step(optimizer)
     scaler.update()
-    optimizer.zero_grad(set_to_none=True)  # free the gradients early
+    optimizer.zero_grad(set_to_none=True)  
     return grad_norm
 
 
 def watch_early_stop(train, losses, best, stale):
-    """(stop?, best so far, evals without improvement) for the watched metric.
-
-    Direction is read off the metric name: 'train' and 'val' are the losses and
-    fall, every other key comes from Task.metrics and is a score that rises.
-    """
     if not train.early_stop_patience and train.early_stop_target is None:
         return False, best, stale
     value = losses.get(train.early_stop_metric)
@@ -137,8 +126,6 @@ def watch_early_stop(train, losses, best, stale):
             return True, value, 0
     if best is None:
         return False, value, 0
-    # written as a threshold rather than a difference: the two round differently,
-    # and this is the form early stopping conventionally takes
     delta = train.early_stop_min_delta
     improved = value < best - delta if lower_is_better else value > best + delta
     if improved:
@@ -164,7 +151,6 @@ def update_mfu(model, running_mfu, fwdbwd_per_iter, dt, settled):
 
 
 def run_metadata(config, model):
-    """Fields recorded on every eval line, in checkpoints and in summary.csv."""
     report = model.param_report()
     encoding = report.get("positional_encoding", config.model.name)
     params = config.task.params
@@ -192,20 +178,17 @@ def build_model(config, task, device, resumed, ckpt_dir):
 
 
 def load_resume_state(config, resumed, optimizer, scaler, task):
-    """Optimizer/scaler/RNG/task position; returns (iter_num, best_val_loss)."""
     optimizer.load_state_dict(resumed["optimizer"])
     if resumed.get("scaler") is not None:
         scaler.load_state_dict(resumed["scaler"])
     if resumed.get("rng") is not None:
         checkpoint.restore_rng(resumed["rng"])
-    # after generate_val, so the val set is identical and the train stream continues
     if resumed.get("task") is not None:
         task.load_state_dict(resumed["task"])
     return resumed["iter_num"], resumed["best_val_loss"]
 
 
 def pick_resume(train, ckpt_dir, device):
-    """None for a fresh run, otherwise the checkpoint to continue from."""
     if train.init == "scratch":
         return None
     if train.init == "auto" and not checkpoint.exists(ckpt_dir):
@@ -217,7 +200,6 @@ def pick_resume(train, ckpt_dir, device):
 
 def save_checkpoints(config, ckpt_dir, model, optimizer, scaler, task, metadata,
                      iter_num, val_loss, best_val_loss):
-    """Write last.pt, and best.pt when val loss improved. Returns the new best."""
     payload = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -229,7 +211,7 @@ def save_checkpoints(config, ckpt_dir, model, optimizer, scaler, task, metadata,
         "rng": checkpoint.rng_state(),
         "task": task.state_dict(),
     }
-    if iter_num == 0:  # nothing trained yet (and eval_only must not touch disk)
+    if iter_num == 0:  
         return min(val_loss, best_val_loss)
     Path(ckpt_dir).mkdir(parents=True, exist_ok=True)
     if config.train.always_save_checkpoint:
@@ -240,8 +222,7 @@ def save_checkpoints(config, ckpt_dir, model, optimizer, scaler, task, metadata,
     return val_loss
 
 
-def run(config):
-    """Train one model. Returns the best val loss reached."""
+def run(config):    
     train_cfg, opt_cfg, hardware = config.train, config.optimizer, config.hardware
     paths = run_paths(config.paths)
     device = resolve_device(hardware)
@@ -283,10 +264,10 @@ def run(config):
           f"positional: {metadata['positional_parameters']}")
     print(f"tokens per iteration will be: {tokens_per_iter:,}")
 
-    x, y = get_batch("train")  # the very first batch
+    x, y = get_batch("train")  
     t0 = time.time()
     local_iter_num, running_mfu, evals = 0, -1.0, 0
-    best_watched, stale = None, 0  # early-stopping state
+    best_watched, stale = None, 0  
 
     while True:
         lr = get_lr(iter_num, opt_cfg)
@@ -308,11 +289,9 @@ def run(config):
             logger.write_curves()
             evals += 1
             logger.log_diagnostics(raw_model, iter_num, train_cfg.diag_interval, evals)
-            # after the checkpoint and the summary, so stopping loses nothing
             stop, best_watched, stale = watch_early_stop(train_cfg, losses,
                                                          best_watched, stale)
             if stop:
-                # only the target path leaves the staleness counter at zero
                 reason = "target reached" if stale == 0 else f"no gain for {stale} eval(s)"
                 print(f"early stop at {iter_num}: {train_cfg.early_stop_metric} "
                       f"{losses[train_cfg.early_stop_metric]:.4f} - {reason}")
@@ -327,7 +306,6 @@ def run(config):
         dt = time.time() - t0
         t0 = time.time()
         if iter_num % train_cfg.log_interval == 0:
-            # loss.item() syncs; scale back up to approximate the full-batch loss
             lossf = loss.item() * steps
             running_mfu = update_mfu(raw_model, running_mfu, train_cfg.batch_size * steps,
                                      dt, settled=local_iter_num >= 5)
@@ -338,7 +316,6 @@ def run(config):
 
         iter_num += 1
         local_iter_num += 1
-        # NOTE(frozen): `>` runs one iteration past max_iters, as the original did
         if iter_num > train_cfg.max_iters:
             break
 

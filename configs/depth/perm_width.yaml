@@ -1,5 +1,4 @@
-# Width alone does not substitute for depth: hold depth at 4 and grow n_embd.
-# For K=16 add: --set task.params="{'n_perms': 16}" --set model.block_size=24
+
 include: base.yaml
 
 paths:
@@ -8,7 +7,7 @@ paths:
 model:
   n_layer: 4
   n_embd: [128, 256, 512]
-  n_head: 0  # derived per width, so the sweep stays a single axis
+  n_head: 0  
   block_size: 16
 
 task:

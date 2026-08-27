@@ -1,5 +1,4 @@
-# Axis 1: softmax approximation. 'taylor' replaces exp with its second-order
-# expansion, renormalised; masked positions are dropped outright.
+
 include: base.yaml
 
 model:

@@ -116,20 +116,17 @@ def gather(model, task, items, args, device, ctx):
             below, sums, squares = [0.0] * len(layers), [0.0] * len(layers), [0.0] * len(layers)
         rows, cols, tokens = answer_positions(y_np)
         labels.append(tokens)
-        # everything before the padding: prompt plus answer, minus the shift collate applies
         lengths = np.array([len(i.prompt) + len(i.answer) - 1 for i in chunk])
         real = torch.from_numpy(np.arange(block_size)[None, :] < lengths[:, None]).to(device)
         positions += int(lengths.sum())
         for index, activation in enumerate(layers):
             features[index].append(activation[rows, cols].float().cpu().numpy())
-            live = activation[real].float()  # [real positions, n_embd]
+            live = activation[real].float()  
             below[index] += float((live.abs() < args.sparsity_threshold).sum())
             sums[index] += live.sum(0).cpu().numpy()
             squares[index] += live.pow(2).sum(0).cpu().numpy()
     width = len(sums[0])
     stats = [{"sparsity": below[i] / (positions * width),
-              # variance per channel, then averaged, so a channel's offset from
-              # the others is not counted as spread
               "variance": float(np.mean(squares[i] / positions - (sums[i] / positions) ** 2))}
              for i in range(len(features))]
     return [np.concatenate(f) for f in features], np.concatenate(labels), stats
@@ -210,7 +207,7 @@ def main():
     for run_dir in args.runs:
         try:
             produced = probe_run(run_dir, args, device)
-        except Exception as error:  # noqa: BLE001 - report and keep going
+        except Exception as error:  
             failures.append(run_dir)
             print(f"FAILED {run_dir}: {type(error).__name__}: {error}", flush=True)
             continue

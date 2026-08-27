@@ -1,6 +1,4 @@
-# Can iteration replace depth? One shared block applied T times. Expectation:
-# a T-iteration looped model tracks a T-layer model on the sequential
-# condition, and iterating buys nothing on the parallel one.
+
 include: base.yaml
 
 paths:
@@ -8,7 +6,7 @@ paths:
 
 model:
   name: looped
-  n_layer: 1  # one distinct block exists; n_loops is what varies
+  n_layer: 1  
   n_loops: [1, 2, 4, 8, 12]
   block_size: 53
 
