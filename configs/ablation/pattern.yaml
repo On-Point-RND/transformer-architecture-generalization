@@ -1,0 +1,10 @@
+# Axis 2: attention pattern. A sliding window of window_size tokens, plus
+# n_global_tokens leading sink tokens every query can always reach.
+# The full-attention baseline is the default arm of kv_design.yaml.
+include: base.yaml
+
+model:
+  name: attention_design
+  pattern: local              # full | local
+  window_size: [32, 64]
+  n_global_tokens: [0, 4]

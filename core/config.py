@@ -87,6 +87,13 @@ class TrainConfig:
     always_save_checkpoint: bool = True  # write last.pt at every eval
     reproducible_val: bool = False  # seeded val batches; off = legacy behaviour
 
+    # Early stopping. Both triggers are off by default, so a config that does not
+    # mention them trains for the full max_iters exactly as before.
+    early_stop_metric: str = "val"  # 'val' | 'train' | a task metric, e.g. 'val_acc'
+    early_stop_patience: int = 0  # evals without improvement before stopping; 0 disables
+    early_stop_min_delta: float = 0.0  # a gain smaller than this does not count
+    early_stop_target: Optional[float] = None  # stop once the metric is this good
+
     def __post_init__(self):
         # resolved here rather than in the training loop, so the number that was
         # actually used lands in config.resolved.yaml and in the checkpoint

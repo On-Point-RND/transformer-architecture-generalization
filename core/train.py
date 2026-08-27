@@ -117,6 +117,37 @@ def optimizer_step(model, optimizer, scaler, grad_clip):
     return grad_norm
 
 
+def watch_early_stop(train, losses, best, stale):
+    """(stop?, best so far, evals without improvement) for the watched metric.
+
+    Direction is read off the metric name: 'train' and 'val' are the losses and
+    fall, every other key comes from Task.metrics and is a score that rises.
+    """
+    if not train.early_stop_patience and train.early_stop_target is None:
+        return False, best, stale
+    value = losses.get(train.early_stop_metric)
+    if value is None:
+        raise ValueError(f"train.early_stop_metric={train.early_stop_metric!r} is not "
+                         f"among the eval metrics {sorted(losses)}")
+    lower_is_better = train.early_stop_metric in ("train", "val")
+    target = train.early_stop_target
+    if target is not None:
+        reached = value <= target if lower_is_better else value >= target
+        if reached:
+            return True, value, 0
+    if best is None:
+        return False, value, 0
+    # written as a threshold rather than a difference: the two round differently,
+    # and this is the form early stopping conventionally takes
+    delta = train.early_stop_min_delta
+    improved = value < best - delta if lower_is_better else value > best + delta
+    if improved:
+        return False, value, 0
+    stale += 1
+    stop = train.early_stop_patience > 0 and stale >= train.early_stop_patience
+    return stop, best, stale
+
+
 def format_eval(iter_num, losses):
     parts = [f"train loss {losses['train']:.4f}", f"val loss {losses['val']:.4f}"]
     parts += [f"{key} {value:.4f}" for key, value in losses.items()
@@ -255,6 +286,7 @@ def run(config):
     x, y = get_batch("train")  # the very first batch
     t0 = time.time()
     local_iter_num, running_mfu, evals = 0, -1.0, 0
+    best_watched, stale = None, 0  # early-stopping state
 
     while True:
         lr = get_lr(iter_num, opt_cfg)
@@ -276,6 +308,15 @@ def run(config):
             logger.write_curves()
             evals += 1
             logger.log_diagnostics(raw_model, iter_num, train_cfg.diag_interval, evals)
+            # after the checkpoint and the summary, so stopping loses nothing
+            stop, best_watched, stale = watch_early_stop(train_cfg, losses,
+                                                         best_watched, stale)
+            if stop:
+                # only the target path leaves the staleness counter at zero
+                reason = "target reached" if stale == 0 else f"no gain for {stale} eval(s)"
+                print(f"early stop at {iter_num}: {train_cfg.early_stop_metric} "
+                      f"{losses[train_cfg.early_stop_metric]:.4f} - {reason}")
+                break
 
         if iter_num == 0 and train_cfg.eval_only:
             break

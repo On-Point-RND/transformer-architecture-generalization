@@ -21,10 +21,13 @@ class Config(ModelConfig):
     fope_train_length: int = 128
     fope_init_gain: float = 0.3
 
+    def __post_init__(self):
+        parse_positional_spec(self.pos_encoding)  # reject a bad spec at config load
+
 
 SLOTS = {
     "nope": None,
-    "wpe": "embedding",
+    "wpe": "embedding", "sinusoidal": "embedding",
     "rope": "qk", "fope": "qk",
     "alibi": "bias", "relative_bias": "bias",
     "cope": "context", "cape": "context",
@@ -60,6 +63,17 @@ def parse_positional_spec(value):
                              f"both occupy {slot!r}")
         selected[slot] = name
     return PositionalSpec(**selected)
+
+
+def sinusoidal_table(block_size, n_embd):
+    """The original Transformer's fixed table: sin on even channels, cos on odd."""
+    position = torch.arange(block_size).float().unsqueeze(1)
+    angles = position * torch.exp(
+        torch.arange(0, n_embd, 2).float() * (-math.log(10000.0) / n_embd))
+    table = torch.zeros(block_size, n_embd)
+    table[:, 0::2] = angles.sin()
+    table[:, 1::2] = angles.cos()[:, : n_embd // 2]
+    return table
 
 
 def rotate_half(x):
@@ -287,12 +301,20 @@ class Model(Transformer):
     def __init__(self, config):
         super().__init__(config)
         self.positional_spec = parse_positional_spec(config.pos_encoding)
+        if self.positional_spec.embedding == "sinusoidal":
+            # Fixed values in the wpe table rather than a separate code path: the
+            # core forward adds it like any position table, weight decay skips it
+            # for lack of a gradient, and param_report counts it as frozen.
+            with torch.no_grad():
+                self.transformer.wpe.weight.copy_(
+                    sinusoidal_table(config.block_size, config.n_embd))
+            self.transformer.wpe.weight.requires_grad_(False)
 
     def build_attention(self, config, layer_idx):
         return PositionalSelfAttention(config, layer_idx)
 
     def uses_pos_embedding(self, config):
-        return parse_positional_spec(config.pos_encoding).embedding == "wpe"
+        return parse_positional_spec(config.pos_encoding).embedding in ("wpe", "sinusoidal")
 
     def param_report(self):
         counted = [(p.requires_grad, p.numel())

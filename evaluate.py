@@ -19,9 +19,11 @@ table for all runs.
 import argparse
 import csv
 from ast import literal_eval
+from collections import defaultdict
 from contextlib import nullcontext
 from pathlib import Path
 
+import numpy as np
 import torch
 
 from core import checkpoint
@@ -31,7 +33,7 @@ from tasks import get_task
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
 CHECKPOINTS = ("best.pt", "last.pt", "ckpt.pt")  # ckpt.pt = pre-consolidation runs
 ROW_FIELDS = ("run", "checkpoint", "iter", "model", "positional_encoding", "task",
-              "label", "slice", "params", "n", "loss")
+              "label", "scoring", "slice", "params", "n", "loss")
 
 
 def parse_args():
@@ -48,6 +50,9 @@ def parse_args():
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
     parser.add_argument("--dtype", help="default: the dtype the run used")
+    parser.add_argument("--autoregressive", action="store_true",
+                        help="decode the answer token by token instead of scoring a "
+                             "teacher-forced argmax")
     parser.add_argument("--by", help="metadata field to break the score down by, "
                                      "e.g. normalized_target_position")
     parser.add_argument("--bins", type=int, default=0,
@@ -110,7 +115,43 @@ def group_items(items, field, bins, edges):
 
 
 @torch.no_grad()
-def score(model, task, items, batch_size, device, ctx):
+def decode_group(model, items, device, ctx):
+    """Greedy continuation for prompts that all share one length."""
+    tokens = torch.from_numpy(np.stack([i.prompt for i in items])).long().to(device)
+    produced = []
+    for _ in range(max(len(i.answer) for i in items)):
+        with ctx:
+            logits, _ = model(tokens[:, -model.config.block_size:])
+        nxt = logits[:, -1, :].argmax(dim=-1, keepdim=True)
+        produced.append(nxt)
+        tokens = torch.cat([tokens, nxt], dim=1)
+    return torch.cat(produced, dim=1).cpu().numpy()
+
+
+def greedy_predictions(model, items, y, device, ctx):
+    """Decoded answers laid out exactly like a teacher-forced argmax would be.
+
+    Teacher forcing feeds the true answer prefix back in, so a multi-token answer
+    is scored optimistically: one wrong token does not derail the rest. Here the
+    model only ever sees its own output. Prompts are grouped by length because a
+    causal model cannot be left-padded without shifting every position, so rows
+    in one batch must have their answer start at the same index.
+    """
+    predicted = np.zeros_like(y)
+    by_length = defaultdict(list)
+    for index, item in enumerate(items):
+        by_length[len(item.prompt)].append(index)
+    for indices in by_length.values():
+        generated = decode_group(model, [items[i] for i in indices], device, ctx)
+        for row, index in enumerate(indices):
+            answer_len = len(items[index].answer)
+            end = len(items[index].prompt) + answer_len - 1
+            predicted[index, end - answer_len:end] = generated[row, :answer_len]
+    return predicted
+
+
+@torch.no_grad()
+def score(model, task, items, batch_size, device, ctx, autoregressive=False):
     """Loss and the task's metrics over the given examples, in batches.
 
     Batched on purpose: one forward over thousands of rows materialises a
@@ -125,7 +166,9 @@ def score(model, task, items, batch_size, device, ctx):
         x, y = torch.from_numpy(x_np).to(device), torch.from_numpy(y_np).to(device)
         with ctx:
             logits, loss = model(x, y)
-        scores = {"loss": loss.item(), **task.metrics(logits.argmax(dim=-1).cpu().numpy(), y_np)}
+        predicted = (greedy_predictions(model, chunk, y_np, device, ctx) if autoregressive
+                     else logits.argmax(dim=-1).cpu().numpy())
+        scores = {"loss": loss.item(), **task.metrics(predicted, y_np)}
         totals = {k: totals.get(k, 0.0) + v * len(chunk) for k, v in scores.items()}
         rows += len(chunk)
     return {"n": rows, **{key: value / rows for key, value in totals.items()}}
@@ -156,12 +199,13 @@ def evaluate_run(run_dir, args, device):
         "positional_encoding": metadata.get("positional_encoding", ""),
         "task": args.task or sections["task"]["name"],
         "label": args.label or ("ood" if shifted else "id"),
+        "scoring": "autoregressive" if args.autoregressive else "teacher_forced",
         "params": repr(params),
     }
     items = task.generate_val(args.n_eval)
     groups = group_items(items, args.by, args.bins, args.range)
     return [{**row, "slice": label,
-             **score(model, task, chunk, args.batch_size, device, ctx)}
+             **score(model, task, chunk, args.batch_size, device, ctx, args.autoregressive)}
             for label, chunk in groups]
 
 

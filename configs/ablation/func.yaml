@@ -1,0 +1,14 @@
+# Overlay: run any axis on function composition instead of KV retrieval.
+# Layer it last, e.g.
+#   python main.py --config configs/ablation/ffn.yaml --config configs/ablation/func.yaml
+# Training depth is 2-3 steps; the OOD split at 5-10 steps is scored by evaluate.py.
+
+paths:
+  run_dir: runs/ablation/func
+
+model:
+  block_size: 144   # 11 function tables plus a 10-step chain pack to 134 tokens
+
+task:
+  name: function_composition
+  params: {d_card: 10, n_funcs: 11, n_steps: [2, 4]}
