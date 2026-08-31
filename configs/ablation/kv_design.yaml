@@ -1,7 +1,0 @@
-
-include: base.yaml
-
-model:
-  name: attention_design
-  n_kv_head: [4, 2, 1]
-  share_kv: [false, true]

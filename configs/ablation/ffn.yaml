@@ -1,5 +1,0 @@
-include: base.yaml
-
-model:
-  name: ffn_gating
-  ffn: [gelu, relu, swiglu]   

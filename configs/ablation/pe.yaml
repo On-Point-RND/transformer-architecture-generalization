@@ -1,6 +1,0 @@
-
-include: base.yaml
-
-model:
-  name: positional
-  pos_encoding: [nope, wpe, sinusoidal, rope, alibi]

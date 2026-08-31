@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Score trained checkpoints, optionally on a shifted distribution.
 
-    python evaluate.py runs/main/pos_encoding=rope__seed=1337
-    python evaluate.py runs/main/* --params "{'length_range': (33, 64)}" --label OOD-1
+    python evaluate.py runs/EVE-PE/pe_lab/pos_encoding=rope__seed=1337
+    python evaluate.py runs/EVE-PE/pe_lab/* --params "{'length_range': (33, 64)}" --label OOD-1
     python evaluate.py runs/kv-run --task nested_kv --label nested
 
 The model and the task come from the checkpoint, so an evaluation reproduces the

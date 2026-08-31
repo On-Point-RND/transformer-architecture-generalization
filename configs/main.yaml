@@ -1,36 +1,47 @@
-include: size/small.yaml
-
 hardware:
-  device: gpu
+  device: gpu           # gpu | cpu
   gpu: 0
-  dtype: bfloat16
+  dtype: bfloat16       # float32 | bfloat16 | float16
   compile: false
 
 paths:
   run_dir: runs/main
+  logs: ""              # empty roots keep logs/checkpoints/results inside run_dir
+  checkpoints: ""
+  results: ""
 
 model:
-  name: positional
-  pos_encoding: [nope, wpe, rope, fope, alibi, relative_bias, cope, cape]
+  name: vanilla         # file in models/
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
   block_size: 256
+  dropout: 0.0
+  bias: false
 
 task:
-  name: relative_offset_copy
-  params: {}
+  name: kv_retrieval
+  params: {k_card: 80, v_card: 80, n_pairs: [2, 25]}
+  n_val: 1000
+  n_train: 0            # 0 = endless stream; >0 = a fixed training set of that size
+
+optimizer:
+  name: adamw           # file in optimizers/
+  decay: matrices       # matrices (2D tensors only) | all
+  schedule: cosine      # cosine | constant
+  learning_rate: 1.0e-4
+  min_lr: 1.0e-5
+  weight_decay: 0.1
+  warmup_iters: 100
+  lr_decay_iters: 80000
+  grad_clip: 1.0        # 0.0 disables
 
 train:
-  init: scratch
-  seed: [1337, 2026]
+  init: scratch         # scratch | resume | auto
+  seed: 1337
   batch_size: 256
   gradient_accumulation_steps: 1
   max_iters: 80000
   eval_interval: 250
   eval_iters: 100
-
-optimizer:
-  learning_rate: 1.0e-4
-  min_lr: 1.0e-5
-  warmup_iters: 100
-  lr_decay_iters: 80000
-  weight_decay: 0.1
-  grad_clip: 1.0
+  early_stop_patience: 0   # 0 disables early stopping

@@ -1,3 +1,4 @@
+include: ../main.yaml
 
 model:
   name: positional
@@ -10,11 +11,18 @@ model:
 
 task:
   name: kv_retrieval
-  params: {k_card: 80, v_card: 80, n_pairs: [2, 25]}  
+  params:
+    k_card: 80
+    v_card: 80
+    n_pairs: [2, 25]
   n_val: 1000
 
-paths:
-  run_dir: runs/small
+optimizer:
+  learning_rate: 0.0001
+  min_lr: 1.0e-05
+  weight_decay: 0.1
+  warmup_iters: 100
+  lr_decay_iters: 80000
 
 train:
   init: scratch
@@ -24,9 +32,5 @@ train:
   eval_interval: 250
   eval_iters: 100
 
-optimizer:
-  lr_decay_iters: 80000
-  warmup_iters: 100
-  learning_rate: 1.0e-4
-  min_lr: 1.0e-5
-  weight_decay: 0.1
+paths:
+  run_dir: runs/EVE-PE/small

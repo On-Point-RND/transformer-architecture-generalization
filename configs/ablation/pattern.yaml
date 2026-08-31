@@ -1,8 +1,0 @@
-
-include: base.yaml
-
-model:
-  name: attention_design
-  pattern: local              
-  window_size: [32, 64]
-  n_global_tokens: [0, 4]

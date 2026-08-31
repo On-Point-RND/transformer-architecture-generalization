@@ -41,7 +41,7 @@ class PathsConfig:
     """Where a run writes. Empty roots keep everything inside run_dir.
 
     A root that is set gets run_dir appended (``checkpoints: /mnt/big`` ->
-    ``/mnt/big/runs/main/pos_encoding=rope/last.pt``), so grid points and
+    ``/mnt/big/runs/EVE-PE/pe_lab/pos_encoding=rope/last.pt``), so grid points and
     separate experiments cannot overwrite each other's files.
     """
     run_dir: str = "runs/run"
@@ -55,8 +55,6 @@ class OptimizerConfig:
     """How the parameters are updated. Which algorithm, and on what schedule."""
     name: str = "adamw"  # file/entry in optimizers/
     learning_rate: float = 6e-4
-    # two scalars rather than a betas pair: a list written directly under a
-    # section is a sweep axis, so `betas: [0.9, 0.95]` would mean two runs
     beta1: float = 0.9
     beta2: float = 0.95
     weight_decay: float = 1e-1

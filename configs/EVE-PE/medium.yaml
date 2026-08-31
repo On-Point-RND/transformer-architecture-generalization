@@ -1,3 +1,5 @@
+include: ../main.yaml
+
 model:
   name: positional
   n_layer: 7
@@ -9,11 +11,17 @@ model:
 
 task:
   name: kv
-  params: {k_card: 64, v_card: 64, n_pairs: 31}
+  params:
+    k_card: 64
+    v_card: 64
+    n_pairs: 31
   n_val: 1000
 
-paths:
-  run_dir: runs/medium
+optimizer:
+  learning_rate: 0.0006
+  min_lr: 6.0e-05
+  warmup_iters: 225
+  lr_decay_iters: 4500
 
 train:
   init: scratch
@@ -23,8 +31,5 @@ train:
   eval_interval: 250
   eval_iters: 200
 
-optimizer:
-  lr_decay_iters: 4500
-  warmup_iters: 225
-  learning_rate: 6.0e-4
-  min_lr: 6.0e-5
+paths:
+  run_dir: runs/EVE-PE/medium

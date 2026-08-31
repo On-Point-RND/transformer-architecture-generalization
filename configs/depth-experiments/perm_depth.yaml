@@ -1,0 +1,42 @@
+include: ../main.yaml
+
+model:
+  name: depth
+  n_layer: [1, 2, 4, 8]
+  n_head: 4
+  n_embd: 128
+  block_size: 16
+  dropout: 0.0
+  bias: true
+
+task:
+  name: [s5, c5]
+  params:
+    n_perms: 8
+  n_val: 5000
+  n_train: 1000000
+
+optimizer:
+  name: adamw
+  decay: all
+  learning_rate: 0.0003
+  min_lr: 0.0
+  weight_decay: 0.1
+  warmup_iters: 500
+  lr_decay_iters: 60000
+  grad_clip: 1.0
+
+train:
+  init: scratch
+  seed: [0, 1, 2, 3, 4]
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 60000
+  eval_interval: 2000
+  eval_iters: 2
+
+hardware:
+  dtype: float32
+
+paths:
+  run_dir: runs/depth-experiments/perm_depth

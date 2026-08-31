@@ -1,3 +1,5 @@
+include: ../main.yaml
+
 model:
   name: positional
   n_layer: 8
@@ -9,12 +11,17 @@ model:
 
 task:
   name: kv
-  # see configs/size/medium.yaml for why this is 31 and not 48
-  params: {k_card: 64, v_card: 64, n_pairs: 31}
+  params:
+    k_card: 64
+    v_card: 64
+    n_pairs: 31
   n_val: 1000
 
-paths:
-  run_dir: runs/large
+optimizer:
+  learning_rate: 0.0006
+  min_lr: 6.0e-05
+  warmup_iters: 770
+  lr_decay_iters: 15400
 
 train:
   init: scratch
@@ -24,8 +31,5 @@ train:
   eval_interval: 500
   eval_iters: 200
 
-optimizer:
-  lr_decay_iters: 15400
-  warmup_iters: 770
-  learning_rate: 6.0e-4
-  min_lr: 6.0e-5
+paths:
+  run_dir: runs/EVE-PE/large

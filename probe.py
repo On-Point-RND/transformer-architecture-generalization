@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Look inside a trained checkpoint: what does each layer already know?
 
-    python probe.py runs/ablation/kv/ffn=swiglu__seed=0 --mode linear
-    python probe.py runs/depth/perm_depth/* --mode readout
-    python probe.py runs/ablation/kv/* --mode stats --params "{'n_pairs': (20, 41)}"
+    python probe.py runs/RELU_SWIGLU/kv/ffn=swiglu__seed=0 --mode linear
+    python probe.py runs/depth-experiments/perm_depth/* --mode readout
+    python probe.py runs/RELU_SWIGLU/kv/* --mode stats --params "{'n_pairs': (20, 41)}"
 
 Three views of the same captured activations:
 

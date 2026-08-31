@@ -46,7 +46,7 @@ def train_guarded(config, position, rerun, guard):
     """Train one config; in a grid a failure is reported instead of raised."""
     try:
         return train_one(config, position, rerun)
-    except Exception as error:  noqa: 
+    except Exception as error:
         if not guard:
             raise
         print(f"{position} FAILED: {type(error).__name__}: {error}", flush=True)
