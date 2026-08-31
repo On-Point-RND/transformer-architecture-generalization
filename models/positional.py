@@ -28,6 +28,7 @@ class Config(ModelConfig):
 SLOTS = {
     "nope": None,
     "wpe": "embedding", "sinusoidal": "embedding",
+    "abs_shift": "embedding", "pose": "embedding",
     "rope": "qk", "fope": "qk",
     "alibi": "bias", "relative_bias": "bias",
     "cope": "context", "cape": "context",
@@ -289,7 +290,80 @@ class Model(Transformer):
         return PositionalSelfAttention(config, layer_idx)
 
     def uses_pos_embedding(self, config):
-        return parse_positional_spec(config.pos_encoding).embedding in ("wpe", "sinusoidal")
+        return parse_positional_spec(config.pos_encoding).embedding in (
+            "wpe", "sinusoidal", "abs_shift", "pose"
+        )
+
+    def _check_sample_shape(self, batch_size, length):
+        if not isinstance(batch_size, int) or batch_size < 1:
+            raise ValueError(f"batch_size must be a positive integer, got {batch_size!r}")
+        if not isinstance(length, int) or not 1 <= length <= self.config.block_size:
+            raise ValueError(
+                f"length must be in [1, {self.config.block_size}], got {length!r}"
+            )
+
+    def _sample_pose_for_lengths(self, lengths, width, device):
+        """PoSE indices for variable valid lengths, padded to ``width`` with 0."""
+        base = torch.arange(width, device=device).unsqueeze(0).expand(len(lengths), width)
+        lengths = lengths.to(device=device, dtype=torch.long).view(-1, 1)
+        budget = self.config.block_size - lengths
+        active = (lengths >= 2) & (budget > 0)
+
+        # One split and two ordered skips per row. Multiplication by the
+        # row-specific integer range is the vectorised equivalent of randint.
+        split = 1 + (torch.rand(len(lengths), 1, device=device)
+                     * (lengths - 1).clamp_min(1)).long()
+        first = (torch.rand(len(lengths), 1, device=device) * (budget + 1)).long()
+        second = first + (
+            torch.rand(len(lengths), 1, device=device) * (budget - first + 1)
+        ).long()
+        first = torch.where(active, first, torch.zeros_like(first))
+        second = torch.where(active, second, torch.zeros_like(second))
+        shifted = base + torch.where(base < split, first, second)
+        return torch.where(base < lengths, shifted, torch.zeros_like(shifted))
+
+    def sample_pose_positions(self, batch_size, length, device):
+        """Sample old-style two-chunk PoSE indices with shape ``[B, T]``."""
+        self._check_sample_shape(batch_size, length)
+        if length < 2 or length == self.config.block_size:
+            return torch.arange(length, device=device).expand(batch_size, length)
+        lengths = torch.full((batch_size,), length, dtype=torch.long, device=device)
+        return self._sample_pose_for_lengths(lengths, length, device)
+
+    def _effective_lengths(self, idx, targets):
+        if targets is None:
+            return torch.full(
+                (idx.size(0),), idx.size(1), dtype=torch.long, device=idx.device
+            )
+        if targets.shape != idx.shape:
+            raise ValueError(
+                f"targets must have shape {tuple(idx.shape)}, got {tuple(targets.shape)}"
+            )
+        supervised = targets.ne(-1)
+        one_based = torch.arange(1, idx.size(1) + 1, device=idx.device)
+        return (supervised * one_based).amax(dim=1)
+
+    def _sample_shift_for_lengths(self, lengths, width, device):
+        base = torch.arange(width, device=device).unsqueeze(0).expand(len(lengths), width)
+        lengths = lengths.to(device=device, dtype=torch.long).view(-1, 1)
+        budget = self.config.block_size - lengths
+        offsets = (torch.rand(len(lengths), 1, device=device) * (budget + 1)).long()
+        shifted = base + offsets
+        return torch.where(base < lengths, shifted, torch.zeros_like(shifted))
+
+    def forward(self, idx, targets=None, positions=None):
+        embedding = self.positional_spec.embedding
+        if positions is None and self.training and embedding in ("abs_shift", "pose"):
+            lengths = self._effective_lengths(idx, targets)
+            if embedding == "abs_shift":
+                positions = self._sample_shift_for_lengths(
+                    lengths, idx.size(1), idx.device
+                )
+            else:
+                positions = self._sample_pose_for_lengths(
+                    lengths, idx.size(1), idx.device
+                )
+        return super().forward(idx, targets, positions=positions)
 
     def param_report(self):
         counted = [(p.requires_grad, p.numel())

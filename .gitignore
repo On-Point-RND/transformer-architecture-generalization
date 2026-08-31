@@ -6,9 +6,11 @@ __pycache__/
 *.bin
 *.pkl
 *.pt
+*.pth
 *.pyc
 input.txt
 env/
 venv/
 runs/
+saved/
 out*

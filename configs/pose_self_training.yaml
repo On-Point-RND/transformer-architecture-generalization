@@ -1,0 +1,61 @@
+include: size/small.yaml
+
+# Reproduction of the PoSE/FixMatch study from transformer-all-tasks, adapted
+# to this repository's model/task contracts.  The runner keeps the original
+# JSON + .pth artifact layout under saved/pose_fixmatch/.  The companion runner
+# exposes baseline, abs_shift, PoSE, FixMatch, and self-improvement variants.
+hardware:
+  device: gpu
+  gpu: 0
+  dtype: float32
+  compile: false
+
+paths:
+  run_dir: saved/pose_fixmatch
+
+model:
+  name: positional
+  pos_encoding: wpe
+  n_layer: 4
+  n_head: 2
+  n_embd: 128
+  block_size: 64
+  dropout: 0.0
+  bias: true
+
+task:
+  # add_seq supplies the BOS/EOS contract needed by pseudo-label filtering.
+  # Task ranges are half-open in the current API: [1, 6) means lengths 1..5.
+  name: add_seq
+  params:
+    n_digits: [1, 6]
+    reverse: true
+  n_val: 1000
+  n_train: 0
+
+train:
+  init: scratch
+  seed: 1
+  data_seed: 1
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 5000
+  eval_interval: 500
+  eval_iters: 100
+  eval_accuracy: true
+  log_interval: 250
+
+optimizer:
+  name: adamw
+  learning_rate: 3.0e-4
+  beta1: 0.9
+  beta2: 0.999
+  weight_decay: 0.01
+  decay: all
+  grad_clip: 1.0
+  # The dedicated runner supplies the original OneCycle schedule.  This value
+  # remains a valid standard-config value for inspection by the core loader.
+  schedule: constant
+  warmup_iters: 250
+  lr_decay_iters: 5000
+  min_lr: 0.0

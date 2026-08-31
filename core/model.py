@@ -164,14 +164,34 @@ class Transformer(nn.Module):
         elif isinstance(module, nn.Embedding):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
-    def forward(self, idx, targets=None):
-        _, t = idx.size()
+    def forward(self, idx, targets=None, positions=None):
+        b, t = idx.size()
         assert t <= self.config.block_size, (
             f"Cannot forward sequence of length {t}, block size is only {self.config.block_size}")
         x = self.transformer.wte(idx)  # [B, T, n_embd]
         if "wpe" in self.transformer:
-            pos = torch.arange(t, dtype=torch.long, device=idx.device)
+            if positions is None:
+                pos = torch.arange(t, dtype=torch.long, device=idx.device)
+            else:
+                if not isinstance(positions, torch.Tensor):
+                    raise TypeError("positions must be a torch.Tensor with shape [T] or [B, T]")
+                if positions.shape not in ((t,), (b, t)):
+                    raise ValueError(
+                        f"positions must have shape {(t,)} or {(b, t)}, "
+                        f"got {tuple(positions.shape)}"
+                    )
+                if positions.device != idx.device:
+                    raise ValueError(
+                        f"positions must be on {idx.device}, got {positions.device}"
+                    )
+                if positions.dtype not in (torch.int32, torch.int64):
+                    raise TypeError(
+                        f"positions must contain integer indices, got {positions.dtype}"
+                    )
+                pos = positions
             x = x + self.transformer.wpe(pos)
+        elif positions is not None:
+            raise ValueError("positions require a model with positional embeddings")
         x = self.transformer.drop(x)
         for block in self.transformer.h:
             x = block(x)
@@ -221,12 +241,20 @@ class Transformer(nn.Module):
     @torch.no_grad()
     def generate(self, idx, max_new_tokens, temperature=1.0, top_k=None):
         """Complete idx [B, T] by feeding predictions back in, max_new_tokens times."""
-        for _ in range(max_new_tokens):
-            idx_cond = idx if idx.size(1) <= self.config.block_size else idx[:, -self.config.block_size:]
-            logits, _ = self(idx_cond)
-            logits = logits[:, -1, :] / temperature
-            if top_k is not None:
-                values, _ = torch.topk(logits, min(top_k, logits.size(-1)))
-                logits[logits < values[:, [-1]]] = -float("inf")
-            idx = torch.cat((idx, torch.multinomial(F.softmax(logits, dim=-1), 1)), dim=1)
-        return idx
+        was_training = self.training
+        self.eval()
+        try:
+            for _ in range(max_new_tokens):
+                idx_cond = (idx if idx.size(1) <= self.config.block_size
+                            else idx[:, -self.config.block_size:])
+                logits, _ = self(idx_cond)
+                logits = logits[:, -1, :] / temperature
+                if top_k is not None:
+                    values, _ = torch.topk(logits, min(top_k, logits.size(-1)))
+                    logits[logits < values[:, [-1]]] = -float("inf")
+                idx = torch.cat(
+                    (idx, torch.multinomial(F.softmax(logits, dim=-1), 1)), dim=1
+                )
+            return idx
+        finally:
+            self.train(was_training)
