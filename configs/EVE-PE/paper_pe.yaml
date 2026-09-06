@@ -34,11 +34,11 @@ optimizer:
 train:
   init: scratch
   seed: 1337
-  batch_size: 256
-  gradient_accumulation_steps: 1
+  batch_size: 8
+  gradient_accumulation_steps: 32
   max_iters: 57000
   eval_interval: 250
-  eval_iters: 100
+  eval_iters: 3200
   reproducible_val: false
   early_stop_patience: 0
 

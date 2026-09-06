@@ -27,6 +27,7 @@ import numpy as np
 import torch
 
 from core import checkpoint
+from core.precision import autocast_context
 from models import get_model
 from tasks import get_task
 
@@ -47,7 +48,7 @@ def parse_args():
     parser.add_argument("--label", help="name for this evaluation in the output row")
     parser.add_argument("-n", "--n-eval", type=int, default=2000)
     parser.add_argument("--seed", type=int, help="default: the run's data_seed")
-    parser.add_argument("--batch-size", type=int, default=128)
+    parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
     parser.add_argument("--dtype", help="default: the dtype the run used")
     parser.add_argument("--autoregressive", action="store_true",
@@ -187,8 +188,7 @@ def evaluate_run(run_dir, args, device):
     overrides = literal_eval(args.params)
     task, params = build_task(sections, args.task, overrides, args.seed)
     dtype = args.dtype or sections["hardware"].get("dtype", "float32")
-    ctx = (nullcontext() if "cuda" not in device else
-           torch.amp.autocast(device_type="cuda", dtype=DTYPES[dtype]))
+    ctx = autocast_context(device, dtype)
     metadata = saved.get("run_metadata", {})
     shifted = bool(overrides) or bool(args.task)
     row = {

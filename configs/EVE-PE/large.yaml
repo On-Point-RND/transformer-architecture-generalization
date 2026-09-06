@@ -25,11 +25,11 @@ optimizer:
 
 train:
   init: scratch
-  batch_size: 256
-  gradient_accumulation_steps: 1
+  batch_size: 8
+  gradient_accumulation_steps: 32
   max_iters: 15400
   eval_interval: 500
-  eval_iters: 200
+  eval_iters: 6400
 
 paths:
   run_dir: runs/EVE-PE/large

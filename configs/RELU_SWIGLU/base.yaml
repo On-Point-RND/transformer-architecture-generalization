@@ -23,10 +23,11 @@ optimizer:
 
 train:
   seed: [0, 1, 2]
-  batch_size: 32
+  batch_size: 8
+  gradient_accumulation_steps: 4
   max_iters: 120000
   eval_interval: 1000
-  eval_iters: 20
+  eval_iters: 80
   early_stop_metric: val       # 'val' | 'train' | a task metric such as 'val_acc'
   early_stop_patience: 15      # 0 disables
   early_stop_min_delta: 1.0e-4

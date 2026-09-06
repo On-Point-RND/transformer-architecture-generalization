@@ -1,4 +1,4 @@
-"""Small CPU protocol checks; all artifacts stay in results/verification."""
+"""Protocol checks plus optional CUDA FP16 checks; artifacts stay in results/verification."""
 import sys
 sys.dont_write_bytecode = True
 from pathlib import Path
@@ -21,6 +21,49 @@ torch.set_num_threads(1)
 
 
 class ProtocolTests(unittest.TestCase):
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA required for FP16")
+    def test_all_encodings_cuda_fp16(self):
+        with patch.object(runner, "precision", return_value=torch.float16):
+            for encoding in runner.read_json(runner.HERE / "experiment.json")["encodings"]:
+                with self.subTest(encoding=encoding):
+                    task = get_task("relative_offset_copy", {"seed": 7, "length_range": (256, 256)})
+                    model = Model(Config(**self.cfg["model"], vocab_size=task.vocab_size,
+                                         pos_encoding=encoding)).to("cuda:0")
+                    x, y = runner.batch(task, task.sample(2), "cuda:0")
+                    with runner.autocast("cuda:0"):
+                        _, loss = model(x, y)
+                    loss.backward()
+                    self.assertTrue(torch.isfinite(loss))
+                    self.assertTrue(all(torch.isfinite(p.grad).all() for p in model.parameters()
+                                        if p.grad is not None))
+                    result = runner.evaluate(model, task, task.sample(2), "cuda:0", 1)
+                    self.assertEqual(result["n"], 2)
+
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA required for FP16 scaling")
+    def test_cuda_fp16_overflow_retry_and_resume(self):
+        # Force the RTX 2070 precision path even on newer test GPUs.
+        with patch.object(runner, "precision", return_value=torch.float16):
+            (self.directory / "data").mkdir()
+            data = runner.dataset("relative_offset_copy", self.cfg, 7, self.directory / "data")
+            worker = runner.Worker("relative_offset_copy", "rope", 7, self.cfg,
+                                   self.directory / "gpu", data, "cuda:0")
+            worker.scaler = torch.amp.GradScaler("cuda", init_scale=2.0 ** 24)
+            before = {k: v.clone() for k, v in worker.model.state_dict().items()}
+            worker.train_step()
+            self.assertEqual(worker.state["step"], 1)
+            self.assertLess(worker.scaler.get_scale(), 2.0 ** 24)
+            self.assertTrue(any(not torch.equal(v, before[k]) for k, v in worker.model.state_dict().items()))
+            worker.save()
+            resumed = runner.Worker("relative_offset_copy", "rope", 7, self.cfg,
+                                    self.directory / "gpu", data, "cuda:0")
+            self.assertEqual(worker.scaler.state_dict(), resumed.scaler.state_dict())
+            worker.train_step()
+            resumed = runner.Worker("relative_offset_copy", "rope", 7, self.cfg,
+                                    self.directory / "gpu", data, "cuda:0")
+            resumed.train_step()
+            for key, value in worker.model.state_dict().items():
+                self.assertTrue(torch.equal(value, resumed.model.state_dict()[key]), key)
+
     def setUp(self):
         self.cfg = runner.read_json(runner.HERE / "experiment.json")
         self.cfg.update(seeds=[7], encodings=["nope", "rope"], batch_size=4,

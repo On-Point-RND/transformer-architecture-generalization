@@ -35,6 +35,7 @@ from torch.nn import functional as F
 
 from evaluate import DTYPES, build_task, load_model, pick_checkpoint, pick_device
 from core import checkpoint
+from core.precision import autocast_context
 
 ROW_FIELDS = ("run", "checkpoint", "model", "task", "label", "mode", "layer",
               "metric", "value")
@@ -51,7 +52,7 @@ def parse_args():
     parser.add_argument("--label", help="name for this probe in the output row")
     parser.add_argument("-n", "--n-eval", type=int, default=2000)
     parser.add_argument("--seed", type=int, help="default: the run's data_seed")
-    parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--probe-steps", type=int, default=400)
     parser.add_argument("--probe-lr", type=float, default=1e-2)
     parser.add_argument("--sparsity-threshold", type=float, default=0.01)
@@ -166,8 +167,7 @@ def probe_run(run_dir, args, device):
     overrides = literal_eval(args.params)
     task, params = build_task(sections, args.task, overrides, args.seed)
     dtype = args.dtype or sections["hardware"].get("dtype", "float32")
-    ctx = (nullcontext() if "cuda" not in device else
-           torch.amp.autocast(device_type="cuda", dtype=DTYPES[dtype]))
+    ctx = autocast_context(device, dtype)
     items = task.generate_val(args.n_eval)
     features, labels, stats = gather(model, task, items, args, device, ctx)
 

@@ -33,11 +33,11 @@ optimizer:
 train:
   init: scratch
   seed: [0, 1, 2]
-  batch_size: 32
-  gradient_accumulation_steps: 1
+  batch_size: 8
+  gradient_accumulation_steps: 4
   max_iters: 120000
   eval_interval: 1000
-  eval_iters: 20
+  eval_iters: 80
   early_stop_metric: val
   early_stop_patience: 15
   early_stop_min_delta: 0.0001

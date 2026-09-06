@@ -11,6 +11,7 @@ import torch
 from core import checkpoint
 from core.config import run_paths, to_dict
 from core.logs import RunLogger
+from core.precision import autocast_context, resolve_dtype
 from tasks import get_task
 from models import get_model
 
@@ -232,8 +233,9 @@ def run(config):
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
     device_type = "cuda" if "cuda" in device else "cpu"
-    ctx = (nullcontext() if device_type == "cpu" else
-           torch.amp.autocast(device_type=device_type, dtype=DTYPES[hardware.dtype]))
+    dtype = resolve_dtype(device, hardware.dtype)
+    ctx = autocast_context(device, dtype)
+    print(f"device={device}, precision={dtype}, effective batch={train_cfg.batch_size * steps}")
 
     task = get_task(config.task.name, {**config.task.params, "seed": train_cfg.data_seed})
     val_items = task.generate_val(config.task.n_val)
@@ -242,7 +244,7 @@ def run(config):
 
     resumed = pick_resume(train_cfg, paths.checkpoints, device)
     model = build_model(config, task, device, resumed, paths.checkpoints)
-    scaler = torch.amp.GradScaler(device_type, enabled=hardware.dtype == "float16")
+    scaler = torch.amp.GradScaler(device_type, enabled=dtype == "float16")
     optimizer = model.configure_optimizers(opt_cfg, device_type)
     iter_num, best_val_loss = 0, float("inf")
     if resumed is not None:

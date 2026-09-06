@@ -108,9 +108,18 @@ def batch(task, items, device):
     return torch.from_numpy(x).to(device), torch.from_numpy(y).to(device)
 
 
+def precision(device):
+    if not device.startswith("cuda"):
+        return torch.float32
+    with torch.cuda.device(device):
+        native_bf16 = torch.cuda.get_device_capability()[0] >= 8 and torch.cuda.is_bf16_supported()
+    return torch.bfloat16 if native_bf16 else torch.float16
+
+
 def autocast(device):
-    return (torch.autocast("cuda", dtype=torch.bfloat16)
-            if device.startswith("cuda") and torch.cuda.is_bf16_supported() else contextlib.nullcontext())
+    dtype = precision(device)
+    return (torch.autocast("cuda", dtype=dtype)
+            if dtype != torch.float32 else contextlib.nullcontext())
 
 
 @contextlib.contextmanager
@@ -182,11 +191,14 @@ class Worker:
         opt = OptimizerConfig(learning_rate=cfg["learning_rate"], schedule="constant",
                               weight_decay=cfg["weight_decay"], grad_clip=cfg["grad_clip"])
         self.optimizer = self.model.configure_optimizers(opt, "cuda" if device.startswith("cuda") else "cpu")
+        self.scaler = torch.amp.GradScaler("cuda", enabled=precision(device) == torch.float16)
         loaded = torch.load(self.path, map_location="cpu", weights_only=False) if self.path.exists() else None
         if loaded:
             self.state = loaded["state"]
             self.model.load_state_dict(loaded["model"])
             self.optimizer.load_state_dict(loaded["optimizer"])
+            if loaded.get("scaler"):
+                self.scaler.load_state_dict(loaded["scaler"])
         self.reset_task()
         if loaded:
             self.task.load_state_dict(loaded["task"])
@@ -199,6 +211,7 @@ class Worker:
 
     def save(self):
         atomic_torch(self.path, {"model": self.model.state_dict(), "optimizer": self.optimizer.state_dict(),
+                                "scaler": self.scaler.state_dict(),
                                 "state": self.state, "task": self.task.state_dict(), "rng": checkpoint.rng_state(),
                                 "model_config": vars(self.model_config), "experiment": self.cfg})
         atomic_json(self.directory / "status.json", self.state)
@@ -228,6 +241,7 @@ class Worker:
             group["lr"] = lr
         self.model.train()
         rng = checkpoint.rng_state()
+        overflow_retries = 0
         while True:
             self.optimizer.zero_grad(set_to_none=True)
             oom = False
@@ -240,14 +254,29 @@ class Worker:
                         loss = loss * (sum(len(x.answer) for x in chunk) / total_tokens)
                     if not torch.isfinite(loss):
                         raise FloatingPointError("Non-finite training loss")
-                    loss.backward()
+                    self.scaler.scale(loss).backward()
                     del x, y, loss, _
             except torch.cuda.OutOfMemoryError:
                 if self.state["micro_batch"] == 1:
                     raise
                 oom = True
             if not oom:
-                break
+                self.scaler.unscale_(self.optimizer)
+                torch.nn.utils.clip_grad_norm_(
+                    self.model.parameters(), self.cfg["grad_clip"],
+                    error_if_nonfinite=not self.scaler.is_enabled())
+                old_scale = self.scaler.get_scale()
+                self.scaler.step(self.optimizer)
+                self.scaler.update()
+                if self.scaler.get_scale() >= old_scale:
+                    break
+                # An overflow must not consume an optimizer step or a new batch.
+                overflow_retries += 1
+                if overflow_retries >= 16:
+                    raise FloatingPointError("FP16 gradients still overflow after 16 retries")
+                checkpoint.restore_rng(rng)
+                self.log("amp_retry", scale=self.scaler.get_scale())
+                continue
             # Retry the SAME logical batch, before any optimizer update.
             self.optimizer.zero_grad(set_to_none=True)
             x = y = loss = _ = None
@@ -255,8 +284,6 @@ class Worker:
             checkpoint.restore_rng(rng)
             torch.cuda.empty_cache()
             self.log("oom_retry", micro_batch=self.state["micro_batch"])
-        torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.cfg["grad_clip"], error_if_nonfinite=True)
-        self.optimizer.step()
         self.state["step"] += 1
 
     def advance(self, target=None):
@@ -469,7 +496,7 @@ def validate(cfg, names):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=HERE / "experiment.json")
-    parser.add_argument("--output", type=Path, default=HERE / "results" / "full")
+    parser.add_argument("--output", type=Path, default=HERE / "results" / "rtx2070")
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--tasks", nargs="+")
     parser.add_argument("--dry-run", action="store_true")
@@ -517,6 +544,8 @@ def main():
                 if not torch.cuda.is_available():
                     raise RuntimeError("CUDA unavailable. Install a CUDA PyTorch build or explicitly use --device cpu")
                 torch.cuda.get_device_properties(torch.device(args.device))
+            print(f"Device: {args.device}; precision: {precision(args.device)}; "
+                  f"microbatch: {cfg['micro_batch_size']}; eval batch: {cfg['eval_batch_size']}", flush=True)
             torch.set_num_threads(min(8, os.cpu_count() or 1))
             atomic_json(output / "environment.json", {"python": sys.version, "torch": torch.__version__,
                         "numpy": np.__version__, "device": args.device, "started": time.strftime("%Y-%m-%d %H:%M:%S")})

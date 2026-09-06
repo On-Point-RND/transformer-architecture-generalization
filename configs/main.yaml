@@ -1,7 +1,7 @@
 hardware:
   device: gpu           # gpu | cpu
   gpu: 0
-  dtype: bfloat16       # float32 | bfloat16 | float16
+  dtype: auto           # RTX 2070: FP16; native BF16 GPUs: BF16; CPU: FP32
   compile: false
 
 paths:
@@ -39,9 +39,9 @@ optimizer:
 train:
   init: scratch         # scratch | resume | auto
   seed: 1337
-  batch_size: 256
-  gradient_accumulation_steps: 1
+  batch_size: 8
+  gradient_accumulation_steps: 32
   max_iters: 80000
   eval_interval: 250
-  eval_iters: 100
+  eval_iters: 3200
   early_stop_patience: 0   # 0 disables early stopping

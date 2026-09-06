@@ -29,11 +29,11 @@ optimizer:
 train:
   init: scratch
   seed: [0, 1, 2, 3, 4]
-  batch_size: 256
-  gradient_accumulation_steps: 1
+  batch_size: 8
+  gradient_accumulation_steps: 32
   max_iters: 60000
   eval_interval: 2000
-  eval_iters: 2
+  eval_iters: 64
 
 hardware:
   dtype: float32
