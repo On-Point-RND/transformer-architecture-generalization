@@ -1,26 +1,3 @@
-"""Task registry.
-
-Training/validation data is streamed live from a ``Task`` — there are no
-on-disk bins and no ``meta.pkl``. Pick a task by name in the config, e.g.
-
-    task:
-      name: kv
-      params: {k_card: 80, v_card: 80, n_pairs: [2, 25]}
-
-Contract — each task is a ``Task`` subclass (see tasks/base.py) that implements
-
-    _sample_one() -> DatasetItem(prompt, answer)   # one prompt->answer example
-    vocab_size                                      # property: number of token ids
-    PAD_ID                                          # class attr, default 0
-
-The base class provides the rest for free: ``sample_train``/``generate_val``
-(deduped by prompt hash), the answer-masked ``collate`` and the rng state used
-for exact resume.
-
-Adding a task = add one file here and one entry in TASKS below. The config name
-need not equal the filename, and related tasks may share a single module.
-"""
-
 import importlib
 
 from tasks.positional_lab import POSITIONAL_TASK_DEFAULTS
@@ -39,6 +16,10 @@ TASKS = {
     "add_indep": ("tasks.addition", "AdditionTask", {"carry": False, "bos_eos": True}),
     "indexing": ("tasks.indexing", "IndexingTask", {}),
     "dyck": ("tasks.dyck", "DyckTask", {}),
+    "maze": ("tasks.maze", "MazeTask", {}),
+    "ltl": ("tasks.ltl", "LTLTask", {}),
+    "ltl_local": ("tasks.ltl", "LTLTask", {"mode": "local"}),
+    "ltl_global": ("tasks.ltl", "LTLTask", {"mode": "global"}),
     "function_composition": ("tasks.function_composition", "FunctionCompositionTask", {}),
     "positional_lab": ("tasks.positional_lab", "PositionalLabTask", {}),
 }

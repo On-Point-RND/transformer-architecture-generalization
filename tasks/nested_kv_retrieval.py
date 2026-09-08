@@ -175,7 +175,6 @@ class NestedKVRetrievalTask(KVRetrievalTask):
             n_nested = self._draw(self.n_nested)
         n_nested = max(0, min(n_nested, n_pairs))
         if self.query_mode == "key2value":
-            # the query needs at least one top-level pair holding a plain value
             n_nested = min(n_nested, n_pairs - 1)
 
         nested_slots = set(

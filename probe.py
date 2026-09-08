@@ -1,28 +1,3 @@
-#!/usr/bin/env python3
-"""Look inside a trained checkpoint: what does each layer already know?
-
-    python probe.py runs/RELU_SWIGLU/kv/ffn=swiglu__seed=0 --mode linear
-    python probe.py runs/depth-experiments/perm_depth/* --mode readout
-    python probe.py runs/RELU_SWIGLU/kv/* --mode stats --params "{'n_pairs': (20, 41)}"
-
-Three views of the same captured activations:
-
-  linear   a fresh linear read-out is trained on each layer's residual stream and
-           scored on held-out positions. This is the honest measurement of when
-           the answer becomes decodable: the read-out is fitted to the layer it
-           reports on.
-  readout  the model's own final norm and head are applied to an intermediate
-           layer. Cheap, and the usual first thing people try, but confounded --
-           the head was trained on the last layer's distribution, so early layers
-           are penalised for a reason unrelated to the question. Kept as the
-           contrast to `linear`.
-  stats    activation sparsity (fraction of units below --sparsity-threshold) and
-           feature variance per layer, over the real (non-padding) positions.
-
-Rows go to <run_dir>/probe.csv in long form, one per (layer, metric); -o also
-writes one combined table.
-"""
-
 import argparse
 import csv
 from ast import literal_eval

@@ -1,21 +1,3 @@
-#!/usr/bin/env python3
-"""Score trained checkpoints, optionally on a shifted distribution.
-
-    python evaluate.py runs/EVE-PE/pe_lab/pos_encoding=rope__seed=1337
-    python evaluate.py runs/EVE-PE/pe_lab/* --params "{'length_range': (33, 64)}" --label OOD-1
-    python evaluate.py runs/kv-run --task nested_kv --label nested
-
-The model and the task come from the checkpoint, so an evaluation reproduces the
-run's own validation set by default (same task, same params, same data_seed).
-Overriding --task or --params is what makes it an OOD measurement: everything
-else stays as trained.
-
-Metrics are whatever the task reports (see Task.metrics), so a task that scores
-itself specially is scored the same way here as during training. Rows are
-appended to <run_dir>/evaluations.csv and printed; -o also writes one combined
-table for all runs.
-"""
-
 import argparse
 import csv
 from ast import literal_eval
