@@ -1,5 +1,3 @@
-"""Length Scaled Softplus Attention (LSSA) from arXiv:2501.13428."""
-
 from dataclasses import dataclass
 
 import torch
@@ -11,16 +9,7 @@ from models.positional import rope_cache, rotate_half
 
 
 def lssa_attention(q, k, v, eps=1e-8):
-    """Length Scaled Softplus Attention.
 
-    Args:
-        q, k, v: [B, H, L, D]
-        eps: stabilizer for L1 normalisation
-
-    Returns:
-        output: [B, H, L, D]
-        attention: [B, H, L, L] causal L1-normalised weights
-    """
     _, _, length, head_dim = q.shape
     q = F.normalize(q, p=2, dim=-1)
     k = F.normalize(k, p=2, dim=-1)

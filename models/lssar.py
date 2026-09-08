@@ -1,5 +1,3 @@
-"""Length Scaled Softplus Attention with Re-weighting (LSSAR) from arXiv:2501.13428."""
-
 from dataclasses import dataclass
 
 import torch
@@ -10,17 +8,6 @@ from models.lssa import Model as LssaModel
 
 
 def lssar_attention(q, k, v, p=15, eps=1e-8):
-    """LSSA followed by Shift-ReLU^p sharpening.
-
-    Args:
-        q, k, v: [B, H, L, D]
-        p: sharpening power (paper default 15)
-        eps: stabilizer for L1 normalisation
-
-    Returns:
-        output: [B, H, L, D]
-        attention: [B, H, L, L] sharpened causal L1-normalised weights
-    """
     _, attention = lssa_attention(q, k, v, eps=eps)
     length = q.size(-2)
     n = torch.arange(1, length + 1, device=q.device, dtype=attention.dtype).view(1, 1, length, 1)
