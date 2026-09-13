@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from core.logs import read_metrics, series, write_curves  
 
-COMPARE_PANELS = (("val_loss", "validation loss"), ("val_acc", "validation exact-match"))
+COMPARE_PANELS = (("val_loss", "validation loss"), ("val_acc", "validation exact-match"), ("val_token_acc", "validation token-accuracy"))
 
 
 def run_label(records):

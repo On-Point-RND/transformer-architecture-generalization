@@ -118,3 +118,118 @@ def _inversions(values) -> int:
     """
     return int(sum(values[i] > values[j]
                    for i in range(len(values)) for j in range(i + 1, len(values))))
+
+
+
+class StringSortingTask(Task):
+    PAD_ID = 0
+    SORT_ID = 1
+    SEP_ID = 2
+    EOS_ID = 3
+    N_SPECIAL = 4
+
+    def __init__(
+        self,
+        n_items: int | Tuple[int, int],
+        item_len: int | Tuple[int, int] = (2, 5),
+        alphabet: str = "0123456789abcdefghijklmnopqrstuvwxyz",
+        duplicates: bool = True,
+        descending: bool = False,
+        seed: int | None = 42,
+    ):
+        self.n_items = n_items
+        self.item_len = item_len
+        self.duplicates = duplicates
+        self.descending = descending
+        self.rng = np.random.default_rng(seed)
+
+        self.char_to_id = {
+            char: idx + self.N_SPECIAL
+            for idx, char in enumerate(alphabet)
+        }
+        self.id_to_char = {
+            idx: char
+            for char, idx in self.char_to_id.items()
+        }
+
+    @property
+    def vocab_size(self) -> int:
+        return self.N_SPECIAL + len(self.char_to_id)
+
+    def _sample_n_items(self) -> int:
+        if isinstance(self.n_items, int):
+            return self.n_items
+        return int(self.rng.integers(*self.n_items))
+
+    def _sample_item_len(self) -> int:
+        if isinstance(self.item_len, int):
+            return self.item_len
+        return int(self.rng.integers(*self.item_len))
+
+    def _sample_string(self) -> str:
+        length = self._sample_item_len()
+        chars = self.rng.choice(list(self.char_to_id), size=length)
+        return "".join(chars)
+
+    def _encode_items(self, items: list[str]) -> np.ndarray:
+        encoded = []
+
+        for i, item in enumerate(items):
+            encoded.extend(self.char_to_id[ch] for ch in item)
+
+            if i < len(items) - 1:
+                encoded.append(self.SEP_ID)
+
+        return np.asarray(encoded, dtype=np.int64)
+
+    def _sample_one(self) -> DatasetItem:
+        n = self._sample_n_items()
+
+        items = []
+        seen = set()
+
+        while len(items) < n:
+            item = self._sample_string()
+
+            if self.duplicates or item not in seen:
+                items.append(item)
+                seen.add(item)
+
+        sorted_items = sorted(items, reverse=self.descending)
+
+        prompt = np.concatenate([
+            self._encode_items(items),
+            np.asarray([self.SORT_ID], dtype=np.int64),
+        ])
+
+        answer = np.concatenate([
+            self._encode_items(sorted_items),
+            np.asarray([self.EOS_ID], dtype=np.int64),
+        ])
+
+        return DatasetItem(
+            prompt=prompt,
+            answer=answer,
+            metadata={
+                "n_items": n,
+                "items": items,
+                "sorted_items": sorted_items,
+            },
+        )
+
+    def metrics(self, predicted, targets) -> dict:
+        """Return batch-level metrics: exact-match `acc` and token-level `token_acc`.
+
+        `predicted` and `targets` are numpy arrays shaped [batch, block_size].
+        Positions where `targets == -1` are ignored for `token_acc`.
+        """
+        base = super().metrics(predicted, targets)
+        mask = targets != -1
+        total = mask.sum()
+        if total:
+            correct = ((predicted == targets) & mask).sum()
+            token_acc = float(correct) / float(total)
+        else:
+            token_acc = 0.0
+        base.update({"token_acc": float(token_acc)})
+        return base
