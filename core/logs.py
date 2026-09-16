@@ -132,7 +132,8 @@ def series(records, event, x_key, y_key):
 
 PANELS = (
     ("loss", (("eval", "train_loss", "train"), ("eval", "val_loss", "val"))),
-    ("exact-match accuracy", (("eval", "train_acc", "train"), ("eval", "val_acc", "val"))),
+    ("exact-match accuracy", (("eval", "train_acc", "train"), ("eval", "val_acc", "val"),
+                               ("eval", "train_token_acc", "train token"), ("eval", "val_token_acc", "val token"))),
     ("learning rate", (("eval", "lr", "lr"),)),
     ("grad norm (global)", (("train", "grad_norm", "grad norm"),)),
 )
