@@ -1,0 +1,14 @@
+include: ../main.yaml
+
+model:
+  name: mamba2
+  n_layer: 4
+  n_embd: 128
+  d_state: 128
+  d_conv: 4
+  expand: 2
+  headdim: 64
+  chunk_size: 256
+
+paths:
+  run_dir: runs/mamba2/base
