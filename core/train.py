@@ -15,7 +15,10 @@ from tasks import get_task
 from models import get_model
 
 ARCHITECTURE_FIELDS = ("name", "n_layer", "n_head", "n_embd", "block_size",
-                       "bias", "vocab_size", "pos_encoding", "n_loops")
+                       "bias", "vocab_size", "pos_encoding", "n_loops",
+                       "d_state", "d_conv", "expand", "headdim", "d_ssm", "ngroups",
+                       "d_has_hdim", "rmsnorm", "norm_before_gate",
+                       "learnable_init_states", "conv_bias")
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
 
 
@@ -320,4 +323,3 @@ def run(config):
             break
 
     return best_val_loss
-
