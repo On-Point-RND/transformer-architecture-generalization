@@ -1,16 +1,3 @@
-"""Run logging: one JSONL of every metric, a one-row summary CSV, and curves.
-
-    <logs>/metrics.jsonl        one record per train tick / eval / diagnostic
-    <results>/summary.csv       one row: config + latest and best metrics
-    <results>/curves.png        loss, accuracy, lr and grad norm, redrawn at eval
-
-where <logs> and <results> come from the paths section of the config and both
-default to the run directory.
-
-No wandb, no tensorboard: the JSONL is the source of truth and every plot is
-regenerated from it (plot.py).
-"""
-
 import csv
 import json
 from pathlib import Path
@@ -20,47 +7,29 @@ import matplotlib
 matplotlib.use("Agg") 
 import matplotlib.pyplot as plt  
 
-GROUPS = (
-    ("positioning", "pe"),
-    ("wte", "embedding"),
-    ("wpe", "embedding"),
-    ("attn.c_attn", "attn.qkv"),
-    ("attn.c_proj", "attn.proj"),
-    ("mlp.", "mlp"),
-    ("ln_", "norm"),
-    ("lm_head", "head"),
-)
-
-
-def group_of(name):
-    for needle, group in GROUPS:
-        if needle in name:
-            return group
-    return "other"
-
-
 def parameter_norms(model):
-    """L2 norm of the weights and of the gradients, per reporting group.
 
-    Weights and gradients only — no forward pass, no extra batch. Pulling one
-    more batch here would advance the task's stream and change what the model
-    trains on. Everything is detached, so this module stays torch-free at import
-    time and plot.py runs anywhere.
-    """
-    weight, grad = {}, {}
+    module_types = {
+        path: module.__class__.__name__
+        for path, module in model.named_modules()
+    }
+    weight, grad = {"all": 0.0}, {"all": 0.0}
     for name, parameter in model.named_parameters():
-        group = group_of(name)
-        weight[group] = weight.get(group, 0.0) + parameter.detach().float().pow(2).sum().item()
+        owner = name.rpartition(".")[0]
+        group = module_types.get(owner, model.__class__.__name__)
+        weight_sq = parameter.detach().float().pow(2).sum().item()
+        weight["all"] += weight_sq
+        weight[group] = weight.get(group, 0.0) + weight_sq
         if parameter.grad is None:
             continue
-        grad[group] = grad.get(group, 0.0) + parameter.grad.detach().float().pow(2).sum().item()
+        grad_sq = parameter.grad.detach().float().pow(2).sum().item()
+        grad["all"] += grad_sq
+        grad[group] = grad.get(group, 0.0) + grad_sq
     return {"weight_norm": {k: v ** 0.5 for k, v in weight.items()},
             "grad_norm": {k: v ** 0.5 for k, v in grad.items()}}
 
 
 class RunLogger:
-    """Append-only JSONL plus a summary row and refreshed curves."""
-
     def __init__(self, paths, metadata, resume=False):
         self.logs_dir, self.results_dir = Path(paths.logs), Path(paths.results)
         self.logs_dir.mkdir(parents=True, exist_ok=True)

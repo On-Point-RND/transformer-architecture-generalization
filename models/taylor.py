@@ -55,6 +55,5 @@ class Attention(CausalAttention):
         return torch.matmul(self.attn_dropout(weights), v)
 
 
-class Model(Transformer):
-    def build_attention(self, config, layer_idx):
-        return Attention(config, layer_idx)
+def build_model(config):
+    return Transformer(config, attention=Attention)

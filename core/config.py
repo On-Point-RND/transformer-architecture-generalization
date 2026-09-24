@@ -1,3 +1,17 @@
+"""Experiment config: one YAML file, no includes.
+
+A field comes from the file, else from the dataclass default below -- one
+level, in one place. Lists under ``grid:`` are axes of a sweep; a list anywhere
+else is data, such as a task's ``n_pairs: [2, 25]`` range.
+
+    model:  {name: positional, n_layer: 4}
+    task:   {name: kv_retrieval, params: {k_card: 80, v_card: 80, n_pairs: [2, 25]}}
+    grid:
+      model.pos_encoding: [nope, rope]
+      task.params.n_pairs: [[2, 7], [2, 25]]
+"""
+
+import copy
 import itertools
 from ast import literal_eval
 from dataclasses import dataclass, field, fields, is_dataclass
@@ -9,14 +23,14 @@ import yaml
 
 @dataclass
 class ModelConfig:
-    name: str = "positional"  # file name in models/
-    block_size: int = 1024
+    name: str = "vanilla"  # entry in models.MODELS
+    block_size: int = 256
     vocab_size: Optional[int] = None  # filled in from the task's vocabulary
-    n_layer: int = 12
-    n_head: int = 12
-    n_embd: int = 768
+    n_layer: int = 4
+    n_head: int = 4
+    n_embd: int = 128
     dropout: float = 0.0
-    bias: bool = True  # bias in Linears and LayerNorms
+    bias: bool = False  # bias in Linears and LayerNorms
 
 
 @dataclass
@@ -54,16 +68,16 @@ class PathsConfig:
 class OptimizerConfig:
     """How the parameters are updated. Which algorithm, and on what schedule."""
     name: str = "adamw"  # file/entry in optimizers/
-    learning_rate: float = 6e-4
+    learning_rate: float = 1e-4
     beta1: float = 0.9
     beta2: float = 0.95
     weight_decay: float = 1e-1
     decay: str = "matrices"  # 'matrices' (2D tensors only) | 'all'
     grad_clip: float = 1.0  # 0.0 disables
     schedule: str = "cosine"  # 'cosine' | 'constant'
-    warmup_iters: int = 2000
-    lr_decay_iters: int = 600000
-    min_lr: float = 6e-5
+    warmup_iters: int = 100
+    lr_decay_iters: int = 80000
+    min_lr: float = 1e-5
 
 
 @dataclass
@@ -72,12 +86,12 @@ class TrainConfig:
     seed: int = 1337  # initialisation/shuffling seed
     data_seed: Optional[int] = None  # None = follow train.seed
 
-    batch_size: int = 12
-    gradient_accumulation_steps: int = 40
-    max_iters: int = 600000
+    batch_size: int = 256
+    gradient_accumulation_steps: int = 1
+    max_iters: int = 80000
 
-    eval_interval: int = 2000
-    eval_iters: int = 200
+    eval_interval: int = 250
+    eval_iters: int = 100
     eval_only: bool = False
     eval_accuracy: bool = True  # also compute the task's metrics at eval
     log_interval: int = 100
@@ -121,16 +135,97 @@ def run_paths(paths: PathsConfig) -> RunPaths:
                       for root in (paths.logs, paths.checkpoints, paths.results)])
 
 
-LEAF_KEYS = {"params"}
+def set_path(sections: dict, key: str, value):
+    """``set_path(s, "task.params.n_pairs", v)`` is ``s["task"]["params"]["n_pairs"] = v``."""
+    section, *names = key.split(".")
+    if section not in sections:
+        raise ValueError(f"{key!r}: no section {section!r}; expected {'/'.join(SECTIONS)}")
+    if not names:
+        raise ValueError(f"{key!r}: name a field, e.g. {section}.<field>")
+    node = sections[section]
+    for name in names[:-1]:
+        node = node.setdefault(name, {})
+    node[names[-1]] = value
 
 
-def _merge(base: dict, extra: dict) -> dict:
-    out = dict(base)
-    for key, value in extra.items():
-        mergeable = (isinstance(value, dict) and isinstance(out.get(key), dict)
-                     and key not in LEAF_KEYS)
-        out[key] = _merge(out[key], value) if mergeable else value
-    return out
+def parse_value(raw: str):
+    """A --set/--grid value: a Python literal (1e-3, [2, 7], True), else YAML
+    (so ``[nope, rope]`` needs no quotes), else the plain string."""
+    try:
+        return literal_eval(raw)
+    except (SyntaxError, ValueError):
+        pass
+    try:
+        return yaml.safe_load(raw)
+    except yaml.YAMLError:
+        return raw
+
+
+def _assignment(text: str, flag: str):
+    key, sep, raw = text.partition("=")
+    if not sep or "." not in key:
+        raise ValueError(f"{flag} expects 'section.field=value', got {text!r}")
+    return key.strip(), parse_value(raw)
+
+
+def read_config(path, overrides=(), grids=()):
+    """The file plus CLI edits, as (sections, grid).
+
+    ``--set key=value`` writes data and, if key was an axis, pins it. ``--grid
+    key=[...]`` adds an axis. Both take the dotted keys the grid uses.
+    """
+    raw = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+    if "include" in raw:
+        raise ValueError(f"{path}: 'include:' is gone; each config is self-contained "
+                         f"and unset fields take the dataclass defaults in core/config.py")
+    grid = dict(raw.pop("grid", None) or {})
+    stray = sorted(set(raw) - set(SECTIONS))
+    if stray:
+        raise ValueError(f"{path}: unknown top-level section(s) {stray}; "
+                         f"expected {'/'.join(SECTIONS)} or grid")
+    sections = {name: dict(raw.get(name) or {}) for name in SECTIONS}
+    for text in overrides:
+        key, value = _assignment(text, "--set")
+        set_path(sections, key, value)
+        grid.pop(key, None)
+    for text in grids:
+        key, values = _assignment(text, "--grid")
+        grid[key] = values
+    for key, values in grid.items():
+        if not isinstance(values, list):
+            raise ValueError(f"grid {key}: expected a list of values, got {values!r}")
+    return sections, grid
+
+
+def _slug(value):
+    return "".join(c if c.isalnum() or c in "+-._" else "-" for c in str(value))
+
+
+def _label_value(value):
+    if isinstance(value, (list, tuple)):
+        return "-".join(_slug(v) for v in value)
+    return _slug(value)
+
+
+def expand(sections, grid):
+    """One sections dict per grid point; run_dir gets ``name=value__...`` appended.
+
+    An axis is named by the last segment of its key, or by the whole key when two
+    axes share that segment (model.name and task.name).
+    """
+    keys = list(grid)
+    short = [key.rsplit(".", 1)[-1] for key in keys]
+    names = [key if short.count(name) > 1 else name for key, name in zip(keys, short)]
+    points = []
+    for values in itertools.product(*(grid[key] for key in keys)):
+        point = copy.deepcopy(sections)
+        for key, value in zip(keys, values):
+            set_path(point, key, value)
+        label = "__".join(f"{name}={_label_value(v)}" for name, v in zip(names, values))
+        base = point["paths"].get("run_dir", PathsConfig.run_dir)
+        point["paths"]["run_dir"] = f"{base}/{label}" if label else base
+        points.append(point)
+    return points
 
 
 def _tuplify(value):
@@ -149,61 +244,12 @@ def _build(cls, values: dict, where: str):
     return cls(**values)
 
 
-def _set_override(sections: dict, assignment: str):
-    key, _, raw = assignment.partition("=")
-    section, _, name = key.strip().partition(".")
-    if not name:
-        raise ValueError(f"--set expects 'section.key=value', got {assignment!r}")
-    if section not in sections:
-        raise ValueError(f"--set {assignment}: no section {section!r}")
-    try:
-        value = literal_eval(raw)
-    except (SyntaxError, ValueError):
-        value = raw  # plain strings need no quoting
-    sections[section][name] = value
-
-
-def read_yaml(path) -> dict:
-    """One config file plus whatever it ``include:``s, as a single dict.
-
-    Includes are resolved relative to the including file and merged first, so a
-    file always overrides what it pulls in.
-    """
-    path = Path(path)
-    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    includes = raw.pop("include", [])
-    includes = [includes] if isinstance(includes, str) else includes
-    merged: dict = {}
-    for name in includes:
-        merged = _merge(merged, read_yaml(path.parent / name))
-    return _merge(merged, raw)
-
-
-def merge_sections(paths, overrides=()) -> dict:
-    """Read the YAML files, apply --set, return {'model': ..., 'task': ..., 'train': ...}.
-
-    Kept separate from ``load_config`` so config files can be inspected and
-    diffed without importing torch.
-    """
-    merged: dict = {}
-    for path in paths:
-        merged = _merge(merged, read_yaml(path))
-    sections = {name: dict(merged.get(name, {})) for name in SECTIONS}
-    stray = sorted(set(merged) - set(sections))
-    if stray:
-        raise ValueError(f"unknown top-level section(s) {stray}; "
-                         f"expected {'/'.join(SECTIONS)}")
-    for assignment in overrides:
-        _set_override(sections, assignment)
-    return sections
-
-
 def _build_config(sections) -> Config:
     from models import get_model  # local import: models import this module
-    model_cls = get_model(sections["model"].get("name", ModelConfig.name))[0]
+    model_config_cls = get_model(sections["model"].get("name", ModelConfig.name))[0]
     sections["task"]["params"] = _tuplify(sections["task"].get("params", {}))
     return Config(
-        model=_build(model_cls, sections["model"], "model"),
+        model=_build(model_config_cls, sections["model"], "model"),
         task=_build(TaskConfig, sections["task"], "task"),
         train=_build(TrainConfig, sections["train"], "train"),
         optimizer=_build(OptimizerConfig, sections["optimizer"], "optimizer"),
@@ -212,60 +258,13 @@ def _build_config(sections) -> Config:
     )
 
 
-def planned_run_dirs(paths, overrides=()):
+def planned_run_dirs(path, overrides=(), grids=()):
     """Where each run would write, without importing the model code."""
-    expanded = expand_sections(merge_sections(paths, overrides))
-    return [sections["paths"]["run_dir"] for _, sections in expanded]
+    return [s["paths"]["run_dir"] for s in expand(*read_config(path, overrides, grids))]
 
 
-def expand_configs(paths, overrides=()):
-    expanded = expand_sections(merge_sections(paths, overrides))
-    return [_build_config(sections) for _, sections in expanded]
-
-
-def load_config(paths, overrides=()) -> Config:
-    """The single Config this input describes; errors if it is a grid."""
-    configs = expand_configs(paths, overrides)
-    if len(configs) != 1:
-        raise ValueError(f"this config expands to {len(configs)} runs; "
-                         f"use expand_configs() or drop the list-valued fields")
-    return configs[0]
-
-
-def _slug(value):
-    return "".join(c if c.isalnum() or c in "+-._" else "-" for c in str(value))
-
-
-def _label(axes, combination):
-    parts = []
-    for (_, key, values), value in zip(axes, combination):
-        scalar = isinstance(value, (str, int, float, bool))
-        parts.append(f"{key}={_slug(value) if scalar else values.index(value) + 1}")
-    return "__".join(parts)
-
-
-def _with_values(sections, axes, combination, label):
-    picked = {name: dict(values) for name, values in sections.items()}
-    for (section, key, _), value in zip(axes, combination):
-        picked[section][key] = value
-    base = picked["paths"].get("run_dir", PathsConfig.run_dir)
-    picked["paths"]["run_dir"] = f"{base}/{label}" if label else base
-    return picked
-
-
-def expand_sections(sections):
-    """[(label, sections)] — one entry per combination of list-valued fields.
-
-    Only fields written directly under model/task/train are axes; anything
-    nested inside a value stays data.
-    """
-    axes = [(name, key, values) for name, section in sections.items()
-            for key, values in section.items() if isinstance(values, list)]
-    expanded = []
-    for combination in itertools.product(*[values for _, _, values in axes]):
-        label = _label(axes, combination)
-        expanded.append((label, _with_values(sections, axes, combination, label)))
-    return expanded
+def expand_configs(path, overrides=(), grids=()):
+    return [_build_config(s) for s in expand(*read_config(path, overrides, grids))]
 
 
 def to_dict(config) -> dict:

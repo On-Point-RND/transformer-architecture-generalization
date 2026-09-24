@@ -12,11 +12,14 @@ DEFAULT_CONFIG = "configs/main.yaml"
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--config", action="append", metavar="FILE",
-                        help=f"config file; repeatable, later files win "
-                             f"(default: {DEFAULT_CONFIG})")
+    parser.add_argument("--config", default=DEFAULT_CONFIG, metavar="FILE",
+                        help=f"the experiment's config file (default: {DEFAULT_CONFIG})")
     parser.add_argument("--set", action="append", default=[], dest="overrides",
-                        metavar="section.key=value", help="single value override")
+                        metavar="key=value",
+                        help="set a value, e.g. task.params.n_pairs=[2,7]; pins an axis")
+    parser.add_argument("--grid", action="append", default=[], dest="grids",
+                        metavar="key=[...]",
+                        help="add an axis, e.g. train.seed=[0,1,2]")
     parser.add_argument("--rerun", action="store_true",
                         help="retrain runs that already have a summary.csv")
     parser.add_argument("--dry-run", action="store_true",
@@ -67,14 +70,13 @@ def report(configs, results):
 
 def main():
     args = parse_args()
-    paths = args.config or [DEFAULT_CONFIG]
     if args.dry_run:
-        planned = planned_run_dirs(paths, args.overrides)
+        planned = planned_run_dirs(args.config, args.overrides, args.grids)
         print(f"{len(planned)} run(s):")
         print(*[f"  {run_dir}" for run_dir in planned], sep="\n")
         return 0
 
-    configs = expand_configs(paths, args.overrides)
+    configs = expand_configs(args.config, args.overrides, args.grids)
     print(f"{len(configs)} run(s):")
     for config in configs:
         print(f"  {config.paths.run_dir}")

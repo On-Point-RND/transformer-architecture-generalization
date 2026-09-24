@@ -13,7 +13,7 @@ from models import get_model
 from tasks import get_task
 
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
-CHECKPOINTS = ("best.pt", "last.pt", "ckpt.pt") 
+CHECKPOINTS = ("best.pt", "last.pt")
 ROW_FIELDS = ("run", "checkpoint", "iter", "model", "positional_encoding", "task",
               "label", "scoring", "slice", "params", "n", "loss")
 
@@ -56,8 +56,8 @@ def pick_checkpoint(run_dir, requested):
 def load_model(run_dir, name, device):
     saved = checkpoint.load(run_dir, name, device)
     fields = dict(checkpoint.config_sections(saved)["model"])
-    Config, Model = get_model(fields.pop("name", "positional"))
-    model = Model(Config(**fields))
+    Config, build_model = get_model(fields.pop("name"))
+    model = build_model(Config(**fields))
     model.load_state_dict(checkpoint.strip_compile_prefix(saved["model"]))
     return model.eval().to(device), saved
 

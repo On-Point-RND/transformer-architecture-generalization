@@ -1,25 +1,20 @@
-"""Attention design (ablation axes 1, 2 and 4).
+"""Attention design: projection layout and visibility pattern.
 
-Three axes share this file because they all modify one computation — the same
-attention call — and the ablation composes them freely:
+Two axes share this file because they both change the attention call:
 
-  axis 4, KV/projection design
+  KV/projection design
       ``n_kv_head`` equal to n_head is MHA, 1 is MQA, a divisor in between is GQA.
       ``share_kv`` is the K=V ablation: one projection feeds both keys and values,
       forcing addresses and content into a single subspace.
-  axis 2, attention pattern
+  attention pattern
       ``full``, or ``local``: a sliding window of ``window_size`` tokens plus
       ``n_global_tokens`` leading sink tokens every query can always reach.
-  axis 1, softmax
-      the exact softmax, or its second-order Taylor approximation.
-
-With the defaults — MHA, full, standard — this is core.model.CausalAttention:
+With the defaults — MHA and full attention — this is core.model.CausalAttention:
 the fused projection is the same 3*n_embd matrix built in the same order, and
 the forward takes the same fused kernel. That makes the ablation's own control
 arm verifiable rather than merely asserted.
 """
 
-import math
 from dataclasses import dataclass
 
 import torch
@@ -38,7 +33,6 @@ class Config(ModelConfig):
     pattern: str = "full"       # 'full' | 'local'
     window_size: int = 0        # tokens visible behind a query under 'local'
     n_global_tokens: int = 0    # leading tokens every query can always see
-    softmax: str = "standard"   # 'standard' | 'taylor'
 
     def __post_init__(self):
         kv = self.n_kv_head or self.n_head
@@ -49,20 +43,6 @@ class Config(ModelConfig):
             raise ValueError(f"model.pattern must be full/local, got {self.pattern!r}")
         if self.pattern == "local" and self.window_size <= 0:
             raise ValueError("model.window_size is required when pattern is 'local'")
-        if self.softmax not in ("standard", "taylor"):
-            raise ValueError(f"model.softmax must be standard/taylor, got {self.softmax!r}")
-
-
-def taylor_softmax(scores):
-    """Second-order Taylor expansion of exp, renormalised.
-
-    Masked positions arrive as -inf and are dropped outright: the polynomial is
-    even, so a large negative score would otherwise come back as a large positive
-    weight.
-    """
-    weights = (1.0 + scores + 0.5 * scores.pow(2)).clamp(min=1e-6)
-    weights = torch.where(torch.isfinite(scores), weights, torch.zeros_like(weights))
-    return weights / weights.sum(dim=-1, keepdim=True).clamp(min=1e-6)
 
 
 class DesignedAttention(nn.Module):
@@ -76,14 +56,12 @@ class DesignedAttention(nn.Module):
         self.pattern = config.pattern
         self.window_size = config.window_size
         self.n_global_tokens = config.n_global_tokens
-        self.softmax = config.softmax
         self.dropout = config.dropout
         kv_dim = self.n_kv_head * self.head_dim
         self.splits = ((config.n_embd, kv_dim) if config.share_kv
                        else (config.n_embd, kv_dim, kv_dim))
         self.c_attn = nn.Linear(config.n_embd, sum(self.splits), bias=config.bias)
         self.c_proj = nn.Linear(config.n_embd, config.n_embd, bias=config.bias)
-        self.attn_dropout = nn.Dropout(config.dropout)
         self.resid_dropout = nn.Dropout(config.dropout)
 
     def forward(self, x):
@@ -118,18 +96,13 @@ class DesignedAttention(nn.Module):
 
     def _mix_values(self, q, k, v, t, device):
         dropout_p = self.dropout if self.training else 0.0
-        if self.softmax == "standard" and self.pattern == "full":
+        if self.pattern == "full":
             return F.scaled_dot_product_attention(q, k, v, is_causal=True,
                                                   dropout_p=dropout_p)
         bias = self._visibility(t, device, q.dtype)
-        if self.softmax == "standard":
-            return F.scaled_dot_product_attention(q, k, v, attn_mask=bias,
-                                                  dropout_p=dropout_p)
-        scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(self.head_dim)
-        weights = self.attn_dropout(taylor_softmax(scores + bias))
-        return torch.matmul(weights, v)
+        return F.scaled_dot_product_attention(q, k, v, attn_mask=bias,
+                                              dropout_p=dropout_p)
 
 
-class Model(Transformer):
-    def build_attention(self, config, layer_idx):
-        return DesignedAttention(config, layer_idx)
+def build_model(config):
+    return Transformer(config, attention=DesignedAttention)

@@ -20,7 +20,7 @@ class LayerNorm(nn.Module):
 
 
 class MLP(nn.Module):
-    def __init__(self, config):
+    def __init__(self, config, layer_idx=0):
         super().__init__()
         self.c_fc = nn.Linear(config.n_embd, 4 * config.n_embd, bias=config.bias)
         self.gelu = nn.GELU()
@@ -94,8 +94,7 @@ class CausalAttention(nn.Module):
 class Block(nn.Module):
     """Pre-LN block: x + attn(ln_1(x)), then x + mlp(ln_2(x)).
 
-    Both sublayers are passed in, so an architecture varies them through
-    Transformer.build_attention / build_mlp without this class knowing about it.
+    Both concrete sublayers are passed in; the block has no architecture hooks.
     """
 
     def __init__(self, config, attn, mlp):
@@ -111,50 +110,76 @@ class Block(nn.Module):
 
 
 class Transformer(nn.Module):
-    residual_init_scaling = True
+    """Decoder stack assembled from explicit attention and MLP components."""
 
-    def __init__(self, config):
+    def __init__(
+        self,
+        config,
+        attention=CausalAttention,
+        mlp=MLP,
+        use_pos_embedding=True,
+        n_block_applications=None,
+        share_block_weights=False,
+        residual_init_scaling=True,
+        positional_encoding=None,
+        positional_markers=("transformer.wpe",),
+    ):
         super().__init__()
         assert config.vocab_size is not None and config.block_size is not None
         self.config = config
-        modules = dict(
-            wte=nn.Embedding(config.vocab_size, config.n_embd),
-            drop=nn.Dropout(config.dropout),
-            h=self.build_blocks(config),
-            ln_f=LayerNorm(config.n_embd, bias=config.bias),
+        self.positional_encoding = positional_encoding or (
+            "wpe" if use_pos_embedding else "nope"
         )
-        if self.uses_pos_embedding(config):
+        self.positional_markers = positional_markers
+        n_blocks = config.n_layer if n_block_applications is None else n_block_applications
+        token_embedding = nn.Embedding(config.vocab_size, config.n_embd)
+        dropout = nn.Dropout(config.dropout)
+
+        def make_block(layer_idx):
+            return Block(config, attention(config, layer_idx), mlp(config, layer_idx))
+
+        if share_block_weights:
+            block = make_block(0)
+            blocks = nn.ModuleList([block] * n_blocks)
+        else:
+            blocks = nn.ModuleList([make_block(i) for i in range(n_blocks)])
+        final_norm = LayerNorm(config.n_embd, bias=config.bias)
+        modules = dict(
+            wte=token_embedding,
+            drop=dropout,
+            h=blocks,
+            ln_f=final_norm,
+        )
+        if use_pos_embedding:
             modules["wpe"] = nn.Embedding(config.block_size, config.n_embd)
         self.transformer = nn.ModuleDict(modules)
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
         self.transformer.wte.weight = self.lm_head.weight
         self.apply(self._init_weights)
-        if self.residual_init_scaling:
+        if residual_init_scaling:
             for name, parameter in self.named_parameters():
                 if name.endswith("c_proj.weight"):
                     nn.init.normal_(parameter, mean=0.0,
                                     std=0.02 / math.sqrt(2 * config.n_layer))
 
-    def build_blocks(self, config):
-        """The stack. Override when layers share weights, e.g. a looped model
-        returns nn.ModuleList([block] * n_loops) holding one Block object."""
-        return nn.ModuleList([Block(config, self.build_attention(config, i),
-                                    self.build_mlp(config, i))
-                              for i in range(config.n_layer)])
-
-    def build_attention(self, config, layer_idx):
-        return CausalAttention(config, layer_idx)
-
-    def build_mlp(self, config, layer_idx):
-        return MLP(config)
-
-    def uses_pos_embedding(self, config):
-        return True
-
     def param_report(self):
-        wpe = self.transformer.wpe.weight.numel() if "wpe" in self.transformer else 0
-        return {"positional_encoding": "wpe" if wpe else "nope",
-                "positional_parameters": {"trainable": wpe, "frozen": 0, "total": wpe}}
+        def is_positional(name):
+            return any(marker in name for marker in self.positional_markers)
+
+        parameters = [(p.requires_grad, p.numel())
+                      for name, p in self.named_parameters() if is_positional(name)]
+        trainable = sum(size for trained, size in parameters if trained)
+        frozen = sum(size for trained, size in parameters if not trained)
+        frozen += sum(buffer.numel() for name, buffer in self.named_buffers()
+                      if is_positional(name))
+        return {
+            "positional_encoding": self.positional_encoding,
+            "positional_parameters": {
+                "trainable": trainable,
+                "frozen": frozen,
+                "total": trainable + frozen,
+            },
+        }
 
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):

@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 
-import torch.nn as nn
-
 from core.config import ModelConfig
-from core.model import Block, Transformer
+from core.model import Transformer
 
 
 @dataclass
@@ -13,9 +11,10 @@ class Config(ModelConfig):
     n_loops: int = 4
 
 
-class Model(Transformer):
-    residual_init_scaling = False
-
-    def build_blocks(self, config):
-        block = Block(config, self.build_attention(config, 0), self.build_mlp(config, 0))
-        return nn.ModuleList([block] * config.n_loops)
+def build_model(config):
+    return Transformer(
+        config,
+        n_block_applications=config.n_loops,
+        share_block_weights=True,
+        residual_init_scaling=False,
+    )
