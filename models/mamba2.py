@@ -3,11 +3,12 @@ from dataclasses import dataclass
 from typing import Optional
 
 import torch
-from torch import nn
+from torch import nn, Tensor
 from torch.nn import functional as F
 
 from core.config import ModelConfig
 from core.model import Transformer
+from models.rmsnorm import GatedRMSNorm, RMSNorm
 
 
 @dataclass
@@ -17,10 +18,10 @@ class Config(ModelConfig):
     d_conv: int = 4
     expand: int = 2
     headdim: int = 64
-    d_ssm: int = 0                 # 0 applies the SSM to the whole inner width
-    ngroups: int = 1              # number of shared B/C groups
+    d_ssm: int = 0  # 0 applies the SSM to the whole inner width
+    ngroups: int = 1  # number of shared B/C groups
     chunk_size: int = 256
-    d_has_hdim: bool = False      # one D per channel instead of per head
+    d_has_hdim: bool = False  # one D per channel instead of per head
     rmsnorm: bool = True
     norm_before_gate: bool = False
     learnable_init_states: bool = False
@@ -34,8 +35,16 @@ class Config(ModelConfig):
     dt_limit: tuple[float, float] = (0.0, float("inf"))
 
     def __post_init__(self):
-        for name in ("n_embd", "n_layer", "d_state", "d_conv", "expand",
-                     "headdim", "ngroups", "chunk_size"):
+        for name in (
+            "n_embd",
+            "n_layer",
+            "d_state",
+            "d_conv",
+            "expand",
+            "headdim",
+            "ngroups",
+            "chunk_size",
+        ):
             if type(getattr(self, name)) is not int or getattr(self, name) <= 0:
                 raise ValueError(f"model.{name} must be a positive integer")
         d_inner = self.expand * self.n_embd
@@ -54,34 +63,7 @@ class Config(ModelConfig):
             raise ValueError("dt_limit must be a nonnegative (minimum, maximum) pair")
 
 
-class RMSNorm(nn.Module):
-    def __init__(self, width, eps=1e-5, groups=1):
-        super().__init__()
-        self.weight = nn.Parameter(torch.ones(width))
-        self.eps = eps
-        self.groups = groups
-
-    def forward(self, x):
-        dtype = x.dtype
-        x = x.float() if dtype != torch.float64 else x
-        shape = (*x.shape[:-1], self.groups, x.shape[-1] // self.groups)
-        grouped = x.reshape(shape)
-        grouped = grouped * torch.rsqrt(grouped.square().mean(-1, keepdim=True) + self.eps)
-        return (grouped.flatten(-2) * self.weight).to(dtype)
-
-
-class GatedRMSNorm(RMSNorm):
-    def __init__(self, width, groups=1, norm_before_gate=False):
-        super().__init__(width, groups=groups)
-        self.norm_before_gate = norm_before_gate
-
-    def forward(self, x, gate):
-        if self.norm_before_gate:
-            return super().forward(x) * F.silu(gate)
-        return super().forward(x * F.silu(gate))
-
-
-def segment_sum(x):
+def segment_sum(x: Tensor):
     """Entry (i, j) is x[j+1] + ... + x[i], or -inf above the diagonal."""
     size = x.size(-1)
     mask = torch.ones(size, size, dtype=torch.bool, device=x.device)
@@ -90,7 +72,7 @@ def segment_sum(x):
     return sums.masked_fill(~mask.tril(), -torch.inf)
 
 
-def _repeat_groups(x, nheads):
+def _repeat_groups(x: Tensor, nheads: int):
     return x.repeat_interleave(nheads // x.shape[2], dim=2)
 
 
@@ -98,8 +80,11 @@ def recurrent_scan(x, dt, a, b, c, initial_state=None, seq_idx=None):
     """Transparent SSD recurrence, also used when packed sequences need resets."""
     batch, length, nheads, headdim = x.shape
     b, c = _repeat_groups(b, nheads), _repeat_groups(c, nheads)
-    state = (x.new_zeros(batch, nheads, headdim, b.shape[-1])
-             if initial_state is None else initial_state)
+    state = (
+        x.new_zeros(batch, nheads, headdim, b.shape[-1])
+        if initial_state is None
+        else initial_state
+    )
     outputs = []
     for t in range(length):
         if seq_idx is not None and t:
@@ -126,8 +111,11 @@ def ssd_scan(x, dt, a, b, c, chunk_size, initial_state=None, seq_idx=None):
 
         batch, length, nheads, headdim = x.shape
         b, c = _repeat_groups(b, nheads), _repeat_groups(c, nheads)
-        state = (x.new_zeros(batch, nheads, headdim, b.shape[-1])
-                 if initial_state is None else initial_state)
+        state = (
+            x.new_zeros(batch, nheads, headdim, b.shape[-1])
+            if initial_state is None
+            else initial_state
+        )
         outputs = []
         for start in range(0, length, chunk_size):
             stop = min(start + chunk_size, length)
@@ -142,8 +130,9 @@ def ssd_scan(x, dt, a, b, c, chunk_size, initial_state=None, seq_idx=None):
             carried = torch.einsum("bihn,bhpn,bhi->bihp", queries, state, prefix)
             outputs.append(local + carried)
 
-            state = (state * prefix[..., -1, None, None]
-                     + torch.einsum("bihn,bhi,bihp->bhpn", keys, decay[..., -1, :], u))
+            state = state * prefix[..., -1, None, None] + torch.einsum(
+                "bihn,bhi,bihp->bhpn", keys, decay[..., -1, :], u
+            )
         return torch.cat(outputs, 1), state
 
 
@@ -167,24 +156,40 @@ class Mamba2(nn.Module):
         self.dt_limit = config.dt_limit
 
         self.conv_dim = self.d_ssm + 2 * self.ngroups * self.d_state
-        projection_dim = 2 * self.d_inner + 2 * self.ngroups * self.d_state + self.nheads
+        projection_dim = (
+            2 * self.d_inner + 2 * self.ngroups * self.d_state + self.nheads
+        )
         self.in_proj = nn.Linear(config.n_embd, projection_dim, bias=config.bias)
-        self.conv1d = nn.Conv1d(self.conv_dim, self.conv_dim, self.d_conv,
-                                groups=self.conv_dim, padding=self.d_conv - 1,
-                                bias=config.conv_bias)
+        self.conv1d = nn.Conv1d(
+            self.conv_dim,
+            self.conv_dim,
+            self.d_conv,
+            groups=self.conv_dim,
+            padding=self.d_conv - 1,
+            bias=config.conv_bias,
+        )
         if config.conv_init is not None:
             nn.init.uniform_(self.conv1d.weight, -config.conv_init, config.conv_init)
 
-        dt = torch.empty(self.nheads).uniform_(math.log(config.dt_min),
-                                               math.log(config.dt_max)).exp()
+        dt = (
+            torch.empty(self.nheads)
+            .uniform_(math.log(config.dt_min), math.log(config.dt_max))
+            .exp()
+        )
         dt = dt.clamp_min(config.dt_init_floor)
         self.dt_bias = nn.Parameter(dt + torch.log(-torch.expm1(-dt)))
-        self.A_log = nn.Parameter(torch.empty(self.nheads).uniform_(
-            config.a_init_min, config.a_init_max).log())
-        self.D = nn.Parameter(torch.ones(self.d_ssm if self.d_has_hdim else self.nheads))
+        self.A_log = nn.Parameter(
+            torch.empty(self.nheads)
+            .uniform_(config.a_init_min, config.a_init_max)
+            .log()
+        )
+        self.D = nn.Parameter(
+            torch.ones(self.d_ssm if self.d_has_hdim else self.nheads)
+        )
         if config.learnable_init_states:
-            self.init_states = nn.Parameter(torch.zeros(
-                self.nheads, self.headdim, self.d_state))
+            self.init_states = nn.Parameter(
+                torch.zeros(self.nheads, self.headdim, self.d_state)
+            )
         else:
             self.init_states = None
         if self.rmsnorm:
@@ -202,16 +207,20 @@ class Mamba2(nn.Module):
 
     def _causal_conv(self, xbc, seq_idx=None):
         if seq_idx is None:
-            return F.silu(self.conv1d(xbc.transpose(1, 2))[..., :xbc.shape[1]].transpose(1, 2))
+            return F.silu(
+                self.conv1d(xbc.transpose(1, 2))[..., : xbc.shape[1]].transpose(1, 2)
+            )
         output = torch.zeros_like(xbc)
         weights = self.conv1d.weight[:, 0]
         for lag in range(self.d_conv):
             if lag >= xbc.shape[1]:
                 break
-            same_sequence = seq_idx[:, lag:] == seq_idx[:, :xbc.shape[1] - lag]
-            output[:, lag:] += (xbc[:, :xbc.shape[1] - lag]
-                                * weights[:, self.d_conv - 1 - lag]
-                                * same_sequence[..., None])
+            same_sequence = seq_idx[:, lag:] == seq_idx[:, : xbc.shape[1] - lag]
+            output[:, lag:] += (
+                xbc[:, : xbc.shape[1] - lag]
+                * weights[:, self.d_conv - 1 - lag]
+                * same_sequence[..., None]
+            )
         if self.conv1d.bias is not None:
             output = output + self.conv1d.bias
         return F.silu(output)
@@ -222,8 +231,11 @@ class Mamba2(nn.Module):
         return self.init_states.to(device=device, dtype=dtype).expand(batch, -1, -1, -1)
 
     def _finish(self, z0, x0, z, x, y):
-        skip = (self.D.view(self.nheads, self.headdim) if self.d_has_hdim
-                else self.D[:, None])
+        skip = (
+            self.D.view(self.nheads, self.headdim)
+            if self.d_has_hdim
+            else self.D[:, None]
+        )
         y = y + x.float() * skip.float()[None, None]
         y = y.flatten(2).to(z.dtype)
         y = self.norm(y, z) if self.rmsnorm else y * F.silu(z)
@@ -235,13 +247,23 @@ class Mamba2(nn.Module):
         batch, length, _ = x.shape
         z0, x0, z, xbc, dt = self._split_projection(self.in_proj(x))
         xbc = self._causal_conv(xbc, seq_idx)
-        x, b, c = xbc.split((self.d_ssm, self.ngroups * self.d_state,
-                             self.ngroups * self.d_state), dim=-1)
+        x, b, c = xbc.split(
+            (self.d_ssm, self.ngroups * self.d_state, self.ngroups * self.d_state),
+            dim=-1,
+        )
         x = x.reshape(batch, length, self.nheads, self.headdim)
         b = b.reshape(batch, length, self.ngroups, self.d_state)
         c = c.reshape(batch, length, self.ngroups, self.d_state)
-        y, _ = ssd_scan(x, self._time_steps(dt), -self.A_log.float().exp(), b, c,
-                        self.chunk_size, self._initial_state(batch, x.dtype, x.device), seq_idx)
+        y, _ = ssd_scan(
+            x,
+            self._time_steps(dt),
+            -self.A_log.float().exp(),
+            b,
+            c,
+            self.chunk_size,
+            self._initial_state(batch, x.dtype, x.device),
+            seq_idx,
+        )
         return self._finish(z0, x0, z, x, y)
 
     def allocate_inference_cache(self, batch_size, max_seqlen=None, dtype=None):
@@ -249,12 +271,22 @@ class Mamba2(nn.Module):
         device = self.c_proj.weight.device
         conv_dtype = dtype or self.conv1d.weight.dtype
         state_dtype = dtype or self.in_proj.weight.dtype
-        conv = torch.zeros(batch_size, self.conv_dim, self.d_conv,
-                           device=device, dtype=conv_dtype)
+        conv = torch.zeros(
+            batch_size, self.conv_dim, self.d_conv, device=device, dtype=conv_dtype
+        )
         initial = self._initial_state(batch_size, state_dtype, device)
-        ssm = (torch.zeros(batch_size, self.nheads, self.headdim, self.d_state,
-                           device=device, dtype=state_dtype)
-               if initial is None else initial.clone())
+        ssm = (
+            torch.zeros(
+                batch_size,
+                self.nheads,
+                self.headdim,
+                self.d_state,
+                device=device,
+                dtype=state_dtype,
+            )
+            if initial is None
+            else initial.clone()
+        )
         return conv, ssm
 
     def step(self, x, conv_state, ssm_state):
@@ -268,8 +300,10 @@ class Mamba2(nn.Module):
         if self.conv1d.bias is not None:
             xbc = xbc + self.conv1d.bias
         xbc = F.silu(xbc)
-        x, b, c = xbc.split((self.d_ssm, self.ngroups * self.d_state,
-                             self.ngroups * self.d_state), dim=-1)
+        x, b, c = xbc.split(
+            (self.d_ssm, self.ngroups * self.d_state, self.ngroups * self.d_state),
+            dim=-1,
+        )
         x = x.reshape(x.shape[0], self.nheads, self.headdim)
         b = b.reshape(b.shape[0], self.ngroups, self.d_state)
         c = c.reshape(c.shape[0], self.ngroups, self.d_state)
@@ -306,3 +340,30 @@ class Model(Transformer):
 
     def estimate_mfu(self, fwdbwd_per_iter, dt):
         return -1.0  # the shared estimate assumes attention
+
+    def _step_token(self, token, caches):
+        x = self.transformer.drop(self.transformer.wte(token))
+        for block, (conv_state, ssm_state) in zip(self.transformer.h, caches):
+            x = x + block.mixer.step(block.norm(x), conv_state, ssm_state)
+        return self.lm_head(self.transformer.ln_f(x))
+
+    @torch.no_grad()
+    def generate(self, idx, max_new_tokens, temperature=1.0, top_k=None):
+        """Complete tokens using each mixer layer's recurrent inference cache."""
+        if idx.size(1) == 0:
+            raise ValueError("Mamba2 generation requires a nonempty prompt")
+        caches = [block.mixer.allocate_inference_cache(idx.size(0))
+                  for block in self.transformer.h]
+        logits = None
+        for position in range(idx.size(1)):
+            logits = self._step_token(idx[:, position : position + 1], caches)
+        for step in range(max_new_tokens):
+            scores = logits[:, -1, :] / temperature
+            if top_k is not None:
+                values, _ = torch.topk(scores, min(top_k, scores.size(-1)))
+                scores[scores < values[:, [-1]]] = -float("inf")
+            next_token = torch.multinomial(F.softmax(scores, dim=-1), 1)
+            idx = torch.cat((idx, next_token), dim=1)
+            if step + 1 < max_new_tokens:
+                logits = self._step_token(next_token, caches)
+        return idx
