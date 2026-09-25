@@ -22,7 +22,13 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("runs", nargs="+", type=Path)
-    parser.add_argument("--checkpoint", help=f"default: first of {', '.join(CHECKPOINTS)}")
+    parser.add_argument(
+        "--checkpoint",
+        nargs="+",
+        metavar="FILE",
+        help=(f"one filename for all runs, or one per run in matching order "
+              f"(default: first of {', '.join(CHECKPOINTS)})"),
+    )
     parser.add_argument("--task", help="evaluate on another task (params are inherited)")
     parser.add_argument("--params", default="{}",
                         help="task params to override, e.g. \"{'length_range': (33, 64)}\"")
@@ -30,7 +36,8 @@ def parse_args():
     parser.add_argument("-n", "--n-eval", type=int, default=2000)
     parser.add_argument("--seed", type=int, help="default: the run's data_seed")
     parser.add_argument("--batch-size", type=int, default=128)
-    parser.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
+    parser.add_argument("--device", default="auto",
+                        help="auto | cpu | mps | cuda | cuda:N")
     parser.add_argument("--dtype", help="default: the dtype the run used")
     parser.add_argument("--autoregressive", action="store_true",
                         help="decode the answer token by token instead of scoring a "
@@ -51,6 +58,20 @@ def pick_checkpoint(run_dir, requested):
     if not found:
         raise FileNotFoundError(f"no {' / '.join(names)} in {run_dir}")
     return found[0]
+
+
+def checkpoint_requests(runs, requested):
+    """One requested checkpoint per run; a single name applies to every run."""
+    if not requested:
+        return [None] * len(runs)
+    if len(requested) == 1:
+        return requested * len(runs)
+    if len(requested) != len(runs):
+        raise ValueError(
+            f"received {len(requested)} checkpoint values for {len(runs)} runs; "
+            "provide one value for all runs or one value per run"
+        )
+    return requested
 
 
 def load_model(run_dir, name, device):
@@ -159,18 +180,23 @@ def score(model, task, items, batch_size, device, ctx, autoregressive=False):
 def pick_device(requested):
     if requested != "auto":
         return requested
-    return "cuda:0" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        return "cuda:0"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
 
 
-def evaluate_run(run_dir, args, device):
-    name = pick_checkpoint(run_dir, args.checkpoint)
+def evaluate_run(run_dir, args, device, requested_checkpoint=None):
+    name = pick_checkpoint(run_dir, requested_checkpoint)
     model, saved = load_model(run_dir, name, device)
     sections = checkpoint.config_sections(saved)
     overrides = literal_eval(args.params)
     task, params = build_task(sections, args.task, overrides, args.seed)
     dtype = args.dtype or sections["hardware"].get("dtype", "float32")
-    ctx = (nullcontext() if "cuda" not in device else
-           torch.amp.autocast(device_type="cuda", dtype=DTYPES[dtype]))
+    device_type = torch.device(device).type
+    ctx = (nullcontext() if device_type == "cpu" or dtype == "float32" else
+           torch.amp.autocast(device_type=device_type, dtype=DTYPES[dtype]))
     metadata = saved.get("run_metadata", {})
     shifted = bool(overrides) or bool(args.task)
     row = {
@@ -209,9 +235,14 @@ def main():
     args = parse_args()
     device = pick_device(args.device)
     rows, failures = [], []
-    for run_dir in args.runs:
+    try:
+        requested = checkpoint_requests(args.runs, args.checkpoint)
+    except ValueError as error:
+        print(f"FAILED: {error}", flush=True)
+        return 1
+    for run_dir, checkpoint_name in zip(args.runs, requested):
         try:
-            produced = evaluate_run(run_dir, args, device)
+            produced = evaluate_run(run_dir, args, device, checkpoint_name)
         except Exception as error:  
             failures.append(run_dir)
             print(f"FAILED {run_dir}: {type(error).__name__}: {error}", flush=True)

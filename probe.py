@@ -141,8 +141,9 @@ def probe_run(run_dir, args, device):
     overrides = literal_eval(args.params)
     task, params = build_task(sections, args.task, overrides, args.seed)
     dtype = args.dtype or sections["hardware"].get("dtype", "float32")
-    ctx = (nullcontext() if "cuda" not in device else
-           torch.amp.autocast(device_type="cuda", dtype=DTYPES[dtype]))
+    device_type = torch.device(device).type
+    ctx = (nullcontext() if device_type == "cpu" or dtype == "float32" else
+           torch.amp.autocast(device_type=device_type, dtype=DTYPES[dtype]))
     items = task.generate_val(args.n_eval)
     features, labels, stats = gather(model, task, items, args, device, ctx)
 
