@@ -30,7 +30,8 @@ def parse_args():
     parser.add_argument("-n", "--n-eval", type=int, default=2000)
     parser.add_argument("--seed", type=int, help="default: the run's data_seed")
     parser.add_argument("--batch-size", type=int, default=128)
-    parser.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
+    parser.add_argument("--device", default="auto",
+                        help="auto | cpu | mps | cuda | cuda:N")
     parser.add_argument("--dtype", help="default: the dtype the run used")
     parser.add_argument("--autoregressive", action="store_true",
                         help="decode the answer token by token instead of scoring a "
@@ -159,7 +160,11 @@ def score(model, task, items, batch_size, device, ctx, autoregressive=False):
 def pick_device(requested):
     if requested != "auto":
         return requested
-    return "cuda:0" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        return "cuda:0"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
 
 
 def evaluate_run(run_dir, args, device):
@@ -169,8 +174,9 @@ def evaluate_run(run_dir, args, device):
     overrides = literal_eval(args.params)
     task, params = build_task(sections, args.task, overrides, args.seed)
     dtype = args.dtype or sections["hardware"].get("dtype", "float32")
-    ctx = (nullcontext() if "cuda" not in device else
-           torch.amp.autocast(device_type="cuda", dtype=DTYPES[dtype]))
+    device_type = torch.device(device).type
+    ctx = (nullcontext() if device_type == "cpu" or dtype == "float32" else
+           torch.amp.autocast(device_type=device_type, dtype=DTYPES[dtype]))
     metadata = saved.get("run_metadata", {})
     shifted = bool(overrides) or bool(args.task)
     row = {
