@@ -25,8 +25,14 @@ DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch
 def resolve_device(hardware):
     if hardware.device == "cpu":
         return "cpu"
+    if hardware.device == "mps":
+        if not torch.backends.mps.is_available():
+            raise RuntimeError("hardware.device is 'mps' but PyTorch MPS is unavailable; "
+                               "set hardware.device: cpu")
+        return "mps"
     if hardware.device != "gpu":
-        raise ValueError(f"hardware.device must be 'gpu' or 'cpu', got {hardware.device!r}")
+        raise ValueError(f"hardware.device must be 'gpu', 'mps', or 'cpu', "
+                         f"got {hardware.device!r}")
     visible = torch.cuda.device_count()
     if visible == 0:
         raise RuntimeError("hardware.device is 'gpu' but torch sees no CUDA device; "
@@ -234,8 +240,8 @@ def run(config):
     torch.manual_seed(train_cfg.seed)
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
-    device_type = "cuda" if "cuda" in device else "cpu"
-    ctx = (nullcontext() if device_type == "cpu" else
+    device_type = torch.device(device).type
+    ctx = (nullcontext() if device_type == "cpu" or hardware.dtype == "float32" else
            torch.amp.autocast(device_type=device_type, dtype=DTYPES[hardware.dtype]))
 
     task = get_task(config.task.name, {**config.task.params, "seed": train_cfg.data_seed})
@@ -245,7 +251,10 @@ def run(config):
 
     resumed = pick_resume(train_cfg, paths.checkpoints, device)
     model = build_model(config, task, device, resumed, paths.checkpoints)
-    scaler = torch.amp.GradScaler(device_type, enabled=hardware.dtype == "float16")
+    scaler = torch.amp.GradScaler(
+        device_type if device_type in ("cpu", "cuda") else "cpu",
+        enabled=device_type == "cuda" and hardware.dtype == "float16",
+    )
     optimizer = model.configure_optimizers(opt_cfg, device_type)
     iter_num, best_val_loss = 0, float("inf")
     if resumed is not None:

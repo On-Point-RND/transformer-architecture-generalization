@@ -30,7 +30,7 @@ class TaskConfig:
 @dataclass
 class HardwareConfig:
     """Where and how the run executes — nothing about the experiment itself."""
-    device: str = "gpu"  # 'gpu' | 'cpu'
+    device: str = "gpu"  # 'gpu' (CUDA) | 'mps' (Apple Silicon) | 'cpu'
     gpu: int = 0  # which card, when device is 'gpu'
     dtype: str = "bfloat16"  # 'float32' | 'bfloat16' | 'float16'
     compile: bool = False
