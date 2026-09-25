@@ -1,0 +1,7 @@
+include: kv_retrieval.yaml
+
+model:
+  allow_neg_eigval: true
+
+paths:
+  run_dir: runs/gated_deltanet/kv_retrieval_negative_eigenvalues_mps
