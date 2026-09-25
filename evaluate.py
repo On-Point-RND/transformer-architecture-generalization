@@ -22,7 +22,13 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("runs", nargs="+", type=Path)
-    parser.add_argument("--checkpoint", help=f"default: first of {', '.join(CHECKPOINTS)}")
+    parser.add_argument(
+        "--checkpoint",
+        nargs="+",
+        metavar="FILE",
+        help=(f"one filename for all runs, or one per run in matching order "
+              f"(default: first of {', '.join(CHECKPOINTS)})"),
+    )
     parser.add_argument("--task", help="evaluate on another task (params are inherited)")
     parser.add_argument("--params", default="{}",
                         help="task params to override, e.g. \"{'length_range': (33, 64)}\"")
@@ -52,6 +58,20 @@ def pick_checkpoint(run_dir, requested):
     if not found:
         raise FileNotFoundError(f"no {' / '.join(names)} in {run_dir}")
     return found[0]
+
+
+def checkpoint_requests(runs, requested):
+    """One requested checkpoint per run; a single name applies to every run."""
+    if not requested:
+        return [None] * len(runs)
+    if len(requested) == 1:
+        return requested * len(runs)
+    if len(requested) != len(runs):
+        raise ValueError(
+            f"received {len(requested)} checkpoint values for {len(runs)} runs; "
+            "provide one value for all runs or one value per run"
+        )
+    return requested
 
 
 def load_model(run_dir, name, device):
@@ -167,8 +187,8 @@ def pick_device(requested):
     return "cpu"
 
 
-def evaluate_run(run_dir, args, device):
-    name = pick_checkpoint(run_dir, args.checkpoint)
+def evaluate_run(run_dir, args, device, requested_checkpoint=None):
+    name = pick_checkpoint(run_dir, requested_checkpoint)
     model, saved = load_model(run_dir, name, device)
     sections = checkpoint.config_sections(saved)
     overrides = literal_eval(args.params)
@@ -215,9 +235,14 @@ def main():
     args = parse_args()
     device = pick_device(args.device)
     rows, failures = [], []
-    for run_dir in args.runs:
+    try:
+        requested = checkpoint_requests(args.runs, args.checkpoint)
+    except ValueError as error:
+        print(f"FAILED: {error}", flush=True)
+        return 1
+    for run_dir, checkpoint_name in zip(args.runs, requested):
         try:
-            produced = evaluate_run(run_dir, args, device)
+            produced = evaluate_run(run_dir, args, device, checkpoint_name)
         except Exception as error:  
             failures.append(run_dir)
             print(f"FAILED {run_dir}: {type(error).__name__}: {error}", flush=True)
