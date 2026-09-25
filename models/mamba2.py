@@ -8,7 +8,6 @@ from torch.nn import functional as F
 
 from core.config import ModelConfig
 from core.model import Transformer
-from models.rmsnorm import GatedRMSNorm, RMSNorm
 
 try:
     from mamba_ssm.ops.triton.ssd_combined import mamba_chunk_scan_combined
@@ -164,6 +163,7 @@ class Mamba2(nn.Module):
         self.chunk_size = config.chunk_size
         self.d_has_hdim = config.d_has_hdim
         self.rmsnorm = config.rmsnorm
+        self.norm_before_gate = config.norm_before_gate
         self.dt_limit = config.dt_limit
         self.ssm_kernel = config.ssm_kernel
 
@@ -205,7 +205,15 @@ class Mamba2(nn.Module):
         else:
             self.init_states = None
         if self.rmsnorm:
-            self.norm = GatedRMSNorm(self.d_ssm, self.ngroups, config.norm_before_gate)
+            group_width = self.d_ssm // self.ngroups
+            self.norm = (
+                nn.RMSNorm(group_width, eps=1e-5)
+                if self.ngroups == 1
+                else nn.ModuleList(
+                    nn.RMSNorm(group_width, eps=1e-5)
+                    for _ in range(self.ngroups)
+                )
+            )
         self.c_proj = nn.Linear(self.d_inner, config.n_embd, bias=config.bias)
         self.dropout = nn.Dropout(config.dropout)
 
@@ -285,6 +293,15 @@ class Mamba2(nn.Module):
             seq_idx,
         )[0]
 
+    def _apply_rmsnorm(self, x):
+        if self.ngroups == 1:
+            return self.norm(x)
+        groups = x.reshape(*x.shape[:-1], self.ngroups, -1)
+        return torch.stack(
+            [norm(groups[..., i, :]) for i, norm in enumerate(self.norm)],
+            dim=-2,
+        ).flatten(-2)
+
     def _finish(self, z0, x0, z, x, y):
         skip = (
             self.D.view(self.nheads, self.headdim)
@@ -293,7 +310,13 @@ class Mamba2(nn.Module):
         )
         y = y + x.float() * skip.float()[None, None]
         y = y.flatten(2).to(z.dtype)
-        y = self.norm(y, z) if self.rmsnorm else y * F.silu(z)
+        if self.rmsnorm:
+            if self.norm_before_gate:
+                y = self._apply_rmsnorm(y) * F.silu(z)
+            else:
+                y = self._apply_rmsnorm(y * F.silu(z))
+        else:
+            y = y * F.silu(z)
         if self.d_mlp:
             y = torch.cat((F.silu(z0) * x0, y), dim=-1)
         return self.dropout(self.c_proj(y))
@@ -368,7 +391,7 @@ class Mamba2(nn.Module):
 class MambaBlock(nn.Module):
     def __init__(self, config, layer_idx):
         super().__init__()
-        self.norm = RMSNorm(config.n_embd)
+        self.norm = nn.RMSNorm(config.n_embd, eps=1e-5)
         self.mixer = Mamba2(config, layer_idx)
 
     def forward(self, x):
@@ -378,7 +401,7 @@ class MambaBlock(nn.Module):
 class Model(Transformer):
     def __init__(self, config):
         super().__init__(config)
-        self.transformer.ln_f = RMSNorm(config.n_embd)
+        self.transformer.ln_f = nn.RMSNorm(config.n_embd, eps=1e-5)
 
     def build_blocks(self, config):
         return nn.ModuleList([MambaBlock(config, i) for i in range(config.n_layer)])
