@@ -10,6 +10,14 @@ from core.config import ModelConfig
 from core.model import Transformer
 from models.rmsnorm import GatedRMSNorm, RMSNorm
 
+try:
+    from mamba_ssm.ops.triton.ssd_combined import mamba_chunk_scan_combined
+except (ImportError, OSError) as error:
+    mamba_chunk_scan_combined = None
+    _FUSED_IMPORT_ERROR = error
+else:
+    _FUSED_IMPORT_ERROR = None
+
 
 @dataclass
 class Config(ModelConfig):
@@ -33,6 +41,7 @@ class Config(ModelConfig):
     dt_max: float = 0.1
     dt_init_floor: float = 1e-4
     dt_limit: tuple[float, float] = (0.0, float("inf"))
+    ssm_kernel: str = "auto"  # auto | torch | fused (official CUDA Triton kernel)
 
     def __post_init__(self):
         for name in (
@@ -61,6 +70,8 @@ class Config(ModelConfig):
             raise ValueError("require 0 < dt_min <= dt_max and dt_init_floor > 0")
         if len(self.dt_limit) != 2 or not 0 <= self.dt_limit[0] <= self.dt_limit[1]:
             raise ValueError("dt_limit must be a nonnegative (minimum, maximum) pair")
+        if self.ssm_kernel not in ("auto", "torch", "fused"):
+            raise ValueError("model.ssm_kernel must be 'auto', 'torch', or 'fused'")
 
 
 def segment_sum(x: Tensor):
@@ -154,6 +165,7 @@ class Mamba2(nn.Module):
         self.d_has_hdim = config.d_has_hdim
         self.rmsnorm = config.rmsnorm
         self.dt_limit = config.dt_limit
+        self.ssm_kernel = config.ssm_kernel
 
         self.conv_dim = self.d_ssm + 2 * self.ngroups * self.d_state
         projection_dim = (
@@ -230,6 +242,49 @@ class Mamba2(nn.Module):
             return None
         return self.init_states.to(device=device, dtype=dtype).expand(batch, -1, -1, -1)
 
+    def _use_fused_scan(self, x):
+        if self.ssm_kernel == "torch":
+            return False
+        if x.device.type != "cuda":
+            if self.ssm_kernel == "fused":
+                raise RuntimeError("model.ssm_kernel='fused' requires a CUDA device")
+            return False
+        if mamba_chunk_scan_combined is None:
+            if self.ssm_kernel == "fused":
+                detail = f": {_FUSED_IMPORT_ERROR}" if _FUSED_IMPORT_ERROR else ""
+                raise RuntimeError(
+                    "model.ssm_kernel='fused' requires the mamba-ssm package" + detail
+                )
+            return False
+        return True
+
+    def _scan(self, x, dt, b, c, initial_state, seq_idx):
+        a = -self.A_log.float().exp()
+        if self._use_fused_scan(x):
+            return mamba_chunk_scan_combined(
+                x,
+                dt,
+                a,
+                b,
+                c,
+                chunk_size=self.chunk_size,
+                dt_bias=self.dt_bias,
+                dt_softplus=True,
+                dt_limit=self.dt_limit,
+                initial_states=initial_state,
+                seq_idx=seq_idx,
+            )
+        return ssd_scan(
+            x,
+            self._time_steps(dt),
+            a,
+            b,
+            c,
+            self.chunk_size,
+            initial_state,
+            seq_idx,
+        )[0]
+
     def _finish(self, z0, x0, z, x, y):
         skip = (
             self.D.view(self.nheads, self.headdim)
@@ -254,15 +309,8 @@ class Mamba2(nn.Module):
         x = x.reshape(batch, length, self.nheads, self.headdim)
         b = b.reshape(batch, length, self.ngroups, self.d_state)
         c = c.reshape(batch, length, self.ngroups, self.d_state)
-        y, _ = ssd_scan(
-            x,
-            self._time_steps(dt),
-            -self.A_log.float().exp(),
-            b,
-            c,
-            self.chunk_size,
-            self._initial_state(batch, x.dtype, x.device),
-            seq_idx,
+        y = self._scan(
+            x, dt, b, c, self._initial_state(batch, x.dtype, x.device), seq_idx
         )
         return self._finish(z0, x0, z, x, y)
 
