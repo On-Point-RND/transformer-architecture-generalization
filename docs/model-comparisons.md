@@ -21,6 +21,14 @@ Evaluate the resulting runs together:
   -o runs/kv-comparison/evaluations.csv
 ```
 
+One checkpoint value applies to every run. To compare different checkpoint
+files, list them after `--checkpoint` in the same order as the run directories:
+
+```bash
+.venv/bin/python evaluate.py runs/experiment/model-a runs/experiment/model-b \
+  --checkpoint checkpoint-a.pt checkpoint-b.pt -n 5000
+```
+
 Use `--by FIELD` to break results down by task metadata such as length or
 difficulty. For a new task, copy an experiment directory and change
 `task.name`, `task.params`, `model.block_size`, and the run directories. For a
