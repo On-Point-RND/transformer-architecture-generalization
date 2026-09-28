@@ -1,0 +1,50 @@
+hardware:
+  device: cpu
+  gpu: 0
+  dtype: float32
+  compile: false
+
+paths:
+  run_dir: runs/multiplication_debug
+  logs: ""              # empty roots keep logs/checkpoints/results inside run_dir
+  checkpoints: ""
+  results: ""
+
+model:
+  name: vanilla         # file in models/
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  block_size: 256
+  dropout: 0.0
+  bias: false
+
+task:
+  name: multiplication
+  params:
+    n_digits: 2
+    multiplier_digits: 1
+    reverse: false
+  n_val: 100
+  n_train: 100
+
+optimizer:
+  name: adamw
+  decay: matrices
+  schedule: cosine
+  learning_rate: 1.0e-4
+  min_lr: 1.0e-5
+  weight_decay: 0.0
+  warmup_iters: 100
+  lr_decay_iters: 10000
+  grad_clip: 1.0
+
+train:
+  init: scratch
+  seed: 1337
+  batch_size: 64
+  gradient_accumulation_steps: 1
+  max_iters: 10000
+  eval_interval: 100
+  eval_iters: 20
+  early_stop_patience: 0

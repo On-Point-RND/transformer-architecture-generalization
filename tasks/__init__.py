@@ -8,6 +8,7 @@ TASKS = {
     "nested_kv_retrieval": ("tasks.nested_kv_retrieval", "NestedKVRetrievalTask", {}),
     "nested_kv": ("tasks.nested_kv_retrieval", "NestedKVRetrievalTask", {}),
     "addition": ("tasks.addition", "AdditionTask", {}),
+    "multiplication": ("tasks.multiplication", "MultiplicationTask", {}),
     "sorting": ("tasks.sorting", "SortingTask", {}),
     "permutation": ("tasks.permutation", "PermutationTask", {}),
     "s5": ("tasks.permutation", "PermutationTask", {"variant": "S5"}),
