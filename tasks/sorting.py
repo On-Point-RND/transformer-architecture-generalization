@@ -1,124 +1,18 @@
+"""String sorting: put a list of short strings in lexicographic order.
+
+    m i 9 b | 2 0 | t n | i l y q  SORT   ->   2 0 | i l y q | m i 9 b | t n  EOS
+
+Each string is spelled one character per token, items are separated by SEP and
+the answer ends in EOS. The order is Python's string order, so a string's rank
+is decided by comparing several positions left to right, and both prompt and
+answer lengths vary with n_items and item_len.
+"""
+
 from typing import Tuple
 
 import numpy as np
 
-from .base import DatasetItem, Task
-
-
-class SortingTask(Task):
-    PAD_ID = 0
-    SORT_MARKER_ID = 1
-    N_SPECIAL = 2
-
-    def __init__(
-        self,
-        v_card: int,
-        n_items: int | Tuple[int, int],
-        duplicates: bool = True,
-        descending: bool = False,
-        sample_v_card: int | None = None,
-        seed: int | None = 42,
-    ):
-        """
-        Generator for the sorting task.
-
-        Prompt layout:  v_0 .. v_{n-1}  SORT
-        Answer layout:  sorted(v_0 .. v_{n-1})
-
-        Token ids are assigned in increasing order of value, so sorting token ids
-        is equivalent to sorting values and no decoding step is needed.
-
-        :param v_card: Total number of value tokens allocated in the model
-            vocabulary. This fixes ``vocab_size = N_SPECIAL + v_card``.
-        :type v_card: int
-        :param n_items: Amount of items to sort. `n_items' if the parameter is an
-            integer, and a value in [n_items[0], n_items[1]) if it is a tuple.
-        :type n_items: int | Tuple[int, int]
-        :param duplicates: Whether the same value may appear more than once. False
-            makes every item distinct (requires n_items <= sample_v_card) and
-            removes tie-breaking from the task.
-        :type duplicates: bool
-        :param descending: Sort order of the answer.
-        :type descending: bool
-        :param sample_v_card: Number of the lowest value tokens that may actually
-            be sampled. ``None`` (default) means all ``v_card`` values. Keeping
-            ``v_card=30`` while training with ``sample_v_card=20`` allocates a
-            30-value model vocabulary but exposes only values 0..19 in training;
-            evaluation can then set ``sample_v_card=30`` without an embedding
-            index overflow.
-        :type sample_v_card: int | None
-        :param seed: Randomization seed, None for non-reproducible environment.
-        :type seed: int | None
-        """
-        self.v_card = v_card
-        self.n_items = n_items
-        self.duplicates = duplicates
-        self.descending = descending
-        self.sample_v_card = v_card if sample_v_card is None else sample_v_card
-
-        if not 1 <= self.sample_v_card <= self.v_card:
-            raise ValueError(
-                f"sample_v_card must be in [1, v_card], got "
-                f"sample_v_card={self.sample_v_card}, v_card={self.v_card}"
-            )
-
-        self.v_token_ids = np.arange(self.sample_v_card) + self.N_SPECIAL
-
-        self.rng = np.random.default_rng(seed)
-
-        if not duplicates and self.max_items > self.sample_v_card:
-            raise ValueError(
-                f"duplicates=False requires n_items <= sample_v_card, got max "
-                f"n_items={self.max_items} and sample_v_card={self.sample_v_card}"
-            )
-
-    @property
-    def vocab_size(self) -> int:
-        return self.N_SPECIAL + self.v_card
-
-    @property
-    def max_items(self) -> int:
-        if isinstance(self.n_items, int):
-            return self.n_items
-        return self.n_items[1] - 1
-
-    @property
-    def min_block_size(self) -> int:
-        """len(prompt) + len(answer) = (n + 1) + n = 2n + 1 <= block_size + 1"""
-        return 2 * self.max_items
-
-    def _sample_one(self) -> DatasetItem:
-        if isinstance(self.n_items, int):
-            n = self.n_items
-        else:
-            n = int(self.rng.integers(self.n_items[0], self.n_items[1]))
-
-        values = self.rng.choice(self.v_token_ids, size=n, replace=self.duplicates)
-
-        answer = np.sort(values)
-        if self.descending:
-            answer = answer[::-1]
-
-        prompt = np.concatenate([values, np.array([self.SORT_MARKER_ID])]).astype(
-            np.int64
-        )
-
-        return DatasetItem(
-            prompt=prompt,
-            answer=answer.astype(np.int64),
-            metadata={"n_items": n, "inversions": _inversions(values)},
-        )
-
-
-def _inversions(values) -> int:
-    """Pairs that are out of order — the difficulty L(x) of a sort.
-
-    Counted on token ids, which is the same as counting on values: ids are
-    assigned in increasing order of value.
-    """
-    return int(sum(values[i] > values[j]
-                   for i in range(len(values)) for j in range(i + 1, len(values))))
-
+from .base import DatasetItem, Task, max_int, sample_int, validate_int_spec
 
 
 class StringSortingTask(Task):
@@ -130,18 +24,21 @@ class StringSortingTask(Task):
 
     def __init__(
         self,
-        n_items: int | Tuple[int, int],
+        n_items: int | Tuple[int, int] = (4, 9),
         item_len: int | Tuple[int, int] = (2, 5),
         alphabet: str = "0123456789abcdefghijklmnopqrstuvwxyz",
         duplicates: bool = True,
         descending: bool = False,
         seed: int | None = 42,
     ):
-        self.n_items = n_items
-        self.item_len = item_len
+        super().__init__(seed)
+        self.n_items = validate_int_spec(n_items, "n_items", 1)
+        self.item_len = validate_int_spec(item_len, "item_len", 1)
         self.duplicates = duplicates
         self.descending = descending
-        self.rng = np.random.default_rng(seed)
+
+        if not alphabet or len(set(alphabet)) != len(alphabet):
+            raise ValueError("alphabet must be non-empty and contain unique characters")
 
         self.char_to_id = {
             char: idx + self.N_SPECIAL
@@ -151,23 +48,22 @@ class StringSortingTask(Task):
             idx: char
             for char, idx in self.char_to_id.items()
         }
+        if not duplicates:
+            lo = self.item_len if isinstance(self.item_len, int) else self.item_len[0]
+            lengths = range(lo, max_int(self.item_len) + 1)
+            capacity = sum(len(alphabet) ** length for length in lengths)
+            if max_int(self.n_items) > capacity:
+                raise ValueError(
+                    f"duplicates=False needs {max_int(self.n_items)} distinct strings, "
+                    f"but item_len/alphabet provide only {capacity}"
+                )
 
     @property
     def vocab_size(self) -> int:
         return self.N_SPECIAL + len(self.char_to_id)
 
-    def _sample_n_items(self) -> int:
-        if isinstance(self.n_items, int):
-            return self.n_items
-        return int(self.rng.integers(*self.n_items))
-
-    def _sample_item_len(self) -> int:
-        if isinstance(self.item_len, int):
-            return self.item_len
-        return int(self.rng.integers(*self.item_len))
-
     def _sample_string(self) -> str:
-        length = self._sample_item_len()
+        length = sample_int(self.rng, self.item_len)
         chars = self.rng.choice(list(self.char_to_id), size=length)
         return "".join(chars)
 
@@ -183,7 +79,7 @@ class StringSortingTask(Task):
         return np.asarray(encoded, dtype=np.int64)
 
     def _sample_one(self) -> DatasetItem:
-        n = self._sample_n_items()
+        n = sample_int(self.rng, self.n_items)
 
         items = []
         seen = set()
@@ -216,20 +112,3 @@ class StringSortingTask(Task):
                 "sorted_items": sorted_items,
             },
         )
-
-    def metrics(self, predicted, targets) -> dict:
-        """Return batch-level metrics: exact-match `acc` and token-level `token_acc`.
-
-        `predicted` and `targets` are numpy arrays shaped [batch, block_size].
-        Positions where `targets == -1` are ignored for `token_acc`.
-        """
-        base = super().metrics(predicted, targets)
-        mask = targets != -1
-        total = mask.sum()
-        if total:
-            correct = ((predicted == targets) & mask).sum()
-            token_acc = float(correct) / float(total)
-        else:
-            token_acc = 0.0
-        base.update({"token_acc": float(token_acc)})
-        return base

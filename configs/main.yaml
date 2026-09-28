@@ -1,47 +1,185 @@
 hardware:
   device: gpu           # gpu | cpu
-  gpu: 0
-  dtype: bfloat16       # float32 | bfloat16 | float16
-  compile: false
+  gpu: 0                # индекс CUDA-карты; используется только при device: gpu
+  dtype: bfloat16       # float32 | bfloat16 | float16; AMP включается только на GPU
+  compile: false        # true | false; torch.compile после загрузки checkpoint
+
+
 
 paths:
   run_dir: runs/main
-  logs: ""              # empty roots keep logs/checkpoints/results inside run_dir
-  checkpoints: ""
-  results: ""
+  logs: ""              # metrics.jsonl и config.resolved.yaml
+  checkpoints: ""       # last.pt и best.pt
+  results: ""           # summary.csv и curves.png
 
+
+# МОДЕЛЬ -------------------------------------------------------------------
+# name:
+#   vanilla          обычный causal Transformer с learned absolute positions
+#   positional       сравнение/композиция positional encodings
+#   attention_design MHA/GQA/MQA, K=V и local attention
+#   ffn_gating       GELU | ReLU | SwiGLU
+#   looped           один блок, применяемый n_loops раз с общими весами
+#   taylor           Taylor attention вместо softmax
+#   relumax          compact-support polynomial attention
+#   lssa             LSSA attention с RoPE
+#   lssar            rectified LSSA
 model:
-  name: vanilla         # file in models/
-  n_layer: 4
-  n_head: 4
-  n_embd: 128
-  block_size: 256
-  dropout: 0.0
-  bias: false
+  name: vanilla
+  block_size: 128     # int > 0; len(prompt)+len(answer)-1 должно помещаться
+  n_layer: 4          # int > 0; для looped обычно 1
+  n_head: 4           # int > 0 и делитель n_embd
+  n_embd: 128         # int > 0; ширина residual stream
+  dropout: 0.0        # float в [0, 1)
+  bias: false         # true | false; bias в Linear и LayerNorm
+  # vocab_size не задаётся: training loop берёт его у выбранной задачи.
 
+# Дополнительные поля добавляются только для соответствующего model.name:
+#
+# positional:
+#   pos_encoding: nope
+#     Одна схема или сумма через '+'. По одному механизму из каждого типа:
+#       embedding: wpe | sinusoidal
+#       q/k:       rope | fope
+#       bias:      alibi | relative_bias
+#       context:   cope | cape
+#     Примеры: nope, rope, wpe+alibi, sinusoidal+rope+cape
+#   rope_theta: 10000.0
+#   rpe_num_buckets: 32
+#   rpe_max_distance: 128
+#   cope_max_position: 64
+#   cape_hidden_dim: 32
+#   fope_train_length: 128
+#   fope_init_gain: 0.3
+#
+# attention_design:
+#   n_kv_head: 0         # 0 = n_head (MHA); 1 = MQA; иной делитель = GQA
+#   share_kv: false      # true заставляет K и V использовать одну проекцию
+#   pattern: full        # full | local
+#   window_size: 0       # int > 0 обязателен при pattern: local
+#   n_global_tokens: 0   # int >= 0; начальные токены, видимые из любого места
+#
+# ffn_gating:
+#   ffn: gelu            # gelu | relu | swiglu
+#   ffn_hidden: 0         # 0 = iso-parameter width, иначе int > 0
+#
+# looped:
+#   n_loops: 4           # int > 0; сколько раз применить общий блок
+#
+# taylor:
+#   n_taylor: 3          # int >= 1; число членов ряда
+#   clamp_min: 1.0e-6    # float >= 0; 0 выключает clamp
+#
+# relumax:
+#   degree: 2            # int >= 1
+#   window: 5.0          # float > 0; ширина compact support
+#
+# lssa:
+#   rope_theta: 10000.0  # float > 0
+#
+# lssar:
+#   rope_theta: 10000.0  # float > 0
+#   p: 15                # степень rectification
+
+
+# ЗАДАЧА -------------------------------------------------------------------
+# name — ровно одно из:
+#   kv_retrieval | selective_count | sorting | c5 | ruler | s5 |
+#   state_based_recall | maze
+#
+# n_val — размер фиксированного held-out набора с уникальными prompt.
+# n_train — 0: бесконечный поток; >0: фиксированный train pool такого размера.
+# seed внутри params не задаётся: генератор получает train.data_seed автоматически.
 task:
   name: kv_retrieval
-  params: {k_card: 80, v_card: 80, n_pairs: [2, 25]}
-  n_val: 1000
-  n_train: 0            # 0 = endless stream; >0 = a fixed training set of that size
+  params:
+    k_card: 64          # int >= 1; количество key-токенов
+    v_card: 64          # int >= 1; количество value-токенов
+    n_pairs: [4, 9]     # int >= 1 или [lo, hi); не больше k_card
+    depth: 1            # int >= 1; 1 = плоский словарь, >1 = вложенный
+  n_val: 1000           # int > 0
+  n_train: 0            # int >= 0
+
+# Полный справочник task.params. При смене task.name замените params целиком.
+#
+# selective_count:
+#   length_range: [16, 33]         # int >= 4 или [lo, hi)
+#   relevant_count_range: [1, 9]   # int >= 1 или [lo, hi)
+#
+# sorting:
+#   n_items: [4, 9]                # int >= 1 или [lo, hi)
+#   item_len: [2, 5]               # int >= 1 или [lo, hi)
+#   alphabet: 0123456789abcdefghijklmnopqrstuvwxyz  # непустые уникальные символы
+#   duplicates: true               # разрешать одинаковые строки
+#   descending: false              # false = ascending, true = descending
+#
+# c5 / s5:
+#   n_permutations: [4, 33]        # int >= 1 или [lo, hi)
+#   # group не задаётся: task.name жёстко фиксирует C5 или S5.
+#
+# ruler (Variable Tracking из RULER):
+#   n_vars: 64                     # размер словаря переменных
+#   v_card: 32                     # размер словаря исходных значений
+#   num_chains: 1                  # int >= 1 или [lo, hi)
+#   num_hops: [2, 9]               # int >= 0 или [lo, hi)
+#   n_filler: [0, 33]              # int >= 0 или [lo, hi)
+#   # Нужно: max(num_chains)*(max(num_hops)+1) <= n_vars
+#   #        max(num_chains) <= v_card
+#
+# state_based_recall:
+#   n_bits: [16, 33]               # int >= 5 или [lo, hi)
+#   n_swaps: [4, 17]               # int >= 0 или [lo, hi)
+#   max_bits: 32                    # int >= max(n_bits); фиксирует address vocabulary
+#
+# maze:
+#   grid_size: 5                   # int >= 2 или [lo, hi)
+#   max_grid_size: 5               # int >= max(grid_size); фиксирует coord vocabulary
+#   min_path_length: 3             # 1 <= value < min(grid_size)^2
+
 
 optimizer:
-  name: adamw           # file in optimizers/
-  decay: matrices       # matrices (2D tensors only) | all
+  name: adamw           # adamw | adam
+  learning_rate: 1.0e-4 # float > 0; peak LR
+  beta1: 0.9            # float в [0, 1)
+  beta2: 0.95           # float в [0, 1)
+  weight_decay: 0.1     # float >= 0; coupled L2 в Adam, decoupled decay в AdamW
+  decay: matrices       # matrices: только tensors ndim>=2 | all: все параметры
+  grad_clip: 1.0        # float >= 0; 0 выключает clipping
   schedule: cosine      # cosine | constant
-  learning_rate: 1.0e-4
-  min_lr: 1.0e-5
-  weight_decay: 0.1
-  warmup_iters: 100
-  lr_decay_iters: 80000
-  grad_clip: 1.0        # 0.0 disables
+  warmup_iters: 100     # int >= 0
+  lr_decay_iters: 80000 # int > warmup_iters для cosine
+  min_lr: 1.0e-5        # float >= 0; конечный LR для cosine
+
 
 train:
-  init: scratch         # scratch | resume | auto
-  seed: 1337
-  batch_size: 256
-  gradient_accumulation_steps: 1
-  max_iters: 80000
-  eval_interval: 250
-  eval_iters: 100
-  early_stop_patience: 0   # 0 disables early stopping
+  init: scratch         # scratch | resume | auto (resume при наличии last.pt)
+  seed: 1337            # int; инициализация модели и Python/Torch RNG
+  data_seed: null       # int | null; null означает использовать train.seed
+
+  batch_size: 256                  # int > 0; micro-batch size
+  gradient_accumulation_steps: 1   # int > 0
+  max_iters: 80000                 # int >= 0
+
+  eval_interval: 250     # int > 0; шагов между evaluation
+  eval_iters: 100        # int > 0; batches для train/val оценки
+  eval_only: false       # true: одна evaluation на step 0, без обучения
+  eval_accuracy: true    # считать task metrics вместе с loss
+  log_interval: 100      # int > 0; шагов между train-log records
+  diag_interval: 0       # int >= 0; каждые N eval считать norms, 0 выключает
+  always_save_checkpoint: true  # сохранять last.pt на каждой evaluation
+  reproducible_val: false       # true: отдельный детерминированный sampling val
+
+  early_stop_metric: val       # train | val | train_acc | val_acc | *_token_acc
+  early_stop_patience: 0       # evals без улучшения; 0 выключает patience stop
+  early_stop_min_delta: 0.0    # минимальное улучшение выбранной метрики
+  early_stop_target: null      # float | null; остановиться при достижении target
+
+
+# GRID (необязательно) -----------------------------------------------------
+# Раскомментируйте нужные оси. Ключ — полный dotted path, значение — список.
+# Оси перемножаются, а их значения добавляются к имени run_dir.
+# grid:
+#   train.seed: [0, 1, 2]
+#   model.name: [vanilla, positional]
+#   task.params.depth: [1, 2, 3]
+#   task.params.n_pairs: [[4, 9], [9, 17]]

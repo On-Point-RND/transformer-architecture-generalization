@@ -8,26 +8,72 @@ and the rng state needed for exact resume.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from numbers import Integral
+from typing import Any
 
 import numpy as np
+
+
+def validate_int_spec(spec, name: str, minimum: int = 0):
+    """Validate and normalize an integer or a half-open ``[lo, hi)`` range."""
+    if isinstance(spec, Integral) and not isinstance(spec, bool):
+        value = int(spec)
+        if value < minimum:
+            raise ValueError(f"{name} must be >= {minimum}, got {value}")
+        return value
+    if not isinstance(spec, (tuple, list)) or len(spec) != 2:
+        raise TypeError(f"{name} must be an integer or a [lo, hi) pair, got {spec!r}")
+    lo, hi = spec
+    if (not isinstance(lo, Integral) or isinstance(lo, bool)
+            or not isinstance(hi, Integral) or isinstance(hi, bool)):
+        raise TypeError(f"{name} bounds must be integers, got {spec!r}")
+    lo, hi = int(lo), int(hi)
+    if lo < minimum or hi <= lo:
+        raise ValueError(
+            f"{name} must satisfy {minimum} <= lo < hi for [lo, hi), got {spec!r}"
+        )
+    return lo, hi
+
+
+def sample_int(rng, spec) -> int:
+    """Return an int, or sample from [lo, hi) when given a range.
+
+    One convention for every task, the one range() uses: the upper bound is
+    excluded, so ``n_pairs: [2, 25]`` yields 2..24.
+    """
+    if isinstance(spec, Integral):
+        return spec
+    return int(rng.integers(spec[0], spec[1]))
+
+
+def max_int(spec) -> int:
+    """Return the largest value ``sample_int`` can produce."""
+    return int(spec) if isinstance(spec, Integral) else spec[1] - 1
 
 
 @dataclass
 class DatasetItem:
     prompt: np.ndarray
     answer: np.ndarray
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class Task(ABC):
-    PAD_ID: int = 0  # token used to right-pad inputs; subclasses may override
-    train_pool = None  # a finite training set, when build_train_pool was called
+    PAD_ID: int = 0
+
+    def __init__(self, seed: int | None):
+        self.rng = np.random.default_rng(seed)
+        self._val_prompts: set[bytes] | None = None
+        self._train_pool: list[DatasetItem] | None = None
+
+    @property
+    @abstractmethod
+    def vocab_size(self) -> int: ...
 
     @abstractmethod
     def _sample_one(self) -> DatasetItem: ...
 
-    def metrics(self, predicted, targets) -> Dict[str, float]:
+    def metrics(self, predicted, targets) -> dict[str, float]:
         """Named scores for one batch of predictions — override to add your own.
 
         ``predicted`` and ``targets`` are [batch, block_size] int arrays and
@@ -35,14 +81,17 @@ class Task(ABC):
         over the batch: the training loop averages each key across eval batches
         and logs it as ``<split>_<key>``.
 
-        The default is answer exact-match: a row counts only if every answer
-        position is right. For single-token answers that is token accuracy.
+        ``acc`` is answer exact-match: a row counts only if every answer
+        position is right. ``token_acc`` is the fraction of answer tokens that
+        are right, so 9 of 10 digits is 0.9 rather than 0. For single-token
+        answers the two coincide.
         """
         answer = targets != -1
         correct = ((predicted == targets) | ~answer).all(axis=1)
-        return {"acc": float(correct.astype(np.float32).mean())}
+        return {"acc": float(correct.astype(np.float32).mean()),
+                "token_acc": float((predicted == targets)[answer].astype(np.float32).mean())}
 
-    def collate(self, items: List[DatasetItem], block_size: int):
+    def collate(self, items: list[DatasetItem], block_size: int):
         """Pack prompt->answer items into answer-masked (x, y) arrays.
 
         For each item, ``seq = concat(prompt, answer)``. The input ``x`` is
@@ -60,7 +109,7 @@ class Task(ABC):
         for b, item in enumerate(items):
             seq = np.concatenate([item.prompt, item.answer]).astype(np.int64)
             self._check_fits(seq, block_size)
-            end = len(seq) - 1  # length of seq[:-1] / seq[1:]
+            end = len(seq) - 1
             x[b, :end] = seq[:-1]
             y[b, end - len(item.answer) : end] = item.answer
         return x, y
@@ -75,20 +124,17 @@ class Task(ABC):
             f"(e.g. fewer pairs) so that len(prompt)+len(answer) <= block_size+1"
         )
 
-    def sample(self, n: int = 1) -> List[DatasetItem]:
-        return [self._sample_one() for _ in range(n)]
-
     @staticmethod
-    def _hash(item: DatasetItem) -> bytes:
+    def _prompt_key(item: DatasetItem) -> bytes:
         return item.prompt.tobytes()
 
     MAX_REJECTS = 10_000
 
-    def _draw_new(self, taken, what: str) -> DatasetItem:
+    def _sample_unique(self, taken, what: str) -> DatasetItem:
         """An example whose prompt is not already in ``taken``."""
         for _ in range(self.MAX_REJECTS):
             item = self._sample_one()
-            if self._hash(item) not in taken:
+            if self._prompt_key(item) not in taken:
                 return item
         raise ValueError(
             f"{type(self).__name__} drew {self.MAX_REJECTS} duplicate prompts in a "
@@ -97,21 +143,23 @@ class Task(ABC):
             f"or widen the task, e.g. more items or a larger vocabulary."
         )
 
-    def generate_val(self, n: int) -> List[DatasetItem]:
+    def generate_val(self, n: int) -> list[DatasetItem]:
         val, seen = [], set()
         while len(val) < n:
-            item = self._draw_new(seen, f"the {n}-example validation set")
-            seen.add(self._hash(item))
+            item = self._sample_unique(seen, f"the {n}-example validation set")
+            seen.add(self._prompt_key(item))
             val.append(item)
-        self.val_hashes = seen
+        self._val_prompts = seen
         return val
 
-    def sample_train(self, n: int = 1) -> List[DatasetItem]:
-        if not hasattr(self, "val_hashes"):
+    def sample_train(self, n: int = 1) -> list[DatasetItem]:
+        if self._val_prompts is None:
             raise RuntimeError("Call `generate_val(...)' before sampling train")
-        if self.train_pool is not None:
-            return [self.train_pool[i] for i in self.rng.integers(len(self.train_pool), size=n)]
-        return [self._draw_new(self.val_hashes, "a training batch") for _ in range(n)]
+        if self._train_pool is not None:
+            indices = self.rng.integers(len(self._train_pool), size=n)
+            return [self._train_pool[i] for i in indices]
+        return [self._sample_unique(self._val_prompts, "a training batch")
+                for _ in range(n)]
 
     def build_train_pool(self, n: int) -> None:
         """Train from a fixed set of n examples instead of an endless stream.
@@ -122,11 +170,10 @@ class Task(ABC):
         pool is rebuilt from the seed on resume, like the val set, so nothing
         extra goes into state_dict.
         """
-        self.train_pool = self.sample_train(n)
+        self._train_pool = self.sample_train(n)
 
-
-    def state_dict(self) -> Dict[str, Any]:
+    def state_dict(self) -> dict[str, Any]:
         return {"rng": self.rng.bit_generator.state}
 
-    def load_state_dict(self, state: Dict[str, Any]) -> None:
+    def load_state_dict(self, state: dict[str, Any]) -> None:
         self.rng.bit_generator.state = state["rng"]

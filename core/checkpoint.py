@@ -5,6 +5,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
+from core.config import SECTIONS
+
 LAST = "last.pt"
 BEST = "best.pt"
 
@@ -72,7 +74,6 @@ def check_architecture(run_dir, checkpoint, model_config, fields):
     )
 
 
-SECTION_NAMES = ("model", "task", "train", "optimizer", "hardware", "paths")
 
 OPTIMIZER_FIELDS = ("learning_rate", "weight_decay", "beta1", "beta2", "grad_clip",
                     "warmup_iters", "lr_decay_iters", "min_lr")
@@ -86,7 +87,7 @@ def config_sections(checkpoint):
     `train:`. Both are normalised here so resume and evaluation read one shape.
     """
     config = checkpoint.get("config", {})
-    sections = {name: dict(config.get(name) or {}) for name in SECTION_NAMES}
+    sections = {name: dict(config.get(name) or {}) for name in SECTIONS}
     sections["model"] = model_fields(checkpoint)
     if not sections["task"]:  
         sections["task"] = {"name": config.get("dataset", "kv_retrieval"),

@@ -45,7 +45,7 @@ def hidden_dim(config):
 class UngatedMLP(nn.Module):
     """The standard two-matrix FFN; the activation is the ablated axis."""
 
-    def __init__(self, config):
+    def __init__(self, config, layer_idx=0):
         super().__init__()
         self.c_fc = nn.Linear(config.n_embd, hidden_dim(config), bias=config.bias)
         self.c_proj = nn.Linear(hidden_dim(config), config.n_embd, bias=config.bias)
@@ -59,7 +59,7 @@ class UngatedMLP(nn.Module):
 class GatedMLP(nn.Module):
     """SwiGLU: one branch gates the other before the down-projection."""
 
-    def __init__(self, config):
+    def __init__(self, config, layer_idx=0):
         super().__init__()
         self.c_fc = nn.Linear(config.n_embd, hidden_dim(config), bias=config.bias)
         self.c_gate = nn.Linear(config.n_embd, hidden_dim(config), bias=config.bias)
@@ -70,6 +70,6 @@ class GatedMLP(nn.Module):
         return self.dropout(self.c_proj(F.silu(self.c_gate(x)) * self.c_fc(x)))
 
 
-class Model(Transformer):
-    def build_mlp(self, config, layer_idx):
-        return GatedMLP(config) if config.ffn == "swiglu" else UngatedMLP(config)
+def build_model(config):
+    mlp = GatedMLP if config.ffn == "swiglu" else UngatedMLP
+    return Transformer(config, mlp=mlp)

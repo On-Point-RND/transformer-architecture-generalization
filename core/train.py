@@ -3,7 +3,7 @@ import os
 import random
 import time
 from contextlib import nullcontext
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from pathlib import Path
 
 import torch
@@ -14,9 +14,11 @@ from core.logs import RunLogger
 from tasks import get_task
 from models import get_model
 
-ARCHITECTURE_FIELDS = ("name", "n_layer", "n_head", "n_embd", "block_size",
-                       "bias", "vocab_size", "pos_encoding", "n_loops")
 DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch.float16}
+
+
+def architecture_fields(model_config):
+    return tuple(f.name for f in fields(model_config) if f.name != "dropout")
 
 
 def resolve_device(hardware):
@@ -168,11 +170,12 @@ def run_metadata(config, model):
 
 
 def build_model(config, task, device, resumed, ckpt_dir):
-    _, model_cls = get_model(config.model.name)
+    _, model_builder = get_model(config.model.name)
     config.model.vocab_size = task.vocab_size
-    model = model_cls(config.model)
+    model = model_builder(config.model)
     if resumed is not None:
-        checkpoint.check_architecture(ckpt_dir, resumed, config.model, ARCHITECTURE_FIELDS)
+        checkpoint.check_architecture(ckpt_dir, resumed, config.model,
+                                      architecture_fields(config.model))
         model.load_state_dict(checkpoint.strip_compile_prefix(resumed["model"]))
     return model.to(device)
 
@@ -320,4 +323,3 @@ def run(config):
             break
 
     return best_val_loss
-

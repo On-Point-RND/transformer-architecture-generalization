@@ -271,35 +271,20 @@ class PositionalSelfAttention(CausalAttention):
         return scores
 
 
-def _is_positional(name):
-    return ".positioning." in name or name.startswith("transformer.wpe")
-
-
-class Model(Transformer):
-    def __init__(self, config):
-        super().__init__(config)
-        self.positional_spec = parse_positional_spec(config.pos_encoding)
-        if self.positional_spec.embedding == "sinusoidal":
-            with torch.no_grad():
-                self.transformer.wpe.weight.copy_(
-                    sinusoidal_table(config.block_size, config.n_embd))
-            self.transformer.wpe.weight.requires_grad_(False)
-
-    def build_attention(self, config, layer_idx):
-        return PositionalSelfAttention(config, layer_idx)
-
-    def uses_pos_embedding(self, config):
-        return parse_positional_spec(config.pos_encoding).embedding in ("wpe", "sinusoidal")
-
-    def param_report(self):
-        counted = [(p.requires_grad, p.numel())
-                   for name, p in self.named_parameters() if _is_positional(name)]
-        trainable = sum(n for grad, n in counted if grad)
-        frozen = sum(n for grad, n in counted if not grad)
-        frozen += sum(b.numel() for name, b in self.named_buffers()
-                      if ".positioning." in name)
-        return {
-            "positional_encoding": self.positional_spec.canonical,
-            "positional_parameters": {"trainable": trainable, "frozen": frozen,
-                                      "total": trainable + frozen},
-        }
+def build_model(config):
+    spec = parse_positional_spec(config.pos_encoding)
+    model = Transformer(
+        config,
+        attention=PositionalSelfAttention,
+        use_pos_embedding=spec.embedding in ("wpe", "sinusoidal"),
+        positional_encoding=spec.canonical,
+        positional_markers=("transformer.wpe", ".positioning."),
+    )
+    model.positional_spec = spec
+    if spec.embedding == "sinusoidal":
+        with torch.no_grad():
+            model.transformer.wpe.weight.copy_(
+                sinusoidal_table(config.block_size, config.n_embd)
+            )
+        model.transformer.wpe.weight.requires_grad_(False)
+    return model

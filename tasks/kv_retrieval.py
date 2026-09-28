@@ -1,95 +1,94 @@
-from typing import Tuple
+"""Nested key-value retrieval: follow a key path and return its value.
+
+    depth=1:  { a 7, b 4 }                 ? b       -> 4
+    depth=2:  { a 7, b { c 9, d 2 } }      ? b c     -> 9
+
+Every dictionary has ``n_pairs`` entries and exactly one entry continues the
+queried path until ``depth`` is reached. Other entries are distractors. Keys are
+unique within a dictionary, so every query has one unambiguous answer.
+"""
 
 import numpy as np
 
-from .base import DatasetItem, Task
+from .base import DatasetItem, Task, max_int, sample_int, validate_int_spec
 
 
 class KVRetrievalTask(Task):
     PAD_ID = 0
-    QUERY_MARKER_ID = 1
-    SOD_ID = 2  # start of dict
-    EOD_ID = 3  # end of dict
-    BOE_ID = 4  # beginning of entry
-    EOE_ID = 5  # end of entry
+    QUERY_ID = 1
+    DICT_START_ID = 2
+    DICT_END_ID = 3
+    ENTRY_START_ID = 4
+    ENTRY_END_ID = 5
     N_SPECIAL = 6
 
     def __init__(
         self,
-        k_card: int,
-        v_card: int,
-        n_pairs: int | Tuple[int, int],
-        duplicate_keys: bool = False,
+        k_card: int = 64,
+        v_card: int = 64,
+        n_pairs: int | tuple[int, int] = (4, 9),
+        depth: int = 1,
         seed: int | None = 42,
     ):
-        """
-        Generator for KV retrieval task.
+        super().__init__(seed)
+        self.k_card = validate_int_spec(k_card, "k_card", 1)
+        self.v_card = validate_int_spec(v_card, "v_card", 1)
+        self.n_pairs = validate_int_spec(n_pairs, "n_pairs", 1)
+        self.depth = validate_int_spec(depth, "depth", 1)
+        if max_int(self.n_pairs) > self.k_card:
+            raise ValueError("n_pairs cannot exceed k_card: keys must be unique in each dict")
 
-        :param k_card: Amount of possible keys.
-        :type k_card: int
-        :param v_card: Amount of possible values.
-        :type v_card: int
-        :param n_pairs: Amount of pairs in each prompt. `n_pairs' if the parameter is an
-        integer, and a value in [n_pairs[0], n_pairs[1]) if it is a tuple.
-        :type n_pairs: int | Tuple[int, int]
-        :param duplicate_keys: Whether to allow duplicate keys in the prompt.
-        :type duplicate_keys: bool
-        :param seed: Randomization seed, None for non-reproducible environment.
-        :type seed: int | None
-
-        NOTE(frozen): with duplicate_keys=True the queried key may occur more
-        than once and the answer is taken from the *drawn* occurrence, not the
-        last one, so ~25% of prompts (507/2000 measured) have an ambiguous
-        target. Kept as-is: the published runs were trained on this stream, and
-        fixing it changes the data. tests/check_data_equivalence.py, if it is
-        still around, will say exactly what moved.
-        """
-        self.k_card = k_card
-        self.v_card = v_card
-        self.n_pairs = n_pairs
-
-        self.k_token_ids = np.arange(k_card) + self.N_SPECIAL
-        self.v_token_ids = np.arange(v_card) + self.N_SPECIAL + k_card
-
-        self.rng = np.random.default_rng(seed)
-
-        self.duplicate_keys = duplicate_keys
+        self.key_ids = np.arange(self.k_card, dtype=np.int64) + self.N_SPECIAL
+        self.value_ids = (
+            np.arange(self.v_card, dtype=np.int64) + self.N_SPECIAL + self.k_card
+        )
 
     @property
     def vocab_size(self) -> int:
         return self.N_SPECIAL + self.k_card + self.v_card
 
-    def _sample_one(self) -> DatasetItem:
-        if isinstance(self.n_pairs, int):
-            n_pairs = self.n_pairs
-        else:
-            n_pairs = int(self.rng.integers(self.n_pairs[0], self.n_pairs[1]))
+    def _build_dictionary(self, level: int):
+        n_pairs = sample_int(self.rng, self.n_pairs)
         keys = self.rng.choice(
-            self.k_token_ids, size=n_pairs, replace=self.duplicate_keys
+            self.key_ids, size=n_pairs, replace=False
         )
-        values = self.rng.choice(self.v_token_ids, size=n_pairs, replace=True)
+        target_slot = int(self.rng.integers(n_pairs))
+        tokens = [self.DICT_START_ID]
+        target_position = None
 
-        seq = np.empty(4 * n_pairs + 2 + 2, dtype=np.int64)
+        for slot, key_token in enumerate(keys):
+            entry_position = len(tokens)
+            tokens += [self.ENTRY_START_ID, int(key_token)]
+            if slot == target_slot and level < self.depth:
+                child, child_path, answer, child_position, sizes = self._build_dictionary(level + 1)
+                tokens += child
+                path = [int(key_token), *child_path]
+                target_position = entry_position + 2 + child_position
+                level_sizes = [n_pairs, *sizes]
+            else:
+                value = int(self.rng.choice(self.value_ids))
+                tokens.append(value)
+                if slot == target_slot:
+                    path = [int(key_token)]
+                    answer = value
+                    target_position = entry_position
+                    level_sizes = [n_pairs]
+            tokens.append(self.ENTRY_END_ID)
 
-        seq[0] = self.SOD_ID
-        entries = seq[1 : 1 + 4 * n_pairs]
-        entries[0::4] = self.BOE_ID
-        entries[1::4] = keys
-        entries[2::4] = values
-        entries[3::4] = self.EOE_ID
-        seq[1 + 4 * n_pairs] = self.EOD_ID
+        tokens.append(self.DICT_END_ID)
+        return tokens, path, answer, target_position, level_sizes
 
-        seq[-2] = self.QUERY_MARKER_ID
-
-        qi = int(self.rng.integers(n_pairs))
-        seq[-1] = keys[qi]
-        answer = np.array([values[qi]], dtype=np.int64)
-
-        metadata = {
-            "sequence_length": len(seq),
-            "n_pairs": n_pairs,
-            "target_entry": qi,
-            "absolute_target_position": 1 + 4 * qi,  # the entry's BOE token
-            "normalized_target_position": qi / max(n_pairs - 1, 1),
-        }
-        return DatasetItem(prompt=seq, answer=answer, metadata=metadata)
+    def _sample_one(self) -> DatasetItem:
+        dictionary, path, value, target_position, level_sizes = self._build_dictionary(1)
+        prompt = np.asarray(dictionary + [self.QUERY_ID, *path], dtype=np.int64)
+        return DatasetItem(
+            prompt=prompt,
+            answer=np.asarray([value], dtype=np.int64),
+            metadata={
+                "depth": self.depth,
+                "n_pairs_by_level": level_sizes,
+                "sequence_length": len(prompt),
+                "absolute_target_position": target_position,
+                "relative_distance": len(prompt) - 1 - target_position,
+            },
+        )
