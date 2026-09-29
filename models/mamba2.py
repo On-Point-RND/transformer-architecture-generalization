@@ -11,7 +11,12 @@ from core.model import Transformer
 
 try:
     from mamba_ssm.ops.triton.ssd_combined import mamba_chunk_scan_combined
-except (ImportError, OSError) as error:
+# mamba-ssm is an optional acceleration dependency. Its transitive compiled
+# packages can also fail with runtime/version errors during import (for example,
+# when quack expects a dtype that the installed PyTorch does not expose). Treat
+# any such import-time failure as "fused kernel unavailable" and use the native
+# PyTorch scan below.
+except Exception as error:
     mamba_chunk_scan_combined = None
     _FUSED_IMPORT_ERROR = error
 else:
