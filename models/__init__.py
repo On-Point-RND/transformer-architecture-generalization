@@ -10,6 +10,7 @@ from models.gated_deltanet import Config as GatedDeltaNetConfig
 from models.gated_deltanet import Model as GatedDeltaNetModel
 from models.looped import Config as LoopedConfig
 from models.looped import build_model as build_looped
+from models.lstm import build_model as build_lstm
 from models.lssa import LSSAConfig, LSSARConfig, build_lssa, build_lssar
 from models.mamba2 import Config as Mamba2Config
 from models.mamba2 import Model as Mamba2Model
@@ -27,6 +28,7 @@ def build_vanilla(config):
 
 MODELS = {
     "vanilla": (ModelConfig, build_vanilla),
+    "lstm": (ModelConfig, build_lstm),
     "positional": (PositionalConfig, build_positional),
     "attention_design": (AttentionConfig, build_attention),
     "ffn_gating": (FFNConfig, build_ffn),

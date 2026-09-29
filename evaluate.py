@@ -161,6 +161,10 @@ def score(model, task, items, batch_size, device, ctx, autoregressive=False):
     [rows, n_head, T, T] score matrix for the mechanisms that need explicit
     scores, which does not fit in memory.
     """
+    if autoregressive and any(item.labels is not None for item in items):
+        raise ValueError("--autoregressive does not apply to this task: its labels "
+                         "are aligned with the input positions, there is nothing to "
+                         "generate after the prompt")
     block_size = model.config.block_size
     totals, rows = {"loss": 0.0}, 0
     for start in range(0, len(items), batch_size):
