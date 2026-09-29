@@ -8,6 +8,7 @@ from models.ffn_gating import Config as FFNConfig
 from models.ffn_gating import build_model as build_ffn
 from models.looped import Config as LoopedConfig
 from models.looped import build_model as build_looped
+from models.lstm import build_model as build_lstm
 from models.lssa import LSSAConfig, LSSARConfig, build_lssa, build_lssar
 from models.positional import Config as PositionalConfig
 from models.positional import build_model as build_positional
@@ -23,6 +24,7 @@ def build_vanilla(config):
 
 MODELS = {
     "vanilla": (ModelConfig, build_vanilla),
+    "lstm": (ModelConfig, build_lstm),
     "positional": (PositionalConfig, build_positional),
     "attention_design": (AttentionConfig, build_attention),
     "ffn_gating": (FFNConfig, build_ffn),
