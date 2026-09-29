@@ -405,14 +405,14 @@ class MambaBlock(nn.Module):
 
 class Model(Transformer):
     def __init__(self, config):
-        super().__init__(config)
+        super().__init__(
+            config,
+            use_pos_embedding=False,
+            positional_encoding="nope",
+            positional_markers=(),
+            block_builder=MambaBlock,
+        )
         self.transformer.ln_f = nn.RMSNorm(config.n_embd, eps=1e-5)
-
-    def build_blocks(self, config):
-        return nn.ModuleList([MambaBlock(config, i) for i in range(config.n_layer)])
-
-    def uses_pos_embedding(self, config):
-        return False
 
     def estimate_mfu(self, fwdbwd_per_iter, dt):
         return -1.0  # the shared estimate assumes attention
