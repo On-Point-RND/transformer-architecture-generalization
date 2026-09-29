@@ -3,10 +3,10 @@
 default_block_size: 128
 
 experiments:
-  - {task: c5, n_layer: 1, params: {n_permutations: 16}}
-  - {task: c5, n_layer: 2, params: {n_permutations: 16}}
-  - {task: c5, n_layer: 3, params: {n_permutations: 16}}
-  - {task: c5, n_layer: 4, params: {n_permutations: 16}}
+  - {task: c5, n_layer: 1, block_size: 16, params: {n_permutations: 16}}
+  - {task: c5, n_layer: 2, block_size: 16, params: {n_permutations: 16}}
+  - {task: c5, n_layer: 3, block_size: 16, params: {n_permutations: 16}}
+  - {task: c5, n_layer: 4, block_size: 16, params: {n_permutations: 16}}
 
   - {task: kv_retrieval, n_layer: 1, params: {k_card: 64, n_pairs: 15, v_card: 64}}
   - {task: kv_retrieval, n_layer: 1, params: {k_card: 64, n_pairs: 29, v_card: 64}}
@@ -52,10 +52,10 @@ experiments:
     block_size: 196
     params: {grid_size: 8, max_grid_size: 12, min_path_length: 2}
 
-  - {task: s5, n_layer: 1, params: {n_permutations: 16}}
-  - {task: s5, n_layer: 2, params: {n_permutations: 16}}
-  - {task: s5, n_layer: 3, params: {n_permutations: 16}}
-  - {task: s5, n_layer: 4, params: {n_permutations: 16}}
+  - {task: s5, n_layer: 1, block_size: 16, params: {n_permutations: 16}}
+  - {task: s5, n_layer: 2, block_size: 16, params: {n_permutations: 16}}
+  - {task: s5, n_layer: 3, block_size: 16, params: {n_permutations: 16}}
+  - {task: s5, n_layer: 4, block_size: 16, params: {n_permutations: 16}}
 
   - {task: state_based_recall, n_layer: 1, params: {n_bits: [16, 17], n_swaps: 15}}
   - {task: state_based_recall, n_layer: 1, params: {n_bits: [16, 17], n_swaps: 20}}
