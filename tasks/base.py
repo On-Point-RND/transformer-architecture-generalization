@@ -56,6 +56,9 @@ class DatasetItem:
     prompt: np.ndarray
     answer: np.ndarray
     metadata: dict[str, Any] = field(default_factory=dict)
+    # one label per prompt position (-1 = unsupervised) for tasks that score
+    # every step, e.g. the S5 word problem; answer is then unused by collate
+    labels: np.ndarray | None = None
 
 
 class Task(ABC):
@@ -101,12 +104,24 @@ class Task(ABC):
         answer tokens. Right-padding is safe for a causal model: the answer span
         precedes the padding, so attention never looks forward into it.
 
+        An item with ``labels`` is packed without a shift: ``x`` is the prompt
+        and ``y[i]`` is the label for position ``i``.
+
         Returns two ``(len(items), block_size)`` int64 numpy arrays. torch is
         intentionally kept out of this package; the training loop tensorizes.
         """
         x = np.full((len(items), block_size), self.PAD_ID, dtype=np.int64)
         y = np.full((len(items), block_size), -1, dtype=np.int64)
         for b, item in enumerate(items):
+            if item.labels is not None:
+                n = len(item.prompt)
+                if n > block_size:
+                    raise ValueError(f"prompt length {n} exceeds block_size={block_size}; "
+                                     f"a task with per-position labels needs "
+                                     f"len(prompt) <= block_size")
+                x[b, :n] = item.prompt
+                y[b, :n] = item.labels
+                continue
             seq = np.concatenate([item.prompt, item.answer]).astype(np.int64)
             self._check_fits(seq, block_size)
             end = len(seq) - 1

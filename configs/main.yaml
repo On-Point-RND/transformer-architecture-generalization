@@ -16,6 +16,7 @@ paths:
 # МОДЕЛЬ -------------------------------------------------------------------
 # name:
 #   vanilla          обычный causal Transformer с learned absolute positions
+#   lstm             stacked causal LSTM без positional encoding
 #   positional       сравнение/композиция positional encodings
 #   attention_design MHA/GQA/MQA, K=V и local attention
 #   ffn_gating       GELU | ReLU | SwiGLU
@@ -24,14 +25,15 @@ paths:
 #   relumax          compact-support polynomial attention
 #   lssa             LSSA attention с RoPE
 #   lssar            rectified LSSA
+
 model:
   name: vanilla
   block_size: 128     # int > 0; len(prompt)+len(answer)-1 должно помещаться
-  n_layer: 4          # int > 0; для looped обычно 1
-  n_head: 4           # int > 0 и делитель n_embd
-  n_embd: 128         # int > 0; ширина residual stream
+  n_layer: 4          # int > 0; число Transformer/LSTM-слоёв; для looped обычно 1
+  n_head: 4           # int > 0 и делитель n_embd; LSTM игнорирует
+  n_embd: 128         # int > 0; ширина Transformer или embedding/hidden size LSTM
   dropout: 0.0        # float в [0, 1)
-  bias: false         # true | false; bias в Linear и LayerNorm
+  bias: false         # true | false; bias внутри Transformer/LSTM; lm_head без bias
   # vocab_size не задаётся: training loop берёт его у выбранной задачи.
 
 # Дополнительные поля добавляются только для соответствующего model.name:
@@ -113,9 +115,10 @@ task:
 #   duplicates: true               # разрешать одинаковые строки
 #   descending: false              # false = ascending, true = descending
 #
-# c5 / s5:
-#   n_permutations: [4, 33]        # int >= 1 или [lo, hi)
-#   # group не задаётся: task.name жёстко фиксирует C5 или S5.
+# c5 / s5 (word problem в формате Merrill et al. 2024 / Li et al. 2025):
+#   n_permutations: [4, 33]        # int >= 1 или [lo, hi); block_size >= max(n_permutations)
+#   # Метка стоит после КАЖДОГО хода — произведение всех ходов до него как
+#   # элемент группы. group не задаётся: task.name жёстко фиксирует C5 или S5.
 #
 # ruler (Variable Tracking из RULER):
 #   n_vars: 64                     # размер словаря переменных
