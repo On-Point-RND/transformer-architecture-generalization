@@ -3,6 +3,7 @@
 import json
 import math
 import os
+import uuid
 import warnings
 from dataclasses import is_dataclass
 from pathlib import Path
@@ -118,7 +119,10 @@ class MLflowSink:
         if run_id_path.is_file():
             run = mlflow.start_run(run_id=run_id_path.read_text(encoding="utf-8").strip())
         else:
-            run_name = os.environ.get("MLFLOW_RUN_NAME") or Path(config.paths.run_dir).name
+            generated_name = (
+                f"{metadata['model']}-{Path(config.paths.run_dir).name}-{uuid.uuid4().hex[:8]}"
+            )
+            run_name = os.environ.get("MLFLOW_RUN_NAME") or generated_name
             tags = {
                 "model": metadata["model"],
                 "task": metadata["task"],
