@@ -20,6 +20,7 @@ in the key direction.  The usual ``beta = sigmoid(.)`` keeps it positive;
 """
 
 import math
+import warnings
 from dataclasses import dataclass
 
 import torch
@@ -28,6 +29,14 @@ from torch.nn import functional as F
 
 from core.config import ModelConfig
 from core.model import Transformer
+
+try:
+    from fla.ops.gated_delta_rule import chunk_gated_delta_rule
+except Exception as error:
+    chunk_gated_delta_rule = None
+    _FLA_IMPORT_ERROR = error
+else:
+    _FLA_IMPORT_ERROR = None
 
 
 @dataclass
@@ -43,6 +52,8 @@ class Config(ModelConfig):
     dt_min: float = 0.001
     dt_max: float = 0.1
     dt_init_floor: float = 1e-4
+    scan_kernel: str = "auto"  # auto | torch | fla
+    chunk_size: int = 16
 
     def __post_init__(self):
         for name in ("n_embd", "n_layer", "n_head", "d_conv"):
@@ -62,6 +73,10 @@ class Config(ModelConfig):
             raise ValueError("require 0 < a_init_min <= a_init_max")
         if not 0 < self.dt_min <= self.dt_max or self.dt_init_floor <= 0:
             raise ValueError("require 0 < dt_min <= dt_max and dt_init_floor > 0")
+        if self.scan_kernel not in ("auto", "torch", "fla"):
+            raise ValueError("model.scan_kernel must be 'auto', 'torch', or 'fla'")
+        if self.chunk_size not in (16, 32, 64):
+            raise ValueError("model.chunk_size must be 16, 32, or 64")
 
 
 def gated_delta_scan(q, k, v, decay, beta, initial_state=None, seq_idx=None):
@@ -88,11 +103,18 @@ def gated_delta_scan(q, k, v, decay, beta, initial_state=None, seq_idx=None):
                 reset = seq_idx[:, t] != seq_idx[:, t - 1]
                 fresh = q.new_zeros(state.shape)
                 state = torch.where(reset[:, None, None, None], fresh, state)
+            q_t, k_t = q[:, t], k[:, t]
             state = state * decay[:, t, :, None, None]
-            prediction = torch.einsum("bhk,bhkv->bhv", k[:, t], state)
+
+            # Read with k and q in one batched contraction. The output after
+            # the rank-one update follows from
+            # q @ (state + k outer error) = q @ state + (q . k) * error.
+            # This avoids reading the large recurrent state a second time.
+            reads = torch.matmul(torch.stack((k_t, q_t), dim=-2), state)
+            prediction, output = reads.unbind(dim=-2)
             error = beta[:, t, :, None] * (v[:, t] - prediction)
-            state = state + torch.einsum("bhk,bhv->bhkv", k[:, t], error)
-            outputs.append(torch.einsum("bhk,bhkv->bhv", q[:, t], state))
+            state = state + k_t[..., None] * error[..., None, :]
+            outputs.append(output + (q_t * k_t).sum(-1, keepdim=True) * error)
         return torch.stack(outputs, dim=1), state
 
 
@@ -109,6 +131,9 @@ class GatedDeltaNet(nn.Module):
         self.head_v_dim = self.value_dim // self.nheads
         self.d_conv = config.d_conv
         self.allow_neg_eigval = config.allow_neg_eigval
+        self.scan_kernel = config.scan_kernel
+        self.chunk_size = config.chunk_size
+        self._warned_fla_fallback = False
 
         self.q_proj = nn.Linear(config.n_embd, self.key_dim, bias=config.bias)
         self.k_proj = nn.Linear(config.n_embd, self.key_dim, bias=config.bias)
@@ -158,26 +183,84 @@ class GatedDeltaNet(nn.Module):
         v = self._causal_conv(self.v_proj(x), self.v_conv)
         shape_k = (*q.shape[:2], self.nheads, self.head_k_dim)
         shape_v = (*v.shape[:2], self.nheads, self.head_v_dim)
-        q = F.normalize(q.reshape(shape_k).float(), dim=-1, eps=1e-6).to(q.dtype)
-        k = F.normalize(k.reshape(shape_k).float(), dim=-1, eps=1e-6).to(k.dtype)
-        return q, k, v.reshape(shape_v)
+        return q.reshape(shape_k), k.reshape(shape_k), v.reshape(shape_v)
 
-    def _gates(self, x):
-        dt = F.softplus(self.a_proj(x).float() + self.dt_bias.float())
+    @staticmethod
+    def _normalize_qk(q, k):
+        q_dtype, k_dtype = q.dtype, k.dtype
+        q = F.normalize(q.float(), dim=-1, eps=1e-6).to(q_dtype)
+        k = F.normalize(k.float(), dim=-1, eps=1e-6).to(k_dtype)
+        return q, k
+
+    def _gate_logits(self, x):
+        return self.a_proj(x), self.b_proj(x)
+
+    def _activate_gates(self, g, beta):
+        dt = F.softplus(g.float() + self.dt_bias.float())
         decay = torch.exp(-self.A_log.float().exp() * dt)
-        beta = self.b_proj(x).float().sigmoid()
+        beta = beta.float().sigmoid()
         if self.allow_neg_eigval:
             beta = 2.0 * beta
         return decay, beta
+
+    def _gates(self, x):
+        return self._activate_gates(*self._gate_logits(x))
 
     def _finish(self, y, gate):
         y = self.o_norm(y).flatten(2).to(gate.dtype) * F.silu(gate)
         return self.dropout(self.c_proj(y))
 
+    def _use_fla_scan(self, q, seq_idx):
+        if self.scan_kernel == "torch":
+            return False
+        if q.device.type != "cuda" or seq_idx is not None:
+            if self.scan_kernel == "fla":
+                reason = ("requires CUDA" if q.device.type != "cuda"
+                          else "does not accept seq_idx; use packed cu_seqlens")
+                raise RuntimeError(f"model.scan_kernel='fla' {reason}")
+            return False
+        if chunk_gated_delta_rule is not None:
+            return True
+        detail = f": {_FLA_IMPORT_ERROR}" if _FLA_IMPORT_ERROR else ""
+        if self.scan_kernel == "fla":
+            raise RuntimeError(
+                "model.scan_kernel='fla' requires fla-core[cuda]"
+                + detail
+            )
+        if not self._warned_fla_fallback:
+            warnings.warn(
+                "Flash Linear Attention is unavailable on CUDA; Gated DeltaNet "
+                "is using the much slower PyTorch recurrence" + detail,
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            self._warned_fla_fallback = True
+        return False
+
     def forward(self, x, seq_idx=None):
         q, k, v = self._project(x)
-        decay, beta = self._gates(x)
-        y, _ = gated_delta_scan(q, k, v, decay, beta, seq_idx=seq_idx)
+        g, beta = self._gate_logits(x)
+        if self._use_fla_scan(q, seq_idx):
+            y, _ = chunk_gated_delta_rule(
+                q=q,
+                k=k,
+                v=v,
+                g=g,
+                beta=beta,
+                scale=1.0,
+                output_final_state=False,
+                chunk_size=self.chunk_size,
+                use_qk_l2norm_in_kernel=True,
+                use_gate_in_kernel=True,
+                A_log=self.A_log,
+                dt_bias=self.dt_bias,
+                use_beta_sigmoid_in_kernel=True,
+                allow_neg_eigval=self.allow_neg_eigval,
+            )
+        else:
+            q, k = self._normalize_qk(q, k)
+            decay, beta = self._activate_gates(g, beta)
+            y, _ = gated_delta_scan(q, k, v, decay, beta, seq_idx=seq_idx)
         return self._finish(y, self.g_proj(x))
 
     def allocate_inference_cache(self, batch_size, max_seqlen=None, dtype=None):

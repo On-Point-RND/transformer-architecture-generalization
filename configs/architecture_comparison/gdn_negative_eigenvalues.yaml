@@ -22,6 +22,8 @@ model:
   expand_v: 1.5
   d_conv: 4
   allow_neg_eigval: true
+  scan_kernel: fla
+  chunk_size: 16
 
 task:
   name: kv_retrieval
