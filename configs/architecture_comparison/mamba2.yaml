@@ -63,6 +63,6 @@ train:
   always_save_checkpoint: true
   reproducible_val: false
   early_stop_metric: val
-  early_stop_patience: 0
-  early_stop_min_delta: 0.0
+  early_stop_patience: 20
+  early_stop_min_delta: 1.0e-4
   early_stop_target: null

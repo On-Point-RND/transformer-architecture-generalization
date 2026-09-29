@@ -17,6 +17,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = PROJECT_ROOT / "configs/architecture_comparison/experiments.yaml"
 DEFAULT_RUN_ROOT = PROJECT_ROOT / "runs/architecture-comparison"
 DEFAULT_OUTPUT = PROJECT_ROOT / "architecture-comparison-results.csv"
+COMPLETION_MARKER = ".complete"
 
 MODEL_CONFIGS = {
     "gdn_negative_eigenvalues": (
@@ -149,18 +150,22 @@ def read_summary(run_dir):
 
 
 def completed(run_dir, max_iters):
+    if (run_dir / COMPLETION_MARKER).is_file():
+        return True
     summary = read_summary(run_dir)
     return summary is not None and int(summary["iter"]) >= max_iters
 
 
 def collect(args, experiments, models, max_iters):
     rows = []
+    complete = 0
     for model in models:
         for index, experiment in enumerate(experiments, start=1):
             run_dir = run_dir_for(args.run_root, model, index, experiment)
             summary = read_summary(run_dir)
             if summary is None:
                 continue
+            complete += int(completed(run_dir, max_iters))
             try:
                 reported_run_dir = run_dir.relative_to(PROJECT_ROOT)
             except ValueError:
@@ -188,7 +193,6 @@ def collect(args, experiments, models, max_iters):
         writer = csv.DictWriter(handle, fieldnames=RESULT_FIELDS)
         writer.writeheader()
         writer.writerows(rows)
-    complete = sum(int(row["iter"]) >= max_iters for row in rows)
     print(f"collected {len(rows)} summaries ({complete} complete) into {args.output}")
 
 
@@ -232,6 +236,9 @@ def main():
                     continue
                 print(f"RUN {model} {index}/{len(experiments)}: {run_dir}", flush=True)
                 result = subprocess.run(command, cwd=PROJECT_ROOT, check=False)
+                if result.returncode == 0:
+                    run_dir.mkdir(parents=True, exist_ok=True)
+                    (run_dir / COMPLETION_MARKER).write_text("complete\n", encoding="utf-8")
                 collect(args, experiments, models, max_iters)
                 if result.returncode and not args.keep_going:
                     return result.returncode
