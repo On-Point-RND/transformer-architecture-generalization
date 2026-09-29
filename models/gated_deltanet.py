@@ -133,7 +133,7 @@ class GatedDeltaNet(nn.Module):
         self.allow_neg_eigval = config.allow_neg_eigval
         self.scan_kernel = config.scan_kernel
         self.chunk_size = config.chunk_size
-        self._warned_fla_fallback = False
+        self._fla_enabled = None
 
         self.q_proj = nn.Linear(config.n_embd, self.key_dim, bias=config.bias)
         self.k_proj = nn.Linear(config.n_embd, self.key_dim, bias=config.bias)
@@ -211,31 +211,39 @@ class GatedDeltaNet(nn.Module):
         return self.dropout(self.c_proj(y))
 
     def _use_fla_scan(self, q, seq_idx):
-        if self.scan_kernel == "torch":
-            return False
-        if q.device.type != "cuda" or seq_idx is not None:
+        if self._fla_enabled is None:
+            detail = f": {_FLA_IMPORT_ERROR}" if _FLA_IMPORT_ERROR else ""
+            if self.scan_kernel == "fla" and q.device.type != "cuda":
+                raise RuntimeError("model.scan_kernel='fla' requires CUDA")
+            if self.scan_kernel == "fla" and chunk_gated_delta_rule is None:
+                raise RuntimeError(
+                    "model.scan_kernel='fla' requires fla-core[cuda]" + detail
+                )
+            self._fla_enabled = (
+                self.scan_kernel != "torch"
+                and q.device.type == "cuda"
+                and chunk_gated_delta_rule is not None
+            )
+            if (self.scan_kernel == "auto" and q.device.type == "cuda"
+                    and chunk_gated_delta_rule is None):
+                warnings.warn(
+                    "Flash Linear Attention is unavailable on CUDA; Gated DeltaNet "
+                    "is using the much slower PyTorch recurrence" + detail,
+                    RuntimeWarning,
+                    stacklevel=2,
+                )
+            if self.layer_idx == 0:
+                backend = "FLA fused kernel" if self._fla_enabled else "PyTorch fallback scan"
+                print(f"Gated DeltaNet: using {backend}")
+
+        if self._fla_enabled and seq_idx is not None:
             if self.scan_kernel == "fla":
-                reason = ("requires CUDA" if q.device.type != "cuda"
-                          else "does not accept seq_idx; use packed cu_seqlens")
-                raise RuntimeError(f"model.scan_kernel='fla' {reason}")
+                raise RuntimeError(
+                    "model.scan_kernel='fla' does not accept seq_idx; "
+                    "use packed cu_seqlens"
+                )
             return False
-        if chunk_gated_delta_rule is not None:
-            return True
-        detail = f": {_FLA_IMPORT_ERROR}" if _FLA_IMPORT_ERROR else ""
-        if self.scan_kernel == "fla":
-            raise RuntimeError(
-                "model.scan_kernel='fla' requires fla-core[cuda]"
-                + detail
-            )
-        if not self._warned_fla_fallback:
-            warnings.warn(
-                "Flash Linear Attention is unavailable on CUDA; Gated DeltaNet "
-                "is using the much slower PyTorch recurrence" + detail,
-                RuntimeWarning,
-                stacklevel=2,
-            )
-            self._warned_fla_fallback = True
-        return False
+        return self._fla_enabled
 
     def forward(self, x, seq_idx=None):
         q, k, v = self._project(x)

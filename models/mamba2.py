@@ -171,6 +171,7 @@ class Mamba2(nn.Module):
         self.norm_before_gate = config.norm_before_gate
         self.dt_limit = config.dt_limit
         self.ssm_kernel = config.ssm_kernel
+        self._fused_enabled = None
 
         self.conv_dim = self.d_ssm + 2 * self.ngroups * self.d_state
         projection_dim = (
@@ -256,20 +257,27 @@ class Mamba2(nn.Module):
         return self.init_states.to(device=device, dtype=dtype).expand(batch, -1, -1, -1)
 
     def _use_fused_scan(self, x):
-        if self.ssm_kernel == "torch":
-            return False
-        if x.device.type != "cuda":
-            if self.ssm_kernel == "fused":
+        if self._fused_enabled is None:
+            detail = f": {_FUSED_IMPORT_ERROR}" if _FUSED_IMPORT_ERROR else ""
+            if self.ssm_kernel == "fused" and x.device.type != "cuda":
                 raise RuntimeError("model.ssm_kernel='fused' requires a CUDA device")
-            return False
-        if mamba_chunk_scan_combined is None:
-            if self.ssm_kernel == "fused":
-                detail = f": {_FUSED_IMPORT_ERROR}" if _FUSED_IMPORT_ERROR else ""
+            if self.ssm_kernel == "fused" and mamba_chunk_scan_combined is None:
                 raise RuntimeError(
                     "model.ssm_kernel='fused' requires the mamba-ssm package" + detail
                 )
-            return False
-        return True
+            self._fused_enabled = (
+                self.ssm_kernel != "torch"
+                and x.device.type == "cuda"
+                and mamba_chunk_scan_combined is not None
+            )
+            if self.layer_idx == 0:
+                backend = (
+                    "mamba-ssm fused kernel"
+                    if self._fused_enabled
+                    else "PyTorch fallback scan"
+                )
+                print(f"Mamba2: using {backend}")
+        return self._fused_enabled
 
     def _scan(self, x, dt, b, c, initial_state, seq_idx):
         a = -self.A_log.float().exp()
