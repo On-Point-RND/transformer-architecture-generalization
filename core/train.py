@@ -267,7 +267,7 @@ def run(config):
 
     val_rng = random.Random(train_cfg.seed) if train_cfg.reproducible_val else random
     get_batch = make_get_batch(task, val_items, config, device, val_rng)
-    logger = RunLogger(paths, metadata, resume=resumed is not None)
+    logger = RunLogger(paths, metadata, config, resume=resumed is not None)
     tokens_per_iter = steps * train_cfg.batch_size * config.model.block_size
     print(f"task '{config.task.name}' vocab_size = {task.vocab_size}, "
           f"held-out val size = {len(val_items)}")
@@ -276,59 +276,66 @@ def run(config):
           f"positional: {metadata['positional_parameters']}")
     print(f"tokens per iteration will be: {tokens_per_iter:,}")
 
-    x, y = get_batch("train")  
-    t0 = time.time()
-    local_iter_num, running_mfu, evals = 0, -1.0, 0
-    best_watched, stale = None, 0  
+    try:
+        x, y = get_batch("train")
+        t0 = time.time()
+        local_iter_num, running_mfu, evals = 0, -1.0, 0
+        best_watched, stale = None, 0
 
-    while True:
-        lr = get_lr(iter_num, opt_cfg)
-        for group in optimizer.param_groups:
-            group["lr"] = lr
+        while True:
+            lr = get_lr(iter_num, opt_cfg)
+            for group in optimizer.param_groups:
+                group["lr"] = lr
 
-        if iter_num % train_cfg.eval_interval == 0:
-            losses = estimate_loss(model, get_batch, ctx, train_cfg, task)
-            scores = {k: v for k, v in losses.items() if k not in ("train", "val")}
-            print(format_eval(iter_num, losses))
-            logger.log_eval(iter=iter_num, lr=lr, mfu=running_mfu,
-                            train_loss=losses["train"], val_loss=losses["val"], **scores)
-            best_val_loss = save_checkpoints(config, paths.checkpoints, raw_model, optimizer,
-                                             scaler, task, metadata, iter_num,
-                                             losses["val"], best_val_loss)
-            logger.write_summary(iter=iter_num, train_loss=losses["train"],
-                                 val_loss=losses["val"], best_val_loss=best_val_loss,
-                                 tokens=tokens_per_iter * iter_num, **scores)
-            logger.write_curves()
-            evals += 1
-            logger.log_diagnostics(raw_model, iter_num, train_cfg.diag_interval, evals)
-            stop, best_watched, stale = watch_early_stop(train_cfg, losses,
-                                                         best_watched, stale)
-            if stop:
-                reason = "target reached" if stale == 0 else f"no gain for {stale} eval(s)"
-                print(f"early stop at {iter_num}: {train_cfg.early_stop_metric} "
-                      f"{losses[train_cfg.early_stop_metric]:.4f} - {reason}")
+            if iter_num % train_cfg.eval_interval == 0:
+                losses = estimate_loss(model, get_batch, ctx, train_cfg, task)
+                scores = {k: v for k, v in losses.items() if k not in ("train", "val")}
+                print(format_eval(iter_num, losses))
+                logger.log_eval(iter=iter_num, lr=lr, mfu=running_mfu,
+                                train_loss=losses["train"], val_loss=losses["val"], **scores)
+                best_val_loss = save_checkpoints(
+                    config, paths.checkpoints, raw_model, optimizer, scaler, task, metadata,
+                    iter_num, losses["val"], best_val_loss
+                )
+                logger.write_summary(iter=iter_num, train_loss=losses["train"],
+                                     val_loss=losses["val"], best_val_loss=best_val_loss,
+                                     tokens=tokens_per_iter * iter_num, **scores)
+                logger.write_curves()
+                evals += 1
+                logger.log_diagnostics(raw_model, iter_num, train_cfg.diag_interval, evals)
+                stop, best_watched, stale = watch_early_stop(
+                    train_cfg, losses, best_watched, stale
+                )
+                if stop:
+                    reason = "target reached" if stale == 0 else f"no gain for {stale} eval(s)"
+                    print(f"early stop at {iter_num}: {train_cfg.early_stop_metric} "
+                          f"{losses[train_cfg.early_stop_metric]:.4f} - {reason}")
+                    break
+
+            if iter_num == 0 and train_cfg.eval_only:
                 break
 
-        if iter_num == 0 and train_cfg.eval_only:
-            break
+            loss, x, y = accumulate_gradients(model, x, y, get_batch, scaler, ctx, steps)
+            grad_norm = optimizer_step(model, optimizer, scaler, opt_cfg.grad_clip)
 
-        loss, x, y = accumulate_gradients(model, x, y, get_batch, scaler, ctx, steps)
-        grad_norm = optimizer_step(model, optimizer, scaler, opt_cfg.grad_clip)
+            dt = time.time() - t0
+            t0 = time.time()
+            if iter_num % train_cfg.log_interval == 0:
+                lossf = loss.item() * steps
+                running_mfu = update_mfu(raw_model, running_mfu, train_cfg.batch_size * steps,
+                                         dt, settled=local_iter_num >= 5)
+                print(f"iter {iter_num}: loss {lossf:.4f}, time {dt * 1000:.2f}ms, "
+                      f"mfu {running_mfu * 100:.2f}%")
+                logger.log("train", iter=iter_num, loss=lossf, lr=lr, dt=dt,
+                           mfu=running_mfu,
+                           grad_norm=None if grad_norm is None else float(grad_norm))
 
-        dt = time.time() - t0
-        t0 = time.time()
-        if iter_num % train_cfg.log_interval == 0:
-            lossf = loss.item() * steps
-            running_mfu = update_mfu(raw_model, running_mfu, train_cfg.batch_size * steps,
-                                     dt, settled=local_iter_num >= 5)
-            print(f"iter {iter_num}: loss {lossf:.4f}, time {dt * 1000:.2f}ms, "
-                  f"mfu {running_mfu * 100:.2f}%")
-            logger.log("train", iter=iter_num, loss=lossf, lr=lr, dt=dt, mfu=running_mfu,
-                       grad_norm=None if grad_norm is None else float(grad_norm))
-
-        iter_num += 1
-        local_iter_num += 1
-        if iter_num > train_cfg.max_iters:
-            break
-
+            iter_num += 1
+            local_iter_num += 1
+            if iter_num > train_cfg.max_iters:
+                break
+    except BaseException:
+        logger.close(status="FAILED")
+        raise
+    logger.close(status="FINISHED")
     return best_val_loss

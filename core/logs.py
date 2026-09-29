@@ -7,6 +7,15 @@ import matplotlib
 matplotlib.use("Agg") 
 import matplotlib.pyplot as plt  
 
+
+def optional_mlflow_sink(config, logs_dir, metadata):
+    """Build the optional sink without making MLflow a training dependency."""
+    try:
+        from core.mlflow_sink import MLflowSink
+        return MLflowSink.from_environment(config, logs_dir, metadata)
+    except Exception:
+        return None
+
 def parameter_norms(model):
 
     module_types = {
@@ -30,7 +39,7 @@ def parameter_norms(model):
 
 
 class RunLogger:
-    def __init__(self, paths, metadata, resume=False):
+    def __init__(self, paths, metadata, config, resume=False):
         self.logs_dir, self.results_dir = Path(paths.logs), Path(paths.results)
         self.logs_dir.mkdir(parents=True, exist_ok=True)
         self.results_dir.mkdir(parents=True, exist_ok=True)
@@ -39,12 +48,15 @@ class RunLogger:
         self.history = []
         if not resume:
             self.metrics_path.write_text("", encoding="utf-8")
+        self.mlflow = optional_mlflow_sink(config, self.logs_dir, metadata)
 
     def log(self, event, **fields):
         record = {"event": event, **fields}
         self.history.append(record)
         with self.metrics_path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, default=float) + "\n")
+        if self.mlflow is not None:
+            self.mlflow.log(event, fields)
 
     def log_eval(self, **fields):
         """Eval records also carry the run metadata, as the old jsonl log did."""
@@ -63,10 +75,25 @@ class RunLogger:
             writer.writeheader()
             writer.writerow({k: json.dumps(v) if isinstance(v, dict) else v
                              for k, v in row.items()})
+        if self.mlflow is not None:
+            self.mlflow.log("summary", fields)
 
     def write_curves(self):
         write_curves(self.metrics_path, self.results_dir / "curves.png",
                      title=Path(self.logs_dir).name)
+
+    def close(self, status="FINISHED"):
+        if self.mlflow is None:
+            return
+        self.mlflow.close(
+            (
+                self.logs_dir / "config.resolved.yaml",
+                self.metrics_path,
+                self.results_dir / "summary.csv",
+                self.results_dir / "curves.png",
+            ),
+            status=status,
+        )
 
 
 def collect_summaries(run_dirs, out_path):
