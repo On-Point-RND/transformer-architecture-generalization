@@ -4,9 +4,13 @@
 import argparse
 import csv
 import json
+import os
 import shlex
 import subprocess
 import sys
+import threading
+import time
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -52,6 +56,58 @@ class Experiment:
     block_size: int
 
 
+@dataclass(frozen=True)
+class Job:
+    model: str
+    index: int
+    total: int
+    run_dir: Path
+    command: tuple[str, ...]
+
+    @property
+    def label(self):
+        return f"{self.model}:{self.index:02d}"
+
+
+class ActiveProcesses:
+    """Thread-safe registry used to stop child processes after Ctrl-C."""
+
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._processes = set()
+        self._stopping = False
+
+    def add(self, process):
+        with self._lock:
+            self._processes.add(process)
+            stopping = self._stopping
+        if stopping:
+            process.terminate()
+
+    def discard(self, process):
+        with self._lock:
+            self._processes.discard(process)
+
+    def terminate_all(self, timeout=5):
+        with self._lock:
+            self._stopping = True
+            processes = list(self._processes)
+        for process in processes:
+            if process.poll() is None:
+                process.terminate()
+        deadline = time.monotonic() + timeout
+        for process in processes:
+            if process.poll() is not None:
+                continue
+            try:
+                process.wait(timeout=max(0, deadline - time.monotonic()))
+            except subprocess.TimeoutExpired:
+                process.kill()
+
+
+OUTPUT_LOCK = threading.Lock()
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
@@ -65,7 +121,12 @@ def parse_args():
         help="architecture to run; repeat to select both (default: both)",
     )
     parser.add_argument("--device", choices=("gpu", "mps", "cpu"))
+    parser.add_argument("--gpu", type=int, help="CUDA device index (default: config value)")
     parser.add_argument("--dtype", choices=("float32", "bfloat16", "float16"))
+    parser.add_argument(
+        "--jobs", type=int, default=1, metavar="N",
+        help="maximum experiments to run concurrently on the selected device (default: 1)",
+    )
     parser.add_argument("--limit", type=int, help="run only the first N source rows")
     parser.add_argument("--dry-run", action="store_true", help="print commands only")
     parser.add_argument(
@@ -125,6 +186,8 @@ def command_for(args, model, index, experiment):
     }
     if args.device:
         overrides["hardware.device"] = args.device
+    if args.gpu is not None:
+        overrides["hardware.gpu"] = args.gpu
     if args.dtype:
         overrides["hardware.dtype"] = args.dtype
     command = [
@@ -196,8 +259,117 @@ def collect(args, experiments, models, max_iters):
     print(f"collected {len(rows)} summaries ({complete} complete) into {args.output}")
 
 
+def build_jobs(args, experiments, models, max_iters):
+    jobs = []
+    for model in models:
+        for index, experiment in enumerate(experiments, start=1):
+            run_dir = run_dir_for(args.run_root, model, index, experiment)
+            if completed(run_dir, max_iters):
+                print(f"SKIP complete: {run_dir}")
+                continue
+            command = tuple(command_for(args, model, index, experiment))
+            if args.dry_run:
+                print(shlex.join(command))
+                continue
+            jobs.append(Job(model, index, len(experiments), run_dir, command))
+    return jobs
+
+
+def run_job(job, active_processes):
+    """Run one experiment, streaming labeled output and retaining a local log."""
+    job.run_dir.mkdir(parents=True, exist_ok=True)
+    log_path = job.run_dir / "process.log"
+    env = {**os.environ, "PYTHONUNBUFFERED": "1"}
+    with log_path.open("a", encoding="utf-8") as log:
+        log.write(f"\n$ {shlex.join(job.command)}\n")
+        log.flush()
+        process = subprocess.Popen(
+            job.command,
+            cwd=PROJECT_ROOT,
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+        )
+        active_processes.add(process)
+        try:
+            with process.stdout:
+                for line in process.stdout:
+                    log.write(line)
+                    log.flush()
+                    with OUTPUT_LOCK:
+                        print(f"[{job.label}] {line}", end="", flush=True)
+            return process.wait()
+        finally:
+            active_processes.discard(process)
+
+
+def run_jobs(args, jobs, experiments, models, max_iters):
+    """Run a bounded queue and return the first nonzero child exit status."""
+    if not jobs:
+        return 0
+    active_processes = ActiveProcesses()
+    failures = []
+    next_job = iter(jobs)
+
+    def submit_available(executor, futures):
+        while len(futures) < args.jobs:
+            try:
+                job = next(next_job)
+            except StopIteration:
+                break
+            print(
+                f"START {job.label} ({job.index}/{job.total}): {job.run_dir}",
+                flush=True,
+            )
+            futures[executor.submit(run_job, job, active_processes)] = job
+
+    executor = ThreadPoolExecutor(max_workers=args.jobs)
+    futures = {}
+    try:
+        submit_available(executor, futures)
+        while futures:
+            done, _ = wait(futures, return_when=FIRST_COMPLETED)
+            for future in done:
+                job = futures.pop(future)
+                try:
+                    returncode = future.result()
+                except Exception as error:
+                    returncode = 1
+                    print(f"FAILED {job.label}: {type(error).__name__}: {error}", flush=True)
+                if returncode == 0:
+                    job.run_dir.mkdir(parents=True, exist_ok=True)
+                    (job.run_dir / COMPLETION_MARKER).write_text(
+                        "complete\n", encoding="utf-8"
+                    )
+                    print(f"DONE {job.label}: {job.run_dir}", flush=True)
+                else:
+                    failures.append(returncode)
+                    print(
+                        f"FAILED {job.label} (exit {returncode}): {job.run_dir}",
+                        flush=True,
+                    )
+                collect(args, experiments, models, max_iters)
+            if not failures or args.keep_going:
+                submit_available(executor, futures)
+    except KeyboardInterrupt:
+        print("\nInterrupted; terminating active experiments...", file=sys.stderr)
+        active_processes.terminate_all()
+        for future in futures:
+            future.cancel()
+        return 130
+    finally:
+        executor.shutdown(wait=True, cancel_futures=True)
+    return failures[0] if failures else 0
+
+
 def main():
     args = parse_args()
+    if args.jobs < 1:
+        raise ValueError("--jobs must be positive")
+    if args.gpu is not None and args.gpu < 0:
+        raise ValueError("--gpu must be nonnegative")
     args.manifest = (
         args.manifest if args.manifest.is_absolute() else PROJECT_ROOT / args.manifest
     )
@@ -224,24 +396,11 @@ def main():
     models = args.models or list(MODEL_CONFIGS)
 
     if not args.collect_only:
-        for model in models:
-            for index, experiment in enumerate(experiments, start=1):
-                run_dir = run_dir_for(args.run_root, model, index, experiment)
-                if completed(run_dir, max_iters):
-                    print(f"SKIP complete: {run_dir}")
-                    continue
-                command = command_for(args, model, index, experiment)
-                if args.dry_run:
-                    print(shlex.join(command))
-                    continue
-                print(f"RUN {model} {index}/{len(experiments)}: {run_dir}", flush=True)
-                result = subprocess.run(command, cwd=PROJECT_ROOT, check=False)
-                if result.returncode == 0:
-                    run_dir.mkdir(parents=True, exist_ok=True)
-                    (run_dir / COMPLETION_MARKER).write_text("complete\n", encoding="utf-8")
-                collect(args, experiments, models, max_iters)
-                if result.returncode and not args.keep_going:
-                    return result.returncode
+        jobs = build_jobs(args, experiments, models, max_iters)
+        if not args.dry_run:
+            returncode = run_jobs(args, jobs, experiments, models, max_iters)
+            if returncode:
+                return returncode
 
     if not args.dry_run:
         collect(args, experiments, models, max_iters)

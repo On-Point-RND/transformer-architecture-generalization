@@ -70,11 +70,14 @@ class RunLogger:
 
     def write_summary(self, **fields):
         row = {**self.metadata, **fields}
-        with (self.results_dir / "summary.csv").open("w", newline="", encoding="utf-8") as f:
+        summary_path = self.results_dir / "summary.csv"
+        temporary_path = self.results_dir / ".summary.csv.tmp"
+        with temporary_path.open("w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=list(row))
             writer.writeheader()
             writer.writerow({k: json.dumps(v) if isinstance(v, dict) else v
                              for k, v in row.items()})
+        temporary_path.replace(summary_path)
         if self.mlflow is not None:
             self.mlflow.log("summary", fields)
 
