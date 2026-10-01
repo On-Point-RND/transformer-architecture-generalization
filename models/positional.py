@@ -1,5 +1,6 @@
 import math
 from dataclasses import dataclass
+from numbers import Integral, Real
 
 import torch
 import torch.nn as nn
@@ -22,7 +23,7 @@ class Config(ModelConfig):
     fope_init_gain: float = 0.3
 
     def __post_init__(self):
-        parse_positional_spec(self.pos_encoding)  # reject a bad spec at config load
+        validate_positional_config(self)
 
 
 SLOTS = {
@@ -45,6 +46,38 @@ class PositionalSpec:
     def canonical(self):
         filled = (self.embedding, self.qk, self.bias, self.context)
         return "+".join(name for name in filled if name) or "nope"
+
+
+def _positive_int(value, name):
+    if not isinstance(value, Integral) or isinstance(value, bool) or value < 1:
+        raise ValueError(f"{name} must be a positive integer, got {value!r}")
+
+
+def _finite_number(value, name, minimum, strict=False):
+    valid_type = isinstance(value, Real) and not isinstance(value, bool)
+    valid_bound = valid_type and (value > minimum if strict else value >= minimum)
+    if not valid_type or not math.isfinite(float(value)) or not valid_bound:
+        relation = ">" if strict else ">="
+        raise ValueError(f"{name} must be finite and {relation} {minimum}, got {value!r}")
+
+
+def validate_positional_config(config):
+    parse_positional_spec(config.pos_encoding)
+    _finite_number(config.rope_theta, "rope_theta", 0.0, strict=True)
+    _positive_int(config.rpe_num_buckets, "rpe_num_buckets")
+    if config.rpe_num_buckets < 2:
+        raise ValueError("rpe_num_buckets must be at least 2")
+    _positive_int(config.rpe_max_distance, "rpe_max_distance")
+    max_exact = config.rpe_num_buckets // 2
+    if config.rpe_max_distance <= max_exact:
+        raise ValueError(
+            "rpe_max_distance must be greater than rpe_num_buckets // 2 "
+            f"({max_exact}), got {config.rpe_max_distance}"
+        )
+    _positive_int(config.cope_max_position, "cope_max_position")
+    _positive_int(config.cape_hidden_dim, "cape_hidden_dim")
+    _positive_int(config.fope_train_length, "fope_train_length")
+    _finite_number(config.fope_init_gain, "fope_init_gain", 0.0)
 
 
 def parse_positional_spec(value):

@@ -1,14 +1,15 @@
-"""Experiment config: one YAML file, no includes.
+"""Experiment config with optional one-parent ``extends`` inheritance.
 
-A field comes from the file, else from the dataclass default below -- one
-level, in one place. Lists under ``grid:`` are axes of a sweep; a list anywhere
-else is data, such as a task's ``n_pairs: [2, 25]`` range.
+A field comes from the file, then its optional relative parent, else from the
+dataclass default below. Lists under ``grid:`` are axes of a sweep; a list
+anywhere else is task data.
 
     model:  {name: positional, n_layer: 4}
-    task:   {name: kv_retrieval, params: {k_card: 80, v_card: 80, n_pairs: [2, 25]}}
+    task:   {name: kv_retrieval, params: {vocab_size: 256, input_seq_len: 64,
+                                          num_kv_pairs: 8, power_a: 0.01}}
     grid:
       model.pos_encoding: [nope, rope]
-      task.params.n_pairs: [[2, 7], [2, 25]]
+      task.params.input_seq_len: [64, 128]
 """
 
 import copy
@@ -19,6 +20,31 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 import yaml
+
+
+def _deep_merge(base, override):
+    """Recursively merge mappings; every non-mapping child value replaces its parent."""
+    merged = copy.deepcopy(base)
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = _deep_merge(merged[key], value)
+        else:
+            merged[key] = copy.deepcopy(value)
+    return merged
+
+
+def _read_yaml(path, stack=()):
+    """Read a config and its relative parent without introducing implicit search paths."""
+    path = Path(path).resolve()
+    if path in stack:
+        cycle = " -> ".join(str(p) for p in (*stack, path))
+        raise ValueError(f"cyclic config extends: {cycle}")
+    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    parent = raw.pop("extends", None)
+    if parent is None:
+        return raw
+    parent_path = (path.parent / parent).resolve()
+    return _deep_merge(_read_yaml(parent_path, (*stack, path)), raw)
 
 
 @dataclass
@@ -82,7 +108,14 @@ class OptimizerConfig:
 
 @dataclass
 class TrainConfig:
-    init: str = "scratch"  # 'scratch' | 'resume' | 'auto' (resume if last.pt exists)
+    init: str = "scratch"  # scratch | resume | auto | checkpoint
+    checkpoint_path: str = ""  # file used by init=checkpoint; never inferred
+    stage: str = "single"
+    regime: str = ""
+    source_run_id: str = ""
+    source_checkpoint: str = ""
+    source_positional_encoding: str = ""
+    source_global_step: Optional[int] = None
     seed: int = 1337  # initialisation/shuffling seed
     data_seed: Optional[int] = None  # None = follow train.seed
 
@@ -174,7 +207,7 @@ def read_config(path, overrides=(), grids=()):
     ``--set key=value`` writes data and, if key was an axis, pins it. ``--grid
     key=[...]`` adds an axis. Both take the dotted keys the grid uses.
     """
-    raw = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+    raw = _read_yaml(path)
     if "include" in raw:
         raise ValueError(f"{path}: 'include:' is gone; each config is self-contained "
                          f"and unset fields take the dataclass defaults in core/config.py")

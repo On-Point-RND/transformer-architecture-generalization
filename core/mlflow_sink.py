@@ -11,14 +11,6 @@ from pathlib import Path
 from core.config import to_dict
 
 
-REQUIRED_ENV = (
-    "MLFLOW_TRACKING_URI",
-    "MLFLOW_TRACKING_USERNAME",
-    "MLFLOW_TRACKING_PASSWORD",
-    "MLFLOW_WORKSPACE",
-)
-
-
 def _flatten(values, prefix=""):
     flat = {}
     for key, value in values.items():
@@ -57,7 +49,9 @@ def _metric_values(event, fields):
         if event in {"eval", "summary"} and not (
             key.startswith("train_")
             or key.startswith("val_")
-            or key in {"lr", "mfu", "best_val_loss", "tokens"}
+            or key in {"lr", "mfu", "best_val_loss", "tokens", "id_accuracy",
+                       "id_token_accuracy", "training_time_seconds",
+                       "evaluation_time_seconds"}
         ):
             continue
         if isinstance(value, dict):
@@ -85,14 +79,17 @@ class MLflowSink:
 
     @classmethod
     def from_environment(cls, config, logs_dir, metadata):
-        configured = {name: os.environ.get(name, "") for name in REQUIRED_ENV}
-        if not any(configured.values()):
+        tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "")
+        related = {
+            name: os.environ.get(name, "")
+            for name in ("MLFLOW_TRACKING_USERNAME", "MLFLOW_TRACKING_PASSWORD",
+                         "MLFLOW_WORKSPACE", "MLFLOW_EXPERIMENT_NAME")
+        }
+        if not tracking_uri and not any(related.values()):
             return None
-        missing = [name for name, value in configured.items() if not value]
-        if missing:
+        if not tracking_uri:
             raise RuntimeError(
-                "MLflow is partially configured; set all of: " + ", ".join(REQUIRED_ENV)
-                + f" (missing: {', '.join(missing)})"
+                "MLflow variables are set but MLFLOW_TRACKING_URI is missing"
             )
         try:
             import mlflow
@@ -102,14 +99,16 @@ class MLflowSink:
                 "install MLflow 3.10 or newer"
             ) from error
 
-        if not hasattr(mlflow, "set_workspace"):
-            raise RuntimeError(
-                "this MLflow client does not provide set_workspace(); install "
-                "MLflow 3.10 or newer"
-            )
-
-        mlflow.set_tracking_uri(configured["MLFLOW_TRACKING_URI"])
-        mlflow.set_workspace(configured["MLFLOW_WORKSPACE"])
+        mlflow.set_tracking_uri(tracking_uri)
+        workspace = related["MLFLOW_WORKSPACE"]
+        if workspace:
+            if not hasattr(mlflow, "set_workspace"):
+                raise RuntimeError(
+                    "MLFLOW_WORKSPACE is set, but this MLflow client has no "
+                    "set_workspace(); unset it for standard MLflow or install the "
+                    "workspace-enabled client"
+                )
+            mlflow.set_workspace(workspace)
         experiment_name = os.environ.get(
             "MLFLOW_EXPERIMENT_NAME", "transformer-architecture-generalization"
         )
@@ -127,10 +126,19 @@ class MLflowSink:
                 "model": metadata["model"],
                 "task": metadata["task"],
                 "run_dir": str(config.paths.run_dir),
+                "training_stage": metadata.get("training_stage", "single"),
+                "positional_encoding": metadata.get("positional_encoding", ""),
             }
+            source_run_id = metadata.get("source_run_id")
+            if source_run_id:
+                tags["mlflow.parentRunId"] = source_run_id
+                tags["source_run_id"] = source_run_id
             run = mlflow.start_run(run_name=run_name, tags=tags)
             run_id_path.write_text(run.info.run_id + "\n", encoding="utf-8")
-            mlflow.log_params(_flatten(to_dict(config)))
+            parameters = _flatten(to_dict(config))
+            parameters.update(_flatten(metadata))
+            mlflow.log_params(parameters)
+            print(f"MLflow run id: {run.info.run_id}", flush=True)
         return cls(mlflow, run, run_id_path)
 
     def log(self, event, fields):
@@ -157,6 +165,11 @@ class MLflowSink:
                         self.mlflow.log_artifact(str(path), artifact_path="run-output")
                     except Exception as error:
                         warnings.warn(f"could not upload MLflow artifact {path}: {error}")
+                elif path.is_dir():
+                    try:
+                        self.mlflow.log_artifacts(str(path), artifact_path="run-output")
+                    except Exception as error:
+                        warnings.warn(f"could not upload MLflow artifacts {path}: {error}")
         try:
             self.mlflow.end_run(status=status)
         except Exception as error:

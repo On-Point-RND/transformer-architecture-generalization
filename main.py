@@ -1,4 +1,6 @@
 import argparse
+import shlex
+import sys
 from pathlib import Path
 
 import yaml
@@ -27,28 +29,42 @@ def parse_args():
     return parser.parse_args()
 
 
-def write_resolved(config):
+def write_resolved(config, source_config):
     logs = run_paths(config.paths).logs
     logs.mkdir(parents=True, exist_ok=True)
     (logs / "config.resolved.yaml").write_text(
         yaml.safe_dump(to_dict(config), sort_keys=False), encoding="utf-8")
+    source = Path(source_config)
+    (logs / "config.source.yaml").write_text(
+        source.read_text(encoding="utf-8"), encoding="utf-8"
+    )
+    (logs / "RUN.md").write_text(
+        "# Reproduce this run\n\n"
+        f"Source config: `{source.as_posix()}`\n\n"
+        "```bash\n"
+        + shlex.join([sys.executable, *sys.argv])
+        + "\n```\n",
+        encoding="utf-8",
+    )
 
 
-def train_one(config, position, rerun):
+def train_one(config, position, rerun, source_config):
     run_dir = config.paths.run_dir
     if not rerun and (run_paths(config.paths).results / "summary.csv").is_file():
         print(f"{position} {run_dir} — already finished, skipping")
         return None
     print(f"{position} {run_dir}", flush=True)
-    write_resolved(config)
+    write_resolved(config, source_config)
+    if rerun:
+        (run_paths(config.paths).logs / "mlflow-run-id").unlink(missing_ok=True)
     from core import train as trainer  
     return trainer.run(config)
 
 
-def train_guarded(config, position, rerun, guard):
+def train_guarded(config, position, rerun, guard, source_config):
     """Train one config; in a grid a failure is reported instead of raised."""
     try:
-        return train_one(config, position, rerun)
+        return train_one(config, position, rerun, source_config)
     except Exception as error:
         if not guard:
             raise
@@ -81,7 +97,8 @@ def main():
     for config in configs:
         print(f"  {config.paths.run_dir}")
     grid = len(configs) > 1
-    results = [train_guarded(config, f"[{index}/{len(configs)}]", args.rerun, guard=grid)
+    results = [train_guarded(config, f"[{index}/{len(configs)}]", args.rerun,
+                             guard=grid, source_config=args.config)
                for index, config in enumerate(configs, start=1)]
     return report(configs, results)
 

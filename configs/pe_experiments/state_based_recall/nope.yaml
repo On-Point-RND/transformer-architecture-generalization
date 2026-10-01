@@ -1,0 +1,3 @@
+extends: base.yaml
+model: {pos_encoding: nope}
+paths: {run_dir: runs/pe_experiments/state_based_recall/nope}

@@ -1,0 +1,7 @@
+extends: base.yaml
+model:
+  pos_encoding: alibi
+train:
+  stage: single
+paths:
+  run_dir: runs/pe_experiments/kv_retrieval/alibi

@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from pathlib import Path
 
 import matplotlib
@@ -10,11 +11,8 @@ import matplotlib.pyplot as plt
 
 def optional_mlflow_sink(config, logs_dir, metadata):
     """Build the optional sink without making MLflow a training dependency."""
-    try:
-        from core.mlflow_sink import MLflowSink
-        return MLflowSink.from_environment(config, logs_dir, metadata)
-    except Exception:
-        return None
+    from core.mlflow_sink import MLflowSink
+    return MLflowSink.from_environment(config, logs_dir, metadata)
 
 def parameter_norms(model):
 
@@ -41,6 +39,7 @@ def parameter_norms(model):
 class RunLogger:
     def __init__(self, paths, metadata, config, resume=False):
         self.logs_dir, self.results_dir = Path(paths.logs), Path(paths.results)
+        self.checkpoints_dir = Path(paths.checkpoints)
         self.logs_dir.mkdir(parents=True, exist_ok=True)
         self.results_dir.mkdir(parents=True, exist_ok=True)
         self.metrics_path = self.logs_dir / "metrics.jsonl"
@@ -88,15 +87,21 @@ class RunLogger:
     def close(self, status="FINISHED"):
         if self.mlflow is None:
             return
-        self.mlflow.close(
-            (
+        artifacts = [
                 self.logs_dir / "config.resolved.yaml",
+                self.logs_dir / "config.source.yaml",
                 self.metrics_path,
+                self.logs_dir / "checkpoint-metadata.json",
+                self.logs_dir / "git-info.json",
+                self.logs_dir / "git.diff",
+                self.logs_dir / "RUN.md",
                 self.results_dir / "summary.csv",
                 self.results_dir / "curves.png",
-            ),
-            status=status,
-        )
+        ]
+        if os.environ.get("MLFLOW_LOG_CHECKPOINTS", "").lower() in {"1", "true", "yes"}:
+            artifacts.extend((self.checkpoints_dir / "last.pt",
+                              self.checkpoints_dir / "best.pt"))
+        self.mlflow.close(artifacts, status=status)
 
 
 def collect_summaries(run_dirs, out_path):

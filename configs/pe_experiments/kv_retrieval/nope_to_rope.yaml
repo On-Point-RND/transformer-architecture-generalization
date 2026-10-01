@@ -1,0 +1,10 @@
+extends: base.yaml
+model:
+  pos_encoding: rope
+train:
+  init: checkpoint
+  checkpoint_path: REQUIRED_BY_LAUNCHER
+  stage: stage_2
+  source_positional_encoding: nope
+paths:
+  run_dir: runs/pe_experiments/kv_retrieval/nope_to_rope

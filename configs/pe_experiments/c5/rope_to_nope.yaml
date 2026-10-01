@@ -1,0 +1,8 @@
+extends: base.yaml
+model: {pos_encoding: nope}
+train:
+  init: checkpoint
+  checkpoint_path: REQUIRED_BY_LAUNCHER
+  stage: stage_2
+  source_positional_encoding: rope
+paths: {run_dir: runs/pe_experiments/c5/rope_to_nope}

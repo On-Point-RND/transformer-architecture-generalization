@@ -1,0 +1,7 @@
+extends: ../c5/base.yaml
+task:
+  name: s5
+  params:
+    n_permutations: [4, 9]
+paths:
+  run_dir: runs/pe_experiments/s5/base

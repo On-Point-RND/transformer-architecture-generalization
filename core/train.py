@@ -1,17 +1,19 @@
 import math
-import os
+import json
 import random
 import sys
 import time
 from contextlib import nullcontext
-from dataclasses import dataclass, fields
+from dataclasses import fields
 from pathlib import Path
 
 import torch
+import yaml
 
 from core import checkpoint
 from core.config import run_paths, to_dict
 from core.logs import RunLogger
+from core.provenance import git_info, write_git_artifacts
 from tasks import get_task
 from models import get_model
 
@@ -180,42 +182,99 @@ def run_metadata(config, model):
         "task": config.task.name,
         "task_variant": params.get("task", params.get("variant", "default")),
         "seed": config.train.seed,
+        "data_seed": config.train.data_seed,
+        "training_stage": config.train.stage,
+        "regime": config.train.regime,
+        "source_run_id": config.train.source_run_id,
+        "source_checkpoint": config.train.source_checkpoint,
+        "source_positional_encoding": config.train.source_positional_encoding,
+        "source_global_step": config.train.source_global_step,
         "train_distribution": to_dict(params),
         "number_of_parameters": sum(p.numel() for p in model.parameters()),
+        "number_of_layers": config.model.n_layer,
+        "number_of_heads": config.model.n_head,
+        "embedding_dimension": config.model.n_embd,
+        "block_size": config.model.block_size,
+        "optimizer": config.optimizer.name,
+        "learning_rate": config.optimizer.learning_rate,
+        "scheduler": config.optimizer.schedule,
+        "warmup": config.optimizer.warmup_iters,
+        "weight_decay": config.optimizer.weight_decay,
+        "batch_size": config.train.batch_size,
+        "gradient_accumulation": config.train.gradient_accumulation_steps,
+        "max_iterations": config.train.max_iters,
+        "positional_hyperparameters": {
+            name: getattr(config.model, name)
+            for name in checkpoint.POSITIONAL_FIELDS if hasattr(config.model, name)
+        },
         "positional_parameters": report.get("positional_parameters", {}),
+        **git_info(),
     }
 
 
-def build_model(config, task, device, resumed, ckpt_dir):
+def build_model(config, task, device, resumed, ckpt_dir, transfer=False):
     _, model_builder = get_model(config.model.name)
     config.model.vocab_size = task.vocab_size
     model = model_builder(config.model)
     if resumed is not None:
-        checkpoint.check_architecture(ckpt_dir, resumed, config.model,
-                                      architecture_fields(config.model))
-        model.load_state_dict(checkpoint.strip_compile_prefix(resumed["model"]))
+        if transfer:
+            checkpoint.check_transfer_architecture(
+                ckpt_dir, resumed, config.model, architecture_fields(config.model)
+            )
+            transfer_report = checkpoint.load_transfer_model_state(model, resumed)
+        else:
+            checkpoint.check_architecture(ckpt_dir, resumed, config.model,
+                                          architecture_fields(config.model))
+            model.load_state_dict(checkpoint.strip_compile_prefix(resumed["model"]))
+            transfer_report = None
+    else:
+        transfer_report = None
+    model.checkpoint_transfer_report = transfer_report
     return model.to(device)
 
 
-def load_resume_state(config, resumed, optimizer, scaler, task):
-    optimizer.load_state_dict(resumed["optimizer"])
+def load_resume_state(config, resumed, optimizer, scaler, task, model, transfer=False):
+    if transfer:
+        named = resumed.get("optimizer_named")
+        if named is not None:
+            optimizer_report = checkpoint.restore_named_optimizer_state(model, optimizer, named)
+        else:
+            try:
+                optimizer.load_state_dict(resumed["optimizer"])
+                optimizer_report = {"restored": "legacy-full-state", "skipped": []}
+            except (ValueError, KeyError):
+                optimizer_report = {"restored": [], "skipped": "legacy-topology-mismatch"}
+    else:
+        optimizer.load_state_dict(resumed["optimizer"])
+        optimizer_report = {"restored": "full-state", "skipped": []}
     if resumed.get("scaler") is not None:
         scaler.load_state_dict(resumed["scaler"])
     if resumed.get("rng") is not None:
         checkpoint.restore_rng(resumed["rng"])
     if resumed.get("task") is not None:
         task.load_state_dict(resumed["task"])
-    return resumed["iter_num"], resumed["best_val_loss"]
+    return resumed["iter_num"], resumed["best_val_loss"], optimizer_report
 
 
 def pick_resume(train, ckpt_dir, device):
     if train.init == "scratch":
-        return None
+        return None, False, ""
+    if train.init == "checkpoint":
+        if not train.checkpoint_path:
+            raise ValueError("train.init=checkpoint requires train.checkpoint_path")
+        source = Path(train.checkpoint_path)
+        if not source.is_file():
+            raise FileNotFoundError(f"continuation checkpoint does not exist: {source}")
+        return checkpoint.load_path(source, device), True, str(source)
     if train.init == "auto" and not checkpoint.exists(ckpt_dir):
-        return None
+        return None, False, ""
     if train.init not in ("resume", "auto"):
-        raise ValueError(f"train.init must be scratch/resume/auto, got {train.init!r}")
-    return checkpoint.load(ckpt_dir, checkpoint.LAST, device)
+        raise ValueError(
+            f"train.init must be scratch/resume/auto/checkpoint, got {train.init!r}"
+        )
+    return checkpoint.load(ckpt_dir, checkpoint.LAST, device), False, str(
+        Path(ckpt_dir) / checkpoint.LAST
+    )
 
 
 def save_checkpoints(config, ckpt_dir, model, optimizer, scaler, task, metadata,
@@ -223,6 +282,7 @@ def save_checkpoints(config, ckpt_dir, model, optimizer, scaler, task, metadata,
     payload = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
+        "optimizer_named": checkpoint.named_optimizer_state(model, optimizer),
         "scaler": scaler.state_dict(),
         "iter_num": iter_num,
         "best_val_loss": min(val_loss, best_val_loss),
@@ -260,25 +320,105 @@ def run(config):
     if config.task.n_train:
         task.build_train_pool(config.task.n_train)
 
-    resumed = pick_resume(train_cfg, paths.checkpoints, device)
-    model = build_model(config, task, device, resumed, paths.checkpoints)
+    resumed, transfer, source_path = pick_resume(train_cfg, paths.checkpoints, device)
+    if transfer:
+        source_sections = checkpoint.config_sections(resumed)
+        current_task = to_dict(config.task)
+        source_task = source_sections["task"]
+        task_differences = {
+            key: (source_task.get(key), current_task.get(key))
+            for key in ("name", "params", "n_val", "n_train")
+            if source_task.get(key) != current_task.get(key)
+        }
+        source_data_seed = source_sections["train"].get("data_seed")
+        if source_data_seed != train_cfg.data_seed:
+            task_differences["data_seed"] = (source_data_seed, train_cfg.data_seed)
+        if task_differences:
+            detail = ", ".join(
+                f"{key}: checkpoint {old!r} vs config {new!r}"
+                for key, (old, new) in sorted(task_differences.items())
+            )
+            raise ValueError(
+                "continuation requires the same task distribution and validation set "
+                f"({detail})"
+            )
+        source_metadata = resumed.get("run_metadata", {})
+        source_model = checkpoint.model_fields(resumed)
+        actual_source_encoding = (
+            source_metadata.get("positional_encoding")
+            or source_model.get("pos_encoding", "")
+        )
+        if (train_cfg.source_positional_encoding
+                and train_cfg.source_positional_encoding != actual_source_encoding):
+            raise ValueError(
+                "train.source_positional_encoding does not match checkpoint: "
+                f"declared {train_cfg.source_positional_encoding!r}, "
+                f"checkpoint {actual_source_encoding!r}"
+            )
+        actual_source_step = resumed.get("iter_num")
+        if (train_cfg.source_global_step is not None
+                and train_cfg.source_global_step != actual_source_step):
+            raise ValueError(
+                "train.source_global_step does not match checkpoint: "
+                f"declared {train_cfg.source_global_step}, checkpoint {actual_source_step}"
+            )
+        train_cfg.source_checkpoint = train_cfg.source_checkpoint or source_path
+        train_cfg.source_positional_encoding = (
+            train_cfg.source_positional_encoding
+            or actual_source_encoding
+        )
+        train_cfg.source_global_step = (
+            train_cfg.source_global_step
+            if train_cfg.source_global_step is not None else actual_source_step
+        )
+        if not train_cfg.source_run_id:
+            run_id_file = Path(source_path).parent / "mlflow-run-id"
+            if run_id_file.is_file():
+                train_cfg.source_run_id = run_id_file.read_text(encoding="utf-8").strip()
+    model = build_model(
+        config, task, device, resumed, source_path or paths.checkpoints, transfer=transfer
+    )
+    transfer_report = model.checkpoint_transfer_report
     scaler = torch.amp.GradScaler(
         device_type if device_type in ("cpu", "cuda") else "cpu",
         enabled=device_type == "cuda" and hardware.dtype == "float16",
     )
     optimizer = model.configure_optimizers(opt_cfg, device_type)
     iter_num, best_val_loss = 0, float("inf")
+    optimizer_report = None
     if resumed is not None:
-        iter_num, best_val_loss = load_resume_state(config, resumed, optimizer, scaler, task)
+        iter_num, best_val_loss, optimizer_report = load_resume_state(
+            config, resumed, optimizer, scaler, task, model, transfer=transfer
+        )
+        if transfer:
+            best_val_loss = float("inf")
 
     metadata = run_metadata(config, model)
+    def report_counts(report):
+        if report is None:
+            return None
+        return {key: len(value) if isinstance(value, list) else value
+                for key, value in report.items()}
+
+    metadata["checkpoint_transfer"] = report_counts(transfer_report)
+    metadata["optimizer_transfer"] = report_counts(optimizer_report)
+    paths.logs.mkdir(parents=True, exist_ok=True)
+    (paths.logs / "config.resolved.yaml").write_text(
+        yaml.safe_dump(to_dict(config), sort_keys=False), encoding="utf-8"
+    )
+    (paths.logs / "checkpoint-metadata.json").write_text(
+        json.dumps({**metadata, "checkpoint_transfer_details": transfer_report,
+                    "optimizer_transfer_details": optimizer_report},
+                   indent=2, default=str) + "\n", encoding="utf-8"
+    )
+    write_git_artifacts(paths.logs)
     raw_model = model
     if hardware.compile:
         model = torch.compile(model)
 
     val_rng = random.Random(train_cfg.seed) if train_cfg.reproducible_val else random
     get_batch = make_get_batch(task, val_items, config, device, val_rng)
-    logger = RunLogger(paths, metadata, config, resume=resumed is not None)
+    logger = RunLogger(paths, metadata, config, resume=resumed is not None and not transfer)
     tokens_per_iter = steps * train_cfg.batch_size * config.model.block_size
     print(f"task '{config.task.name}' vocab_size = {task.vocab_size}, "
           f"held-out val size = {len(val_items)}")
@@ -289,7 +429,7 @@ def run(config):
 
     try:
         x, y = get_batch("train")
-        t0 = time.time()
+        started_at = t0 = time.time()
         local_iter_num, running_mfu, evals = 0, -1.0, 0
         best_watched, stale = None, 0
 
@@ -299,18 +439,25 @@ def run(config):
                 group["lr"] = lr
 
             if iter_num % train_cfg.eval_interval == 0:
+                eval_started = time.time()
                 losses = estimate_loss(model, get_batch, ctx, train_cfg, task)
+                eval_time = time.time() - eval_started
                 scores = {k: v for k, v in losses.items() if k not in ("train", "val")}
                 print(format_eval(iter_num, losses))
                 logger.log_eval(iter=iter_num, lr=lr, mfu=running_mfu,
-                                train_loss=losses["train"], val_loss=losses["val"], **scores)
+                                train_loss=losses["train"], val_loss=losses["val"],
+                                id_accuracy=losses.get("val_acc"),
+                                id_token_accuracy=losses.get("val_token_acc"),
+                                evaluation_time_seconds=eval_time, **scores)
                 best_val_loss = save_checkpoints(
                     config, paths.checkpoints, raw_model, optimizer, scaler, task, metadata,
                     iter_num, losses["val"], best_val_loss
                 )
                 logger.write_summary(iter=iter_num, train_loss=losses["train"],
                                      val_loss=losses["val"], best_val_loss=best_val_loss,
-                                     tokens=tokens_per_iter * iter_num, **scores)
+                                     tokens=tokens_per_iter * iter_num,
+                                     training_time_seconds=time.time() - started_at,
+                                     evaluation_time_seconds=eval_time, **scores)
                 logger.write_curves()
                 evals += 1
                 logger.log_diagnostics(raw_model, iter_num, train_cfg.diag_interval, evals)
@@ -323,7 +470,9 @@ def run(config):
                           f"{losses[train_cfg.early_stop_metric]:.4f} - {reason}")
                     break
 
-            if iter_num == 0 and train_cfg.eval_only:
+            if train_cfg.eval_only:
+                break
+            if iter_num >= train_cfg.max_iters:
                 break
 
             loss, x, y = accumulate_gradients(model, x, y, get_batch, scaler, ctx, steps)
@@ -343,8 +492,6 @@ def run(config):
 
             iter_num += 1
             local_iter_num += 1
-            if iter_num > train_cfg.max_iters:
-                break
     except BaseException:
         logger.close(status="FAILED")
         raise

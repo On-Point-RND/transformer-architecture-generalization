@@ -1,3 +1,4 @@
+import copy
 import os
 import random
 from pathlib import Path
@@ -40,6 +41,10 @@ def load(run_dir, name, device):
     return torch.load(Path(run_dir) / name, map_location=device, weights_only=False)
 
 
+def load_path(path, device):
+    return torch.load(Path(path), map_location=device, weights_only=False)
+
+
 def exists(run_dir, name=LAST):
     return (Path(run_dir) / name).is_file()
 
@@ -72,6 +77,88 @@ def check_architecture(run_dir, checkpoint, model_config, fields):
         f"cannot resume {run_dir}: the checkpoint was trained with a different "
         f"architecture ({detail}). Fix the config, or train into a new run_dir."
     )
+
+
+POSITIONAL_FIELDS = {
+    "pos_encoding",
+    "rope_theta",
+    "rpe_num_buckets",
+    "rpe_max_distance",
+    "cope_max_position",
+    "cape_hidden_dim",
+    "fope_train_length",
+    "fope_init_gain",
+}
+
+
+def check_transfer_architecture(source, saved, model_config, fields):
+    """Allow only PE-specific config differences for a continuation checkpoint."""
+    common_fields = tuple(field for field in fields if field not in POSITIONAL_FIELDS)
+    check_architecture(source, saved, model_config, common_fields)
+
+
+def load_transfer_model_state(model, saved):
+    """Load every common tensor strictly and tolerate only positional-key topology changes."""
+    incoming = strip_compile_prefix(saved["model"])
+    current = model.state_dict()
+    positional_markers = tuple(getattr(model, "positional_markers", ()))
+
+    def positional(name):
+        return any(marker in name for marker in positional_markers)
+
+    common = {}
+    incompatible = []
+    skipped_source = []
+    for name, value in incoming.items():
+        if name not in current:
+            (skipped_source if positional(name) else incompatible).append(name)
+        elif current[name].shape != value.shape:
+            (skipped_source if positional(name) else incompatible).append(name)
+        else:
+            common[name] = value
+    missing = [name for name in current if name not in common]
+    incompatible += [name for name in missing if not positional(name)]
+    if incompatible:
+        raise ValueError(
+            "continuation checkpoint differs outside positional encoding: "
+            + ", ".join(sorted(incompatible))
+        )
+    model.load_state_dict(common, strict=False)
+    return {
+        "loaded": sorted(common),
+        "skipped_source_positional": sorted(skipped_source),
+        "new_target_positional": sorted(name for name in missing if positional(name)),
+    }
+
+
+def named_optimizer_state(model, optimizer):
+    """Checkpoint optimizer moments by parameter name so PE topology may change safely."""
+    names = {parameter: name for name, parameter in model.named_parameters()}
+    # Reuse the same tensors already present in optimizer.state. torch.save preserves
+    # shared storages, so the named index does not duplicate every Adam moment on disk.
+    return {names[parameter]: state
+            for parameter, state in optimizer.state.items() if parameter in names}
+
+
+def restore_named_optimizer_state(model, optimizer, saved_state):
+    """Restore moments for matching parameters; leave new PE parameters fresh."""
+    restored, skipped = [], []
+    for name, parameter in model.named_parameters():
+        state = saved_state.get(name)
+        if state is None:
+            continue
+        tensors = [value for value in state.values() if torch.is_tensor(value)]
+        incompatible = [value for value in tensors
+                        if value.ndim > 0 and value.shape != parameter.shape]
+        if incompatible:
+            skipped.append(name)
+            continue
+        optimizer.state[parameter] = {
+            key: value.to(parameter.device) if torch.is_tensor(value) else copy.deepcopy(value)
+            for key, value in state.items()
+        }
+        restored.append(name)
+    return {"restored": sorted(restored), "skipped": sorted(skipped)}
 
 
 

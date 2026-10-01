@@ -1,0 +1,48 @@
+model:
+  name: positional
+  block_size: 64
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  dropout: 0.0
+  bias: false
+  pos_encoding: nope
+  rope_theta: 10000.0
+  rpe_num_buckets: 32
+  rpe_max_distance: 128
+  cope_max_position: 64
+  cape_hidden_dim: 32
+  fope_train_length: 16
+  fope_init_gain: 0.3
+task:
+  name: c5
+  params:
+    n_permutations: [8, 17]
+  n_val: 512
+  n_train: 0
+train:
+  init: scratch
+  stage: single
+  seed: 1337
+  data_seed: 424242
+  batch_size: 256
+  max_iters: 30000
+  eval_interval: 500
+  eval_iters: 20
+  log_interval: 100
+  diag_interval: 4
+  reproducible_val: true
+optimizer:
+  name: adamw
+  learning_rate: 5.0e-4
+  weight_decay: 0.1
+  grad_clip: 1.0
+  schedule: cosine
+  warmup_iters: 500
+  lr_decay_iters: 30000
+  min_lr: 1.0e-5
+hardware:
+  device: gpu
+  dtype: bfloat16
+paths:
+  run_dir: runs/pe_experiments/c5/base

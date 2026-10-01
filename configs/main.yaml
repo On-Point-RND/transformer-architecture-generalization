@@ -120,10 +120,10 @@ task:
 #   # group не задаётся: task.name жёстко фиксирует C5 или S5.
 #
 # kv_retrieval:
-#   k_card: 64
-#   v_card: 64
-#   n_pairs: [4, 9]
-#   depth: 1                       # 1 = плоский словарь, >1 = вложенный
+#   vocab_size: 8192               # int > input_seq_len
+#   input_seq_len: 64              # чётная длина входа
+#   num_kv_pairs: 8                # 4*num_kv_pairs <= input_seq_len
+#   power_a: 0.01                  # параметр power-law распределения расстояний
 #
 # ruler (Variable Tracking из RULER):
 #   n_vars: 64                     # размер словаря переменных
