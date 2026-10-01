@@ -21,11 +21,11 @@ def rng_state():
 
 
 def restore_rng(state):
-    torch.set_rng_state(state["torch"])
+    torch.set_rng_state(state["torch"].cpu())
     np.random.set_state(state["numpy"])
     random.setstate(state["python"])
     if state["torch_cuda"] is not None and torch.cuda.is_available():
-        torch.cuda.set_rng_state_all(state["torch_cuda"])
+        torch.cuda.set_rng_state_all([rng.cpu() for rng in state["torch_cuda"]])
 
 
 def save(run_dir, name, payload):

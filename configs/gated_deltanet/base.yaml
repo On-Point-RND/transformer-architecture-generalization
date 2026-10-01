@@ -1,0 +1,14 @@
+include: ../main.yaml
+
+model:
+  name: gated_deltanet
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  expand_k: 0.75
+  expand_v: 1.5
+  d_conv: 4
+  allow_neg_eigval: false
+
+paths:
+  run_dir: runs/gated_deltanet/base

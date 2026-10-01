@@ -1,0 +1,7 @@
+include: base.yaml
+
+model:
+  allow_neg_eigval: true
+
+paths:
+  run_dir: runs/gated_deltanet/negative_eigenvalues

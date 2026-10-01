@@ -123,6 +123,7 @@ class Transformer(nn.Module):
         residual_init_scaling=True,
         positional_encoding=None,
         positional_markers=("transformer.wpe",),
+        block_builder=None,
     ):
         super().__init__()
         assert config.vocab_size is not None and config.block_size is not None
@@ -136,6 +137,8 @@ class Transformer(nn.Module):
         dropout = nn.Dropout(config.dropout)
 
         def make_block(layer_idx):
+            if block_builder is not None:
+                return block_builder(config, layer_idx)
             return Block(config, attention(config, layer_idx), mlp(config, layer_idx))
 
         if share_block_weights:
