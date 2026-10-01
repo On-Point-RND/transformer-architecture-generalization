@@ -1,6 +1,7 @@
 import math
 import os
 import random
+import sys
 import time
 from contextlib import nullcontext
 from dataclasses import dataclass, fields
@@ -138,9 +139,19 @@ def watch_early_stop(train, losses, best, stale):
 
 
 def format_eval(iter_num, losses):
-    parts = [f"train loss {losses['train']:.4f}", f"val loss {losses['val']:.4f}"]
-    parts += [f"{key} {value:.4f}" for key, value in losses.items()
-              if key not in ("train", "val")]
+    """Eval line for the console. Colours only when stdout is a TTY."""
+    paint = ((lambda text, code: f"\033[{code}m{text}\033[0m") if sys.stdout.isatty()
+             else (lambda text, code: text))
+    parts = [paint(f"train loss {losses['train']:.4f}", "1;31")] 
+    if "train_acc" in losses:
+        parts.append(paint(f"train_acc {losses['train_acc']:.4f}", "1;34"))  
+    parts.append(f"val loss {losses['val']:.4f}")
+
+    val_acc_key = next((k for k in ("val_acc", "val_token_acc") if k in losses), None)
+    if val_acc_key is not None:
+        parts.append(paint(f"{val_acc_key} {losses[val_acc_key]:.4f}", "1;38;5;28")) 
+    shown = {"train", "val", "train_acc", val_acc_key}
+    parts += [f"{key} {value:.4f}" for key, value in losses.items() if key not in shown]
     return f"step {iter_num}: " + ", ".join(parts)
 
 

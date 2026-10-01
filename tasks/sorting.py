@@ -3,9 +3,14 @@
     m i 9 b | 2 0 | t n | i l y q  SORT   ->   2 0 | i l y q | m i 9 b | t n  EOS
 
 Each string is spelled one character per token, items are separated by SEP and
-the answer ends in EOS. The order is Python's string order, so a string's rank
-is decided by comparing several positions left to right, and both prompt and
-answer lengths vary with n_items and item_len.
+the answer ends in EOS. Strings are compared character by character in the
+order of ``alphabet`` (a proper prefix comes first); for the default alphabet
+this is Python's string order. Both prompt and answer lengths vary with
+n_items and item_len.
+
+With the default 36 characters the first character alone decides the whole
+order in about 80% of examples and the first two in 99%; a smaller alphabet
+(10 or 4 characters) makes later positions matter.
 """
 
 from typing import Tuple
@@ -91,7 +96,11 @@ class StringSortingTask(Task):
                 items.append(item)
                 seen.add(item)
 
-        sorted_items = sorted(items, reverse=self.descending)
+        sorted_items = sorted(
+            items,
+            key=lambda item: [self.char_to_id[ch] for ch in item],
+            reverse=self.descending,
+        )
 
         prompt = np.concatenate([
             self._encode_items(items),

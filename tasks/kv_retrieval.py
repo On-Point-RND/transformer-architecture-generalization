@@ -1,94 +1,77 @@
-"""Nested key-value retrieval: follow a key path and return its value.
+"""Multi-query associative recall (MQAR) from Zoology (Arora et al., 2023).
 
-    depth=1:  { a 7, b 4 }                 ? b       -> 4
-    depth=2:  { a 7, b { c 9, d 2 } }      ? b c     -> 9
+    x:  k1 v1 k2 v2 ... kK vK   r  r  k2  r  r  r  r  k1  r ...
+    y:   -  -  -  -  ...  -  -   -  -  v2  -  -  -  -  v1  - ...
 
-Every dictionary has ``n_pairs`` entries and exactly one entry continues the
-queried path until ``depth`` is reached. Other entries are distractors. Keys are
-unique within a dictionary, so every query has one unambiguous answer.
+The first 2K tokens are K key-value pairs: distinct keys from the lower half
+of the vocabulary (token 0 excluded) and distinct values from the upper half.
+Every key then appears once more, at an even offset whose distance follows a
+power law (``power_a``); the label at that position is the key's value, all
+other positions are unsupervised. The rest are uniformly random tokens from
+the whole vocabulary. This is zoology/data/multiquery_ar.py with its defaults
+(``num_passes=1``, ``random_non_queries=True``): the same token ids, labels
+and lengths, drawn from our own random stream.
+
+``token_acc`` is Zoology's accuracy, the share of values recalled (with a
+fixed K the per-example and pooled means coincide); ``acc`` needs every query
+of an example right. Needs ``block_size >= input_seq_len``.
 """
 
 import numpy as np
 
-from .base import DatasetItem, Task, max_int, sample_int, validate_int_spec
+from .base import DatasetItem, Task
 
 
 class KVRetrievalTask(Task):
-    PAD_ID = 0
-    QUERY_ID = 1
-    DICT_START_ID = 2
-    DICT_END_ID = 3
-    ENTRY_START_ID = 4
-    ENTRY_END_ID = 5
-    N_SPECIAL = 6
+    PAD_ID = 0  
 
     def __init__(
         self,
-        k_card: int = 64,
-        v_card: int = 64,
-        n_pairs: int | tuple[int, int] = (4, 9),
-        depth: int = 1,
+        vocab_size: int = 8192,
+        input_seq_len: int = 64,
+        num_kv_pairs: int = 8,
+        power_a: float = 0.01,
         seed: int | None = 42,
     ):
         super().__init__(seed)
-        self.k_card = validate_int_spec(k_card, "k_card", 1)
-        self.v_card = validate_int_spec(v_card, "v_card", 1)
-        self.n_pairs = validate_int_spec(n_pairs, "n_pairs", 1)
-        self.depth = validate_int_spec(depth, "depth", 1)
-        if max_int(self.n_pairs) > self.k_card:
-            raise ValueError("n_pairs cannot exceed k_card: keys must be unique in each dict")
+        if input_seq_len % 2:
+            raise ValueError(f"input_seq_len must be even, got {input_seq_len}")
+        if vocab_size <= input_seq_len:
+            raise ValueError("vocab_size must exceed input_seq_len")
+        if 4 * num_kv_pairs > input_seq_len:
+            raise ValueError("input_seq_len must be at least 4 * num_kv_pairs "
+                             "(K pairs plus room for K distinct query slots)")
+        self.n_vocab = vocab_size
+        self.input_seq_len = input_seq_len
+        self.num_kv_pairs = num_kv_pairs
+        self.key_choices = np.arange(1, vocab_size // 2)
+        self.value_choices = np.arange(vocab_size // 2, vocab_size)
 
-        self.key_ids = np.arange(self.k_card, dtype=np.int64) + self.N_SPECIAL
-        self.value_ids = (
-            np.arange(self.v_card, dtype=np.int64) + self.N_SPECIAL + self.k_card
-        )
+        space = (input_seq_len - 2 * num_kv_pairs) // 2
+        weights = power_a * np.arange(1, space + 1) ** (power_a - 1)
+        self.gap_probs = weights / weights.sum()
 
     @property
     def vocab_size(self) -> int:
-        return self.N_SPECIAL + self.k_card + self.v_card
-
-    def _build_dictionary(self, level: int):
-        n_pairs = sample_int(self.rng, self.n_pairs)
-        keys = self.rng.choice(
-            self.key_ids, size=n_pairs, replace=False
-        )
-        target_slot = int(self.rng.integers(n_pairs))
-        tokens = [self.DICT_START_ID]
-        target_position = None
-
-        for slot, key_token in enumerate(keys):
-            entry_position = len(tokens)
-            tokens += [self.ENTRY_START_ID, int(key_token)]
-            if slot == target_slot and level < self.depth:
-                child, child_path, answer, child_position, sizes = self._build_dictionary(level + 1)
-                tokens += child
-                path = [int(key_token), *child_path]
-                target_position = entry_position + 2 + child_position
-                level_sizes = [n_pairs, *sizes]
-            else:
-                value = int(self.rng.choice(self.value_ids))
-                tokens.append(value)
-                if slot == target_slot:
-                    path = [int(key_token)]
-                    answer = value
-                    target_position = entry_position
-                    level_sizes = [n_pairs]
-            tokens.append(self.ENTRY_END_ID)
-
-        tokens.append(self.DICT_END_ID)
-        return tokens, path, answer, target_position, level_sizes
+        return self.n_vocab
 
     def _sample_one(self) -> DatasetItem:
-        dictionary, path, value, target_position, level_sizes = self._build_dictionary(1)
-        prompt = np.asarray(dictionary + [self.QUERY_ID, *path], dtype=np.int64)
+        n_pairs, context = self.num_kv_pairs, 2 * self.num_kv_pairs
+        keys = self.rng.choice(self.key_choices, size=n_pairs, replace=False)
+        values = self.rng.choice(self.value_choices, size=n_pairs, replace=False)
+        gaps = self.rng.choice(len(self.gap_probs), size=n_pairs, replace=False, p=self.gap_probs)
+
+        prompt = self.rng.integers(0, self.n_vocab, size=self.input_seq_len)  # the random non-queries
+        prompt[0:context:2] = keys
+        prompt[1:context:2] = values
+        query_positions = context + 2 * gaps
+        prompt[query_positions] = keys
+        labels = np.full(self.input_seq_len, -1, dtype=np.int64)
+        labels[query_positions] = values
+
         return DatasetItem(
-            prompt=prompt,
-            answer=np.asarray([value], dtype=np.int64),
-            metadata={
-                "depth": self.depth,
-                "n_pairs_by_level": level_sizes,
-                "sequence_length": len(prompt),
-                "absolute_target_position": target_position,
-                "relative_distance": len(prompt) - 1 - target_position,
-            },
+            prompt,
+            values[np.argsort(query_positions)],  # the answers in query order; collate uses labels
+            metadata={"num_kv_pairs": n_pairs, "input_seq_len": self.input_seq_len},
+            labels=labels,
         )
