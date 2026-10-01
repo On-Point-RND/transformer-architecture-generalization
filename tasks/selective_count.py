@@ -1,63 +1,72 @@
-"""Selective counting: how many marks are hidden among the fillers?
+"""Query Count (Yehudai et al., 2024): count the final token in the body.
 
-    RESET . R . . R . . . R . QUERY   ->   3
+    3 7 1 3 5 0 2 3 6 4 1 7  3   ->   3      (n = 12, m = 8)
 
-The marks sit at random positions, so the count is an aggregate over the whole
-sequence: no single position answers it, and the model has to reach back as
-far as the leftmost mark. The answer is one class token, CLASS_LOW + count.
-Most of the 160 token ids go unused; they are kept so the stream matches the
-runs made before this task had a file of its own.
+The body contains ``seq_len`` uniform samples from ``n_symbols``. A random
+query is forced into the body and appended last. The target is its count in
+the body, encoded as ``CLASS_LOW + count``. The paper's formula 3 also counts
+the appended query, so its target is one larger.
+
+The task is hard because any symbol can be queried and every position matters
+(Section 4). Uniform attention forms a histogram when ``d >= m``; otherwise
+selective attention produces roughly ``1/count``, whose inversion needs MLP
+width proportional to ``n``. Expect a transition near ``d = m`` and poor
+generalization beyond the training length.
+
+Their metric is ``nmae = |prediction - count| / (n/m + 1)``. For large ``m``,
+the median-count baseline is already strong (``acc=0.825``, ``nmae=0.161`` at
+``m=512, n=100``), so compare against it rather than the non-integer ``n/m``
+baseline. This task replaces the earlier fixed-marker version, which one
+attention head solved at any length.
 """
 
 import numpy as np
 
-from .base import DatasetItem, Task, max_int, sample_int, validate_int_spec
+from .base import DatasetItem, Task, validate_int_spec
 
 
 class SelectiveCountTask(Task):
     PAD_ID = 0
-    QUERY, RESET, RELEVANT = 2, 6, 7
-    FILL_LOW, FILL_HIGH = 16, 63
-    CLASS_LOW = 128
+    SYMBOL_LOW = 1  
 
-    def __init__(
-        self,
-        length_range=(16, 33),
-        relevant_count_range=(1, 9),
-        seed=42,
-    ):
+    def __init__(self, n_symbols: int = 32, seq_len: int = 50,
+                 max_count: int | None = None, seed: int | None = 42):
         """
-        :param length_range: sequence length, [lo, hi).
-        :param relevant_count_range: how many marks, [lo, hi); capped at length - 3.
+        :param n_symbols: vocabulary size m of the body.
+        :param seq_len: body length n; one int, since nmae is normalized by n/m.
+        :param max_count: largest count token; None means seq_len. Set it above
+            seq_len to evaluate on longer sequences later.
         """
         super().__init__(seed)
-        self.length_range = validate_int_spec(length_range, "length_range", 4)
-        self.relevant_count_range = validate_int_spec(
-            relevant_count_range, "relevant_count_range", 1
-        )
-        max_count = min(max_int(self.relevant_count_range), max_int(self.length_range) - 3)
-        if self.CLASS_LOW + max_count >= self.vocab_size:
-            raise ValueError(f"relevant_count_range exceeds the class token block "
-                             f"(max {self.vocab_size - self.CLASS_LOW - 1})")
+        self.n_symbols = validate_int_spec(n_symbols, "n_symbols", 2)
+        self.seq_len = validate_int_spec(seq_len, "seq_len", 1)
+        self.max_count = self.seq_len if max_count is None else validate_int_spec(max_count, "max_count", 1)
+        if not all(isinstance(v, int) for v in (self.n_symbols, self.seq_len, self.max_count)):
+            raise TypeError("n_symbols, seq_len and max_count must be single integers")
+        if self.max_count < self.seq_len:
+            raise ValueError(f"max_count={self.max_count} cannot hold a count of up to "
+                             f"seq_len={self.seq_len}")
+        self.CLASS_LOW = self.SYMBOL_LOW + self.n_symbols  
 
     @property
-    def vocab_size(self):
-        return 160
+    def vocab_size(self) -> int:
+        return self.CLASS_LOW + self.max_count + 1
 
     def _sample_one(self) -> DatasetItem:
-        length = sample_int(self.rng, self.length_range)
-        count = min(sample_int(self.rng, self.relevant_count_range), length - 3)
-        prompt = self.rng.integers(self.FILL_LOW, self.FILL_HIGH + 1, size=length, dtype=np.int64)
-        prompt[0], prompt[-1] = self.RESET, self.QUERY
-        positions = self.rng.choice(np.arange(1, length - 1), size=count, replace=False)
-        prompt[positions] = self.RELEVANT
-        first = int(positions.min())
-        metadata = {
-            "sequence_length": length,
-            "absolute_target_position": first,
-            "normalized_target_position": first / max(length - 1, 1),
-            "relative_distance": length - 1 - first,
-            "relevant_count": count,
-            "number_of_distractors": length - count - 2,
-        }
-        return DatasetItem(prompt, np.array([self.CLASS_LOW + count], dtype=np.int64), metadata)
+        body = self.rng.integers(0, self.n_symbols, size=self.seq_len)
+        query = int(self.rng.integers(self.n_symbols))
+        body[self.rng.integers(self.seq_len)] = query 
+        count = int((body == query).sum())
+        prompt = self.SYMBOL_LOW + np.append(body, query).astype(np.int64)
+        return DatasetItem(prompt, np.array([self.CLASS_LOW + count], dtype=np.int64),
+                           metadata={"query": query, "count": count,
+                                     "seq_len": self.seq_len, "n_symbols": self.n_symbols})
+
+    def metrics(self, predicted, targets) -> dict[str, float]:
+        scores = super().metrics(predicted, targets)
+        answer = targets != -1
+        true = targets[answer] - self.CLASS_LOW
+        guess = np.clip(predicted[answer] - self.CLASS_LOW, 0, self.max_count)
+        expected = self.seq_len / self.n_symbols + 1
+        scores["nmae"] = float(np.abs(guess - true).mean() / expected)
+        return scores

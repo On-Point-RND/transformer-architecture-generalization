@@ -9,12 +9,17 @@ Merrill et al. 2024 (jopetty/word-problem, generate_data.py) and Li et al.
 2025 (belindal/state-tracking): the model reads only the moves and must keep
 the running product itself. Composition follows both of them: (a o b)[j] =
 a[b[j]] and each new factor is multiplied on the right, s_i = s_{i-1} o p_i,
-so labels are comparable with their data element for element. The base metrics map onto theirs -- ``token_acc``
-is their token accuracy, ``acc`` their sequence accuracy.
+so labels are comparable with their data element for element.
 
-S5 draws from all 120 permutations of five elements; chance is 1/120. C5 draws
-from the five powers of one 5-cycle, so composition reduces to addition mod 5;
-chance is 1/5. Both share the vocabulary and the sequence length.
+Metrics (override of ``Task.metrics``), aligned with Merrill/Li:
+
+* ``acc`` — sequence accuracy: every position in the example correct.
+* ``token_acc`` — micro token accuracy over all labeled positions (incl. the
+  trivial copy ``s_1 = p_1``). Chance ≈ 1/120 (S5) or 1/5 (C5).
+
+S5 draws from all 120 permutations of five elements. C5 draws from the five
+powers of one 5-cycle, so composition reduces to addition mod 5. Both share
+the vocabulary and the sequence length.
 """
 
 from itertools import permutations
@@ -63,6 +68,15 @@ class PermutationTask(Task):
     @property
     def vocab_size(self) -> int:
         return self.PERM_LOW + len(ALL_PERMUTATIONS)
+
+    def metrics(self, predicted, targets) -> dict[str, float]:
+        labeled = targets != -1
+        match = predicted == targets
+        n_tok = int(labeled.sum())
+        return {
+            "acc": float((match | ~labeled).all(axis=1).mean()),
+            "token_acc": float(match[labeled].mean()) if n_tok else 0.0,
+        }
 
     def _sample_one(self) -> DatasetItem:
         length = sample_int(self.rng, self.n_permutations)
