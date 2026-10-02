@@ -13,7 +13,4 @@ venv/
 runs/
 out*
 
-configs/tasks/kv_retrieval.yaml
-configs/tasks/selective_count.yaml
 configs/tasks/sorting.yaml
-configs/tasks/ruler.yaml
