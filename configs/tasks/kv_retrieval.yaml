@@ -1,0 +1,61 @@
+hardware:
+  device: gpu           # gpu | cpu
+  gpu: 0                # индекс CUDA-карты; используется только при device: gpu
+  dtype: bfloat16       # float32 | bfloat16 | float16; AMP включается только на GPU
+  compile: false        # true | false; torch.compile после загрузки checkpoint
+
+paths:
+  run_dir: runs/main
+  logs: ""              # metrics.jsonl и config.resolved.yaml
+  checkpoints: ""       # last.pt и best.pt
+  results: ""           # summary.csv и curves.png
+
+model:
+  name: vanilla
+  block_size: 1024     # int > 0; для s5/c5 (labels): >= max(n_permutations); иначе len(prompt)+len(answer)-1
+  n_layer: 4          # int > 0; число Transformer/LSTM-слоёв; для looped обычно 1
+  n_head: 4           # int > 0 и делитель n_embd; LSTM игнорирует
+  n_embd: 128         # int > 0; ширина Transformer или embedding/hidden size LSTM
+  dropout: 0.0        # float в [0, 1)
+  bias: false         # true | false; bias внутри Transformer/LSTM; lm_head без bias
+
+task:
+  name: kv_retrieval
+  params: {vocab_size: 8192, input_seq_len: 1024, num_kv_pairs: 8}
+
+optimizer:
+  name: adamw           # adamw | adam
+  learning_rate: 5.0e-4 # float > 0; peak LR
+  beta1: 0.9            # float в [0, 1)
+  beta2: 0.95           # float в [0, 1)
+  weight_decay: 0.1     # float >= 0; coupled L2 в Adam, decoupled decay в AdamW
+  decay: matrices       # matrices: только tensors ndim>=2 | all: все параметры
+  grad_clip: 1.0        # float >= 0; 0 выключает clipping
+  schedule: cosine      # cosine | constant
+  warmup_iters: 1000     # int >= 0
+  lr_decay_iters: 45000 # int > warmup_iters для cosine
+  min_lr: 1.0e-5        # float >= 0; конечный LR для cosine
+
+
+train:
+  init: scratch         # scratch | resume | auto (resume при наличии last.pt)
+  seed: 1337            # int; инициализация модели и Python/Torch RNG
+  data_seed: null       # int | null; null означает использовать train.seed
+
+  batch_size: 256                  # int > 0; micro-batch size
+  gradient_accumulation_steps: 1   # int > 0
+  max_iters: 50000                 # int >= 0
+
+  eval_interval: 1000     # int > 0; шагов между evaluation
+  eval_iters: 10        # int > 0; batches для train/val оценки
+  eval_only: false       # true: одна evaluation на step 0, без обучения
+  eval_accuracy: true    # считать task metrics вместе с loss
+  log_interval: 100      # int > 0; шагов между train-log records
+  diag_interval: 0       # int >= 0; каждые N eval считать norms, 0 выключает
+  always_save_checkpoint: true  # сохранять last.pt на каждой evaluation
+  reproducible_val: false       # true: отдельный детерминированный sampling val
+
+  early_stop_metric: val       # train | val | train_acc | val_acc | *_token_acc
+  early_stop_patience: 0       # evals без улучшения; 0 выключает patience stop
+  early_stop_min_delta: 0.0    # минимальное улучшение выбранной метрики
+  early_stop_target: null      # float | null; остановиться при достижении target
