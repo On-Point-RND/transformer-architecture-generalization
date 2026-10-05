@@ -10,6 +10,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from numbers import Integral
 from typing import Any
+from .base import DatasetItem, Task, max_int, sample_int, validate_int_spec
 
 import numpy as np
 
