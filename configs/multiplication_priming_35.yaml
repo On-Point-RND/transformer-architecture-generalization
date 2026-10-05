@@ -1,0 +1,53 @@
+
+hardware:
+  device: gpu
+  gpu: 0
+  dtype: bfloat16
+  compile: false
+
+paths:
+  run_dir: runs/multiplication_priming_35
+  logs: ""
+  checkpoints: ""
+  results: ""
+
+model:
+  name: vanilla
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  block_size: 256
+  dropout: 0.0
+  bias: false
+
+task:
+  name: multiplication
+  params:
+    n_digits: 5
+    multiplier_digits: 3
+    reverse: false
+    prime_digits: 35
+    prime_probability: 0.01
+  n_val: 1000
+  n_train: 0
+
+optimizer:
+  name: adamw
+  decay: matrices
+  schedule: cosine
+  learning_rate: 1.0e-4
+  min_lr: 1.0e-5
+  weight_decay: 0.0
+  warmup_iters: 100
+  lr_decay_iters: 10000
+  grad_clip: 1.0
+
+train:
+  init: scratch
+  seed: 1337
+  batch_size: 64
+  gradient_accumulation_steps: 1
+  max_iters: 10000
+  eval_interval: 100
+  eval_iters: 20
+  early_stop_patience: 0
