@@ -28,7 +28,7 @@ from torch import nn
 from torch.nn import functional as F
 
 from core.config import ModelConfig
-from core.model import Transformer
+from core.model import Transformer, make_norm
 
 try:
     from fla.ops.gated_delta_rule import chunk_gated_delta_rule
@@ -42,6 +42,7 @@ else:
 @dataclass
 class Config(ModelConfig):
     name: str = "gated_deltanet"
+    norm: str = "rms"  # block and final norms, as in FLA; 'layer' also works
     expand_k: float = 0.75
     expand_v: float = 1.5
     d_conv: int = 4
@@ -325,7 +326,7 @@ class GatedDeltaNet(nn.Module):
 class GatedDeltaBlock(nn.Module):
     def __init__(self, config, layer_idx):
         super().__init__()
-        self.norm = nn.RMSNorm(config.n_embd, eps=1e-5)
+        self.norm = make_norm(config)
         self.mixer = GatedDeltaNet(config, layer_idx)
 
     def forward(self, x):
@@ -341,7 +342,6 @@ class Model(Transformer):
             positional_markers=(),
             block_builder=GatedDeltaBlock,
         )
-        self.transformer.ln_f = nn.RMSNorm(config.n_embd, eps=1e-5)
 
     def estimate_mfu(self, fwdbwd_per_iter, dt):
         return -1.0

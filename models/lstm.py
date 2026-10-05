@@ -1,4 +1,7 @@
-"""Stacked causal LSTM language model with the standard model config."""
+"""Stacked causal LSTM language model with the standard model config.
+
+The LSTM has no normalization layers, so ``model.norm`` is ignored here.
+"""
 
 import torch
 import torch.nn as nn
