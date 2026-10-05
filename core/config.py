@@ -30,7 +30,8 @@ class ModelConfig:
     n_head: int = 4
     n_embd: int = 128
     dropout: float = 0.0
-    bias: bool = False  # bias in Linears and LayerNorms
+    bias: bool = False  # bias in Linears and LayerNorms (RMSNorm has none)
+    norm: str = "layer"  # block and final norms: 'layer' | 'rms'; see core.model.make_norm
 
 
 @dataclass

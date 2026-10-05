@@ -19,6 +19,15 @@ class LayerNorm(nn.Module):
         return F.layer_norm(input, self.weight.shape, self.weight, self.bias, 1e-5)
 
 
+def make_norm(config, dim=None):
+    dim = dim or config.n_embd
+    if config.norm == "layer":
+        return LayerNorm(dim, bias=config.bias)
+    if config.norm == "rms":
+        return nn.RMSNorm(dim, eps=1e-5)  # no bias term; needs torch >= 2.4
+    raise ValueError(f"model.norm must be layer/rms, got {config.norm!r}")
+
+
 class MLP(nn.Module):
     def __init__(self, config, layer_idx=0):
         super().__init__()
@@ -92,16 +101,16 @@ class CausalAttention(nn.Module):
 
 
 class Block(nn.Module):
-    """Pre-LN block: x + attn(ln_1(x)), then x + mlp(ln_2(x)).
+    """Pre-norm block: x + attn(ln_1(x)), then x + mlp(ln_2(x)).
 
-    Both concrete sublayers are passed in; the block has no architecture hooks.
+    Both concrete sublayers are passed in; the norms follow ``config.norm``.
     """
 
     def __init__(self, config, attn, mlp):
         super().__init__()
-        self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
+        self.ln_1 = make_norm(config)
         self.attn = attn
-        self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
+        self.ln_2 = make_norm(config)
         self.mlp = mlp
 
     def forward(self, x):
@@ -146,7 +155,7 @@ class Transformer(nn.Module):
             blocks = nn.ModuleList([block] * n_blocks)
         else:
             blocks = nn.ModuleList([make_block(i) for i in range(n_blocks)])
-        final_norm = LayerNorm(config.n_embd, bias=config.bias)
+        final_norm = make_norm(config)
         modules = dict(
             wte=token_embedding,
             drop=dropout,

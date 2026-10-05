@@ -34,6 +34,7 @@ model:
   n_embd: 128         # int > 0; ширина Transformer или embedding/hidden size LSTM
   dropout: 0.0        # float в [0, 1)
   bias: false         # true | false; bias внутри Transformer/LSTM; lm_head без bias
+  # norm: layer       # layernorm | rms; нормализации блоков и финальная ln_f. Если не задано, то дефлолт модели. У ванилы layernorm, у mamba2 и deltanet rms.
   # vocab_size не задаётся: training loop берёт его у выбранной задачи.
 
 # Дополнительные поля добавляются только для соответствующего model.name:

@@ -7,7 +7,7 @@ from torch import nn, Tensor
 from torch.nn import functional as F
 
 from core.config import ModelConfig
-from core.model import Transformer
+from core.model import Transformer, make_norm
 
 try:
     from mamba_ssm.ops.triton.ssd_combined import mamba_chunk_scan_combined
@@ -26,6 +26,7 @@ else:
 @dataclass
 class Config(ModelConfig):
     name: str = "mamba2"
+    norm: str = "rms"  # block and final norms, as in mamba_ssm; 'layer' also works
     d_state: int = 128
     d_conv: int = 4
     expand: int = 2
@@ -404,7 +405,7 @@ class Mamba2(nn.Module):
 class MambaBlock(nn.Module):
     def __init__(self, config, layer_idx):
         super().__init__()
-        self.norm = nn.RMSNorm(config.n_embd, eps=1e-5)
+        self.norm = make_norm(config)
         self.mixer = Mamba2(config, layer_idx)
 
     def forward(self, x):
@@ -420,7 +421,6 @@ class Model(Transformer):
             positional_markers=(),
             block_builder=MambaBlock,
         )
-        self.transformer.ln_f = nn.RMSNorm(config.n_embd, eps=1e-5)
 
     def estimate_mfu(self, fwdbwd_per_iter, dt):
         return -1.0  # the shared estimate assumes attention
