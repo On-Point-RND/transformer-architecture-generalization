@@ -22,7 +22,7 @@ model:
 task:
   name: selective_count
   params:
-    n_symbols: 18         
+    n_symbols: 16         
     count_ratio: 10      
     seq_len: null         
     max_count: null       

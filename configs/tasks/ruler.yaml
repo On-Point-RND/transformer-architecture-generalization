@@ -24,7 +24,7 @@ task:
   params:
     n_vars: 128
     v_card: 32
-    num_chains: 1       
+    num_chains: 8       
     num_hops: 4       
     n_filler: [0, 33]  
   n_val: 1024

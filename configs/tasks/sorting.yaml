@@ -1,6 +1,6 @@
 hardware:
   device: gpu           # gpu | cpu
-  gpu: 1                # индекс CUDA-карты; используется только при device: gpu
+  gpu: 0                # индекс CUDA-карты; используется только при device: gpu
   dtype: bfloat16       # float32 | bfloat16 | float16; AMP включается только на GPU
   compile: false        # true | false; torch.compile после загрузки checkpoint
 
@@ -12,7 +12,7 @@ paths:
 
 model:
   name: vanilla
-  block_size: 128     # int > 0; для s5/c5 (labels): >= max(n_permutations); иначе len(prompt)+len(answer)-1
+  block_size: 1024     # int > 0; для s5/c5 (labels): >= max(n_permutations); иначе len(prompt)+len(answer)-1
   n_layer: 4          # int > 0; число Transformer/LSTM-слоёв; для looped обычно 1
   n_head: 4           # int > 0 и делитель n_embd; LSTM игнорирует
   n_embd: 128         # int > 0; ширина Transformer или embedding/hidden size LSTM
@@ -20,11 +20,13 @@ model:
   bias: false         # true | false; bias внутри Transformer/LSTM; lm_head без bias
 
 task:
-  name: state_based_recall
+  name: sorting
   params:
-    n_bits: 16
-    n_swaps: 3
-    max_bits: 32        
+    n_items: [4, 9]     
+    item_len: [8, 16]    
+    alphabet: 0123456789abcdefghijklmnopqrstuvwxyz
+    duplicates: true
+    descending: false
   n_val: 1024
   n_train: 0
 
