@@ -22,7 +22,7 @@ model:
 task:
   name: s5
   params:
-    n_permutations: 17
+    n_permutations: 16
   n_val: 1024           # int > 0
   n_train: 0            # int >= 0
 
