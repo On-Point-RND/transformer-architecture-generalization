@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the checked-in GDN-negative and Mamba2 experiment matrix."""
+"""Run the checked-in GDN, GDN2, and Mamba2 experiment matrix."""
 
 import argparse
 import csv
@@ -28,6 +28,10 @@ MODEL_CONFIGS = {
         PROJECT_ROOT / "configs/architecture_comparison/gdn_negative_eigenvalues.yaml"
     ),
     "mamba2": PROJECT_ROOT / "configs/architecture_comparison/mamba2.yaml",
+    "gdn2": PROJECT_ROOT / "configs/architecture_comparison/gdn2.yaml",
+    "gdn2_negative_eigenvalues": (
+        PROJECT_ROOT / "configs/architecture_comparison/gdn2_negative_eigenvalues.yaml"
+    ),
 }
 
 RESULT_FIELDS = (
@@ -118,7 +122,7 @@ def parse_args():
         action="append",
         choices=tuple(MODEL_CONFIGS),
         dest="models",
-        help="architecture to run; repeat to select both (default: both)",
+        help="architecture to run; repeat to select several (default: all)",
     )
     parser.add_argument("--device", choices=("gpu", "mps", "cpu"))
     parser.add_argument("--gpu", type=int, help="CUDA device index (default: config value)")
