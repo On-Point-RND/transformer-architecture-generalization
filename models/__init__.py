@@ -16,6 +16,8 @@ from models.lstm import build_model as build_lstm
 from models.lssa import LSSAConfig, LSSARConfig, build_lssa, build_lssar
 from models.mamba2 import Config as Mamba2Config
 from models.mamba2 import Model as Mamba2Model
+from models.mamba3 import Config as Mamba3Config
+from models.mamba3 import Model as Mamba3Model
 from models.positional import Config as PositionalConfig
 from models.positional import build_model as build_positional
 from models.relumax import Config as RelumaxConfig
@@ -42,6 +44,7 @@ MODELS = {
     "lssa": (LSSAConfig, build_lssa),
     "lssar": (LSSARConfig, build_lssar),
     "mamba2": (Mamba2Config, Mamba2Model),
+    "mamba3": (Mamba3Config, Mamba3Model),
 }
 
 

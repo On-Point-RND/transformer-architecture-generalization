@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the checked-in GDN, GDN2, and Mamba2 experiment matrix."""
+"""Run the checked-in GDN, GDN2, Mamba2, and Mamba3 experiment matrix."""
 
 import argparse
 import csv
@@ -28,6 +28,8 @@ MODEL_CONFIGS = {
         PROJECT_ROOT / "configs/architecture_comparison/gdn_negative_eigenvalues.yaml"
     ),
     "mamba2": PROJECT_ROOT / "configs/architecture_comparison/mamba2.yaml",
+    "mamba3": PROJECT_ROOT / "configs/architecture_comparison/mamba3.yaml",
+    "mamba3_mimo": PROJECT_ROOT / "configs/architecture_comparison/mamba3_mimo.yaml",
     "gdn2": PROJECT_ROOT / "configs/architecture_comparison/gdn2.yaml",
     "gdn2_negative_eigenvalues": (
         PROJECT_ROOT / "configs/architecture_comparison/gdn2_negative_eigenvalues.yaml"
