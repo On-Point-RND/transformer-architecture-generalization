@@ -1,0 +1,58 @@
+hardware:
+  device: mps           # gpu | cpu
+  gpu: 0
+  dtype: bfloat16       # float32 | bfloat16 | float16
+  compile: false
+
+paths:
+  run_dir: runs/main/local_w2_2x3
+  logs: ""              # empty roots keep logs/checkpoints/results inside run_dir
+  checkpoints: ""
+  results: ""
+
+model:
+  name: attention_design  # file in models/
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  block_size: 256
+  dropout: 0.0
+  bias: false
+  pattern: local
+  window_size: 2
+  n_global_tokens: 2
+  softmax: standard
+
+task:
+  name: string_sorting
+  params:
+    n_items: [3, 4] #[low, high)
+    item_len: [2, 3] #[low, high)
+    alphabet: "0123456789abcdefghijklmnopqrstuvwxyz"
+    duplicates: true
+    descending: false
+    seed: 42
+  n_val: 1000
+  n_train: 0            # 0 = endless stream; >0 = a fixed training set of that size
+
+optimizer:
+  name: adamw           # file in optimizers/
+  decay: matrices       # matrices (2D tensors only) | all
+  schedule: cosine      # cosine | constant
+  learning_rate: 1.0e-4
+  min_lr: 1.0e-5
+  weight_decay: 0.1
+  warmup_iters: 100
+  lr_decay_iters: 80000
+  grad_clip: 1.0        # 0.0 disables
+
+train:
+  init: scratch         # scratch | resume | auto
+  seed: 1337
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 80000
+  eval_interval: 250
+  eval_iters: 100
+  eval_accuracy: true
+  early_stop_patience: 0   # 0 disables early stopping

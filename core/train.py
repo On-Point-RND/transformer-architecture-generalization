@@ -22,6 +22,8 @@ DTYPES = {"float32": torch.float32, "bfloat16": torch.bfloat16, "float16": torch
 def resolve_device(hardware):
     if hardware.device == "cpu":
         return "cpu"
+    elif hardware.device == "mps":
+        return "mps"
     if hardware.device != "gpu":
         raise ValueError(f"hardware.device must be 'gpu' or 'cpu', got {hardware.device!r}")
     visible = torch.cuda.device_count()
@@ -231,8 +233,8 @@ def run(config):
     torch.manual_seed(train_cfg.seed)
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
-    device_type = "cuda" if "cuda" in device else "cpu"
-    ctx = (nullcontext() if device_type == "cpu" else
+    device_type = "cuda" if "cuda" in device else "mps"
+    ctx = (nullcontext() if device_type == "mps" else
            torch.amp.autocast(device_type=device_type, dtype=DTYPES[hardware.dtype]))
 
     task = get_task(config.task.name, {**config.task.params, "seed": train_cfg.data_seed})
