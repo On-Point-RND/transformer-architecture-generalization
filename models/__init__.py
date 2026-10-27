@@ -10,6 +10,8 @@ from models.gated_deltanet import Config as GatedDeltaNetConfig
 from models.gated_deltanet import Model as GatedDeltaNetModel
 from models.gated_deltanet2 import Config as GatedDeltaNet2Config
 from models.gated_deltanet2 import Model as GatedDeltaNet2Model
+from models.gdn2_attention import Config as GDN2AttentionConfig
+from models.gdn2_attention import Model as GDN2AttentionModel
 from models.looped import Config as LoopedConfig
 from models.looped import build_model as build_looped
 from models.lstm import build_model as build_lstm
@@ -38,6 +40,7 @@ MODELS = {
     "ffn_gating": (FFNConfig, build_ffn),
     "gated_deltanet": (GatedDeltaNetConfig, GatedDeltaNetModel),
     "gated_deltanet2": (GatedDeltaNet2Config, GatedDeltaNet2Model),
+    "gdn2_attention": (GDN2AttentionConfig, GDN2AttentionModel),
     "looped": (LoopedConfig, build_looped),
     "taylor": (TaylorConfig, build_taylor),
     "relumax": (RelumaxConfig, build_relumax),
