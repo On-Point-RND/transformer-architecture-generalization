@@ -35,8 +35,8 @@ optimizer:
   decay: matrices       # matrices: только tensors ndim>=2 | all: все параметры
   grad_clip: 1.0        # float >= 0; 0 выключает clipping
   schedule: cosine      # cosine | constant
-  warmup_iters: 1000     # int >= 0
-  lr_decay_iters: 45000 # int > warmup_iters для cosine
+  warmup_iters: 1000    # int >= 0
+  lr_decay_iters: 95000 # int > warmup_iters для cosine
   min_lr: 1.0e-5        # float >= 0; конечный LR для cosine
 
 
@@ -47,7 +47,7 @@ train:
 
   batch_size: 256                  # int > 0; micro-batch size
   gradient_accumulation_steps: 1   # int > 0
-  max_iters: 50000                 # int >= 0
+  max_iters: 100000                # int >= 0
 
   eval_interval: 1000     # int > 0; шагов между evaluation
   eval_iters: 10        # int > 0; batches для train/val оценки
