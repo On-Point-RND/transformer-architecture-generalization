@@ -120,6 +120,14 @@ def parse_args():
     parser.add_argument("--run-root", type=Path, default=DEFAULT_RUN_ROOT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
+        "--seed", type=int,
+        help="training seed (default: config value); use a fresh --run-root for a new seed",
+    )
+    parser.add_argument(
+        "--data-seed", type=int,
+        help="task data seed (default: config value, which follows --seed when null)",
+    )
+    parser.add_argument(
         "--model",
         action="append",
         choices=tuple(MODEL_CONFIGS),
@@ -190,6 +198,10 @@ def command_for(args, model, index, experiment):
         "paths.run_dir": str(run_dir),
         "train.init": "auto",
     }
+    if args.seed is not None:
+        overrides["train.seed"] = args.seed
+    if args.data_seed is not None:
+        overrides["train.data_seed"] = args.data_seed
     if args.device:
         overrides["hardware.device"] = args.device
     if args.gpu is not None:
