@@ -1,0 +1,23 @@
+# Same S5 length as the GDN2 and vanilla results. n_layer = TOTAL block count.
+# Select BOTH --model gdn2_attention --model attention_gdn2.
+# Both use learned positions, RMSNorm, width 128, four heads, LR 1e-4,
+# and 80k iterations with no plateau stopping. Not parameter matched to vanilla.
+# Repeat with --seed 0, 42, 123, each with a separate run root/output CSV.
+# Example (8 runs per seed, 24 total):
+# for seed in 0 42 123; do
+#   python scripts/run_architecture_experiments.py \
+#     --manifest configs/architecture_comparison/experiments_s5_hybrid.yaml \
+#     --model gdn2_attention --model attention_gdn2 --seed "$seed" \
+#     --run-root "runs/s5-hybrid/seed-$seed" \
+#     --output "s5-hybrid-seed-$seed.csv" --gpu 0 --jobs 2
+# done
+# Data follows each training seed, as in the existing model config. Add
+# --data-seed 1337 to isolate initialization with a fixed data stream.
+# Vanilla already reached 99.80% exact match at depth 3 / seed 123;
+# assess success across seeds, not just the best run. Its LR was 5e-4 and
+# budget 100k, so this is exploratory rather than a matched comparison.
+experiments:
+  - {task: s5, n_layer: 2, block_size: 10, params: {n_permutations: 10}}
+  - {task: s5, n_layer: 4, block_size: 10, params: {n_permutations: 10}}
+  - {task: s5, n_layer: 6, block_size: 10, params: {n_permutations: 10}}
+  - {task: s5, n_layer: 8, block_size: 10, params: {n_permutations: 10}}

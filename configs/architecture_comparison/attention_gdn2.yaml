@@ -1,0 +1,70 @@
+# Hybrid: n_layer counts total blocks; repeat layer_pattern from input to output.
+# Attention blocks include a GELU MLP. All blocks use RMSNorm.
+# Learned absolute positions are added once to the input embeddings.
+# Disable loss-plateau stopping to allow delayed learning on S5.
+hardware:
+  compile: false
+  device: gpu
+  dtype: bfloat16
+  gpu: 0
+model:
+  allow_neg_eigval: false
+  beta_guard: true
+  bias: false
+  block_size: 10
+  d_conv: 4
+  dropout: 0.0
+  expand_k: 1.0
+  expand_v: 1.0
+  n_embd: 128
+  n_head: 4
+  n_layer: 2
+  name: gdn2_attention
+  scan_kernel: fla
+  layer_pattern:
+  - attention
+  - gdn2
+  use_pos_embedding: true
+  norm: rms
+optimizer:
+  beta1: 0.9
+  beta2: 0.95
+  decay: matrices
+  grad_clip: 1.0
+  learning_rate: 0.0001
+  lr_decay_iters: 80000
+  min_lr: 1.0e-05
+  name: adamw
+  schedule: cosine
+  warmup_iters: 100
+  weight_decay: 0.1
+paths:
+  checkpoints: ''
+  logs: ''
+  results: ''
+  run_dir: runs/s5-hybrid/attention_gdn2
+task:
+  n_train: 0
+  n_val: 1000
+  name: s5
+  params:
+    n_permutations: 10
+train:
+  always_save_checkpoint: true
+  batch_size: 256
+  data_seed: null
+  diag_interval: 0
+  early_stop_metric: val
+  early_stop_min_delta: 0.0001
+  early_stop_patience: 0
+  early_stop_target: null
+  eval_accuracy: true
+  eval_interval: 250
+  eval_iters: 100
+  eval_only: false
+  gradient_accumulation_steps: 1
+  init: scratch
+  log_interval: 100
+  max_iters: 80000
+  reproducible_val: false
+  seed: 1337
