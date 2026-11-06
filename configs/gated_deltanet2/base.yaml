@@ -1,0 +1,21 @@
+# Portable GDN2 example; unset sections/fields use core/config.py defaults.
+model:
+  name: gated_deltanet2
+  block_size: 128
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  expand_k: 1.0
+  expand_v: 1.0
+  d_conv: 4
+  use_short_conv: true
+  allow_neg_eigval: false
+  beta_guard: true
+  scan_kernel: auto
+
+task:
+  name: kv_retrieval
+  params: {vocab_size: 256, input_seq_len: 64, num_kv_pairs: 8}
+
+paths:
+  run_dir: runs/gated_deltanet2/base

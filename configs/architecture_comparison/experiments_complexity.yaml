@@ -1,0 +1,46 @@
+# Fixed task difficulties, sweeping only depth (1 through 4).
+# Use run_architecture_experiments.py with --model gdn2 --model mamba3.
+# Ranges are half-open: [4, 8] samples 4..7; [0, 33] samples 0..32.
+# Block sizes cover the largest shifted prompt+answer or unshifted labels.
+default_block_size: 128
+
+experiments:
+  - {"task": "c5", "n_layer": 1, "block_size": 68, "params": {"n_permutations": 68}}
+  - {"task": "c5", "n_layer": 2, "block_size": 68, "params": {"n_permutations": 68}}
+  - {"task": "c5", "n_layer": 3, "block_size": 68, "params": {"n_permutations": 68}}
+  - {"task": "c5", "n_layer": 4, "block_size": 68, "params": {"n_permutations": 68}}
+
+  - {"task": "s5", "n_layer": 1, "block_size": 10, "params": {"n_permutations": 10}}
+  - {"task": "s5", "n_layer": 2, "block_size": 10, "params": {"n_permutations": 10}}
+  - {"task": "s5", "n_layer": 3, "block_size": 10, "params": {"n_permutations": 10}}
+  - {"task": "s5", "n_layer": 4, "block_size": 10, "params": {"n_permutations": 10}}
+
+  - {"task": "kv_retrieval", "n_layer": 1, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 64, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 2, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 64, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 3, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 64, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 4, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 64, "vocab_size": 8192}}
+
+  - {"task": "state_based_recall", "n_layer": 1, "block_size": 36, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 3}}
+  - {"task": "state_based_recall", "n_layer": 2, "block_size": 36, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 3}}
+  - {"task": "state_based_recall", "n_layer": 3, "block_size": 36, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 3}}
+  - {"task": "state_based_recall", "n_layer": 4, "block_size": 36, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 3}}
+
+  - {"task": "maze", "n_layer": 1, "block_size": 325, "params": {"grid_size": 8}}
+  - {"task": "maze", "n_layer": 2, "block_size": 325, "params": {"grid_size": 8}}
+  - {"task": "maze", "n_layer": 3, "block_size": 325, "params": {"grid_size": 8}}
+  - {"task": "maze", "n_layer": 4, "block_size": 325, "params": {"grid_size": 8}}
+
+  - {"task": "ruler", "n_layer": 1, "block_size": 198, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 4, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 2, "block_size": 198, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 4, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 3, "block_size": 198, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 4, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 4, "block_size": 198, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 4, "v_card": 32}}
+
+  - {"task": "sorting", "n_layer": 1, "block_size": 111, "params": {"alphabet": "0123456789abcdefghijklmnopqrstuvwxyz", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 2, "block_size": 111, "params": {"alphabet": "0123456789abcdefghijklmnopqrstuvwxyz", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 3, "block_size": 111, "params": {"alphabet": "0123456789abcdefghijklmnopqrstuvwxyz", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 4, "block_size": 111, "params": {"alphabet": "0123456789abcdefghijklmnopqrstuvwxyz", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+
+  - {"task": "selective_count", "n_layer": 1, "block_size": 160, "params": {"count_ratio": 10, "max_count": null, "n_symbols": 16, "seq_len": null}}
+  - {"task": "selective_count", "n_layer": 2, "block_size": 160, "params": {"count_ratio": 10, "max_count": null, "n_symbols": 16, "seq_len": null}}
+  - {"task": "selective_count", "n_layer": 3, "block_size": 160, "params": {"count_ratio": 10, "max_count": null, "n_symbols": 16, "seq_len": null}}
+  - {"task": "selective_count", "n_layer": 4, "block_size": 160, "params": {"count_ratio": 10, "max_count": null, "n_symbols": 16, "seq_len": null}}

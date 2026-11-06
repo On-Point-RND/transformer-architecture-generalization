@@ -8,12 +8,18 @@ from models.ffn_gating import Config as FFNConfig
 from models.ffn_gating import build_model as build_ffn
 from models.gated_deltanet import Config as GatedDeltaNetConfig
 from models.gated_deltanet import Model as GatedDeltaNetModel
+from models.gated_deltanet2 import Config as GatedDeltaNet2Config
+from models.gated_deltanet2 import Model as GatedDeltaNet2Model
+from models.gdn2_attention import Config as GDN2AttentionConfig
+from models.gdn2_attention import Model as GDN2AttentionModel
 from models.looped import Config as LoopedConfig
 from models.looped import build_model as build_looped
 from models.lstm import build_model as build_lstm
 from models.lssa import LSSAConfig, LSSARConfig, build_lssa, build_lssar
 from models.mamba2 import Config as Mamba2Config
 from models.mamba2 import Model as Mamba2Model
+from models.mamba3 import Config as Mamba3Config
+from models.mamba3 import Model as Mamba3Model
 from models.positional import Config as PositionalConfig
 from models.positional import build_model as build_positional
 from models.relumax import Config as RelumaxConfig
@@ -33,12 +39,15 @@ MODELS = {
     "attention_design": (AttentionConfig, build_attention),
     "ffn_gating": (FFNConfig, build_ffn),
     "gated_deltanet": (GatedDeltaNetConfig, GatedDeltaNetModel),
+    "gated_deltanet2": (GatedDeltaNet2Config, GatedDeltaNet2Model),
+    "gdn2_attention": (GDN2AttentionConfig, GDN2AttentionModel),
     "looped": (LoopedConfig, build_looped),
     "taylor": (TaylorConfig, build_taylor),
     "relumax": (RelumaxConfig, build_relumax),
     "lssa": (LSSAConfig, build_lssa),
     "lssar": (LSSARConfig, build_lssar),
     "mamba2": (Mamba2Config, Mamba2Model),
+    "mamba3": (Mamba3Config, Mamba3Model),
 }
 
 

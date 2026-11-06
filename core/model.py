@@ -121,6 +121,8 @@ class Block(nn.Module):
 class Transformer(nn.Module):
     """Decoder stack assembled from explicit attention and MLP components."""
 
+    supports_loss_only = True
+
     def __init__(
         self,
         config,
@@ -201,7 +203,7 @@ class Transformer(nn.Module):
         elif isinstance(module, nn.Embedding):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
-    def forward(self, idx, targets=None):
+    def forward(self, idx, targets=None, return_logits=True):
         _, t = idx.size()
         assert t <= self.config.block_size, (
             f"Cannot forward sequence of length {t}, block size is only {self.config.block_size}")
@@ -215,6 +217,12 @@ class Transformer(nn.Module):
         x = self.transformer.ln_f(x)
         if targets is None:
             return self.lm_head(x[:, [-1], :]), None
+        if not return_logits:
+            # Skip vocabulary projections for positions excluded from the loss.
+            mask = targets != -1
+            logits = self.lm_head(x[mask])
+            loss = F.cross_entropy(logits, targets[mask])
+            return None, loss
         logits = self.lm_head(x)
         loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1),
                                ignore_index=-1)

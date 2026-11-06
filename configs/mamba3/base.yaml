@@ -1,0 +1,22 @@
+model:
+  name: mamba3
+  block_size: 128
+  n_layer: 4
+  n_embd: 128
+  norm: rms
+  d_state: 128
+  expand: 2
+  headdim: 64
+  ngroups: 1
+  rope_fraction: 0.5
+  is_mimo: false
+  is_outproj_norm: false
+  chunk_size: 64
+  ssm_kernel: auto
+
+task:
+  name: kv_retrieval
+  params: {vocab_size: 256, input_seq_len: 64, num_kv_pairs: 8}
+
+paths:
+  run_dir: runs/mamba3/base

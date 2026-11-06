@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the checked-in GDN-negative and Mamba2 experiment matrix."""
+"""Run the checked-in GDN, GDN2, Mamba2, and Mamba3 experiment matrix."""
 
 import argparse
 import csv
@@ -28,6 +28,14 @@ MODEL_CONFIGS = {
         PROJECT_ROOT / "configs/architecture_comparison/gdn_negative_eigenvalues.yaml"
     ),
     "mamba2": PROJECT_ROOT / "configs/architecture_comparison/mamba2.yaml",
+    "mamba3": PROJECT_ROOT / "configs/architecture_comparison/mamba3.yaml",
+    "mamba3_mimo": PROJECT_ROOT / "configs/architecture_comparison/mamba3_mimo.yaml",
+    "gdn2": PROJECT_ROOT / "configs/architecture_comparison/gdn2.yaml",
+    "gdn2_attention": PROJECT_ROOT / "configs/architecture_comparison/gdn2_attention.yaml",
+    "attention_gdn2": PROJECT_ROOT / "configs/architecture_comparison/attention_gdn2.yaml",
+    "gdn2_negative_eigenvalues": (
+        PROJECT_ROOT / "configs/architecture_comparison/gdn2_negative_eigenvalues.yaml"
+    ),
 }
 
 RESULT_FIELDS = (
@@ -114,11 +122,19 @@ def parse_args():
     parser.add_argument("--run-root", type=Path, default=DEFAULT_RUN_ROOT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
+        "--seed", type=int,
+        help="training seed (default: config value); use a fresh --run-root for a new seed",
+    )
+    parser.add_argument(
+        "--data-seed", type=int,
+        help="task data seed (default: config value, which follows --seed when null)",
+    )
+    parser.add_argument(
         "--model",
         action="append",
         choices=tuple(MODEL_CONFIGS),
         dest="models",
-        help="architecture to run; repeat to select both (default: both)",
+        help="architecture to run; repeat to select several (default: all)",
     )
     parser.add_argument("--device", choices=("gpu", "mps", "cpu"))
     parser.add_argument("--gpu", type=int, help="CUDA device index (default: config value)")
@@ -184,6 +200,10 @@ def command_for(args, model, index, experiment):
         "paths.run_dir": str(run_dir),
         "train.init": "auto",
     }
+    if args.seed is not None:
+        overrides["train.seed"] = args.seed
+    if args.data_seed is not None:
+        overrides["train.data_seed"] = args.data_seed
     if args.device:
         overrides["hardware.device"] = args.device
     if args.gpu is not None:

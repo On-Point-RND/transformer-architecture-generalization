@@ -100,9 +100,12 @@ def estimate_loss(model, get_batch, ctx, train, task):
 
 
 def accumulate_gradients(model, x, y, get_batch, scaler, ctx, steps):
+    forward_kwargs = (
+        {"return_logits": False} if getattr(model, "supports_loss_only", False) else {}
+    )
     for _ in range(steps):
         with ctx:
-            _, loss = model(x, y)
+            _, loss = model(x, y, **forward_kwargs)
             loss = loss / steps  
         x, y = get_batch("train")  
         scaler.scale(loss).backward()

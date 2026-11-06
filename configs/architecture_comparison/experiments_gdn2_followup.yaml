@@ -1,0 +1,97 @@
+# GDN2 follow-up: 58 points (C5 confirmation + difficulty search).
+# Existing results use seed 1337. Candidate difficulties are untested.
+# Run all points at seed 0, then ONLY the first two C5 points at seeds 42,123:
+# python scripts/run_architecture_experiments.py --manifest configs/architecture_comparison/experiments_gdn2_followup.yaml --model gdn2 --seed 0 --data-seed 1337 --run-root runs/gdn2-followup/seed-0 --output gdn2-followup-seed-0.csv --gpu 0 --jobs 2
+# python scripts/run_architecture_experiments.py --manifest configs/architecture_comparison/experiments_gdn2_followup.yaml --model gdn2 --seed 42 --data-seed 1337 --limit 2 --run-root runs/gdn2-followup/seed-42 --output gdn2-followup-seed-42.csv --gpu 0 --jobs 2
+# python scripts/run_architecture_experiments.py --manifest configs/architecture_comparison/experiments_gdn2_followup.yaml --model gdn2 --seed 123 --data-seed 1337 --limit 2 --run-root runs/gdn2-followup/seed-123 --output gdn2-followup-seed-123.csv --gpu 0 --jobs 2
+# Fixed data seed isolates initialization changes; omit --data-seed to vary both.
+# C5 must stay first for --limit 2. No C5 depth-3/4 runs.
+# Use >=95% validation exact-match as a provisional solved threshold (C5
+# depth 2 is 97.77%); also report >=99%. Current CSV cannot prove completion.
+# Preserve original experiments_complexity.yaml and seed-1337 results.
+# All other settings come from the existing gdn2 model config.
+# Ranges are half-open. Each candidate uses identical params at depths 1-4.
+experiments:
+  # Harder: more alias hops (was 4); retain 8 competing chains.
+  - {"task": "ruler", "n_layer": 1, "block_size": 330, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 8, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 2, "block_size": 330, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 8, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 3, "block_size": 330, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 8, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 4, "block_size": 330, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 8, "v_card": 32}}
+
+  # Harder: more alias hops (was 4); retain 8 competing chains.
+  - {"task": "ruler", "n_layer": 1, "block_size": 462, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 12, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 2, "block_size": 462, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 12, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 3, "block_size": 462, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 12, "v_card": 32}}
+  - {"task": "ruler", "n_layer": 4, "block_size": 462, "params": {"n_filler": [0, 33], "n_vars": 128, "num_chains": 8, "num_hops": 12, "v_card": 32}}
+
+  # Harder: more symbols (was 16), keeping expected count ~10.
+  - {"task": "selective_count", "n_layer": 1, "block_size": 320, "params": {"n_symbols": 32, "count_ratio": 10, "seq_len": null, "max_count": null}}
+  - {"task": "selective_count", "n_layer": 2, "block_size": 320, "params": {"n_symbols": 32, "count_ratio": 10, "seq_len": null, "max_count": null}}
+  - {"task": "selective_count", "n_layer": 3, "block_size": 320, "params": {"n_symbols": 32, "count_ratio": 10, "seq_len": null, "max_count": null}}
+  - {"task": "selective_count", "n_layer": 4, "block_size": 320, "params": {"n_symbols": 32, "count_ratio": 10, "seq_len": null, "max_count": null}}
+
+  # Harder: more symbols (was 16), keeping expected count ~10.
+  - {"task": "selective_count", "n_layer": 1, "block_size": 640, "params": {"n_symbols": 64, "count_ratio": 10, "seq_len": null, "max_count": null}}
+  - {"task": "selective_count", "n_layer": 2, "block_size": 640, "params": {"n_symbols": 64, "count_ratio": 10, "seq_len": null, "max_count": null}}
+  - {"task": "selective_count", "n_layer": 3, "block_size": 640, "params": {"n_symbols": 64, "count_ratio": 10, "seq_len": null, "max_count": null}}
+  - {"task": "selective_count", "n_layer": 4, "block_size": 640, "params": {"n_symbols": 64, "count_ratio": 10, "seq_len": null, "max_count": null}}
+
+  # Harder: more pointer swaps (was 3); keep memory size fixed.
+  - {"task": "state_based_recall", "n_layer": 1, "block_size": 46, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 8}}
+  - {"task": "state_based_recall", "n_layer": 2, "block_size": 46, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 8}}
+  - {"task": "state_based_recall", "n_layer": 3, "block_size": 46, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 8}}
+  - {"task": "state_based_recall", "n_layer": 4, "block_size": 46, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 8}}
+
+  # Harder: more pointer swaps (was 3); keep memory size fixed.
+  - {"task": "state_based_recall", "n_layer": 1, "block_size": 62, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 16}}
+  - {"task": "state_based_recall", "n_layer": 2, "block_size": 62, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 16}}
+  - {"task": "state_based_recall", "n_layer": 3, "block_size": 62, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 16}}
+  - {"task": "state_based_recall", "n_layer": 4, "block_size": 62, "params": {"max_bits": 32, "n_bits": 16, "n_swaps": 16}}
+
+  # Harder: smaller alphabet (was 36 chars) forces deeper prefix comparisons.
+  - {"task": "sorting", "n_layer": 1, "block_size": 111, "params": {"alphabet": "0123456789", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 2, "block_size": 111, "params": {"alphabet": "0123456789", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 3, "block_size": 111, "params": {"alphabet": "0123456789", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 4, "block_size": 111, "params": {"alphabet": "0123456789", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+
+  # Harder: smaller alphabet (was 36 chars) forces deeper prefix comparisons.
+  - {"task": "sorting", "n_layer": 1, "block_size": 111, "params": {"alphabet": "0123", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 2, "block_size": 111, "params": {"alphabet": "0123", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 3, "block_size": 111, "params": {"alphabet": "0123", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+  - {"task": "sorting", "n_layer": 4, "block_size": 111, "params": {"alphabet": "0123", "descending": false, "duplicates": true, "item_len": [4, 8], "n_items": [4, 8]}}
+
+  # Easier: shorter products (was 10); no depth solved the original.
+  - {"task": "s5", "n_layer": 1, "block_size": 4, "params": {"n_permutations": 4}}
+  - {"task": "s5", "n_layer": 2, "block_size": 4, "params": {"n_permutations": 4}}
+  - {"task": "s5", "n_layer": 3, "block_size": 4, "params": {"n_permutations": 4}}
+  - {"task": "s5", "n_layer": 4, "block_size": 4, "params": {"n_permutations": 4}}
+
+  # Easier: shorter products (was 10); no depth solved the original.
+  - {"task": "s5", "n_layer": 1, "block_size": 6, "params": {"n_permutations": 6}}
+  - {"task": "s5", "n_layer": 2, "block_size": 6, "params": {"n_permutations": 6}}
+  - {"task": "s5", "n_layer": 3, "block_size": 6, "params": {"n_permutations": 6}}
+  - {"task": "s5", "n_layer": 4, "block_size": 6, "params": {"n_permutations": 6}}
+
+  # Easier: smaller grids (was 8); no depth solved the original.
+  - {"task": "maze", "n_layer": 1, "block_size": 85, "params": {"grid_size": 4}}
+  - {"task": "maze", "n_layer": 2, "block_size": 85, "params": {"grid_size": 4}}
+  - {"task": "maze", "n_layer": 3, "block_size": 85, "params": {"grid_size": 4}}
+  - {"task": "maze", "n_layer": 4, "block_size": 85, "params": {"grid_size": 4}}
+
+  # Easier: smaller grids (was 8); no depth solved the original.
+  - {"task": "maze", "n_layer": 1, "block_size": 185, "params": {"grid_size": 6}}
+  - {"task": "maze", "n_layer": 2, "block_size": 185, "params": {"grid_size": 6}}
+  - {"task": "maze", "n_layer": 3, "block_size": 185, "params": {"grid_size": 6}}
+  - {"task": "maze", "n_layer": 4, "block_size": 185, "params": {"grid_size": 6}}
+
+  # Easier: fewer pairs (was 64); depth 4 reached only 94.98% exact match.
+  - {"task": "kv_retrieval", "n_layer": 1, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 16, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 2, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 16, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 3, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 16, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 4, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 16, "vocab_size": 8192}}
+
+  # Easier: fewer pairs (was 64); depth 4 reached only 94.98% exact match.
+  - {"task": "kv_retrieval", "n_layer": 1, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 32, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 2, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 32, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 3, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 32, "vocab_size": 8192}}
+  - {"task": "kv_retrieval", "n_layer": 4, "block_size": 512, "params": {"input_seq_len": 512, "num_kv_pairs": 32, "vocab_size": 8192}}

@@ -1,0 +1,72 @@
+hardware:
+  device: gpu
+  gpu: 0
+  dtype: bfloat16
+  compile: false
+
+paths:
+  run_dir: runs/architecture-comparison/mamba3_mimo
+  logs: ""
+  checkpoints: ""
+  results: ""
+
+model:
+  name: mamba3
+  block_size: 128
+  n_layer: 4
+  n_head: 4
+  n_embd: 128
+  dropout: 0.0
+  bias: false
+  d_state: 128
+  expand: 2
+  headdim: 64
+  ngroups: 1
+  rope_fraction: 0.5
+  is_mimo: true
+  mimo_rank: 4
+  is_outproj_norm: false
+  chunk_size: 16
+  ssm_kernel: fused
+
+task:
+  name: kv_retrieval
+  params:
+    vocab_size: 256
+    input_seq_len: 128
+    num_kv_pairs: 8
+  n_val: 1000
+  n_train: 0
+
+optimizer:
+  name: adamw
+  learning_rate: 1.0e-4
+  beta1: 0.9
+  beta2: 0.95
+  weight_decay: 0.1
+  decay: matrices
+  grad_clip: 1.0
+  schedule: cosine
+  warmup_iters: 100
+  lr_decay_iters: 80000
+  min_lr: 1.0e-5
+
+train:
+  init: scratch
+  seed: 1337
+  data_seed: null
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 80000
+  eval_interval: 250
+  eval_iters: 100
+  eval_only: false
+  eval_accuracy: true
+  log_interval: 100
+  diag_interval: 0
+  always_save_checkpoint: true
+  reproducible_val: false
+  early_stop_metric: val
+  early_stop_patience: 20
+  early_stop_min_delta: 1.0e-4
+  early_stop_target: null
