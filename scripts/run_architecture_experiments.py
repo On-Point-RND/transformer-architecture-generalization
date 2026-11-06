@@ -11,13 +11,18 @@ import sys
 import threading
 import time
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 import yaml
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from core.config import OptimizerConfig, parse_value
+
+TASK_CONFIG_ROOT = PROJECT_ROOT / "configs/tasks"
 DEFAULT_MANIFEST = PROJECT_ROOT / "configs/architecture_comparison/experiments.yaml"
 DEFAULT_RUN_ROOT = PROJECT_ROOT / "runs/architecture-comparison"
 DEFAULT_OUTPUT = PROJECT_ROOT / "architecture-comparison-results.csv"
@@ -62,6 +67,7 @@ class Experiment:
     n_layer: int
     params: dict
     block_size: int
+    overrides: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -157,22 +163,32 @@ def parse_args():
 def load_experiments(manifest):
     raw = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
     default_block_size = int(raw.get("default_block_size", 128))
+    defaults = raw.get("overrides", {})
     experiments = []
     for index, row in enumerate(raw.get("experiments", ()), start=1):
         missing = {"task", "n_layer", "params"} - set(row)
         if missing:
             raise ValueError(f"manifest experiment {index} lacks: {sorted(missing)}")
+        overrides = {**defaults, **row.get("overrides", {})}
+        reserved = {"task.name", "task.params", "model.n_layer", "model.block_size"}
+        for key in overrides:
+            if "." not in key or key.split(".")[0] not in {"train", "optimizer", "model", "hardware", "task"}:
+                raise ValueError(f"invalid experiment override: {key!r}")
+            if key in reserved or key.startswith("task.params."):
+                raise ValueError(f"set {key!r} using the experiment's task/params/n_layer/block_size fields")
         experiments.append(
             Experiment(
                 task=row["task"],
                 n_layer=int(row["n_layer"]),
                 params=dict(row["params"]),
                 block_size=int(row.get("block_size", default_block_size)),
+                overrides=overrides,
             )
         )
     if not experiments:
         raise ValueError("experiment manifest is empty")
-    keys = [(e.task, e.n_layer, json.dumps(e.params, sort_keys=True)) for e in experiments]
+    keys = [(e.task, e.n_layer, e.block_size, json.dumps(e.params, sort_keys=True),
+             json.dumps(e.overrides, sort_keys=True)) for e in experiments]
     if len(keys) != len(set(keys)):
         raise ValueError("source CSV contains duplicate task/layer/params experiment points")
     return experiments
@@ -200,6 +216,16 @@ def command_for(args, model, index, experiment):
         "paths.run_dir": str(run_dir),
         "train.init": "auto",
     }
+    # Task configs are the shared optimizer source for vanilla and every
+    # comparison architecture. Resolve omitted fields from the same defaults
+    # as main.py, rather than retaining architecture-specific optimizer values.
+    task_path = TASK_CONFIG_ROOT / f"{experiment.task}.yaml"
+    task_config = yaml.safe_load(task_path.read_text(encoding="utf-8")) or {}
+    optimizer = OptimizerConfig(**(task_config.get("optimizer") or {}))
+    overrides.update({f"optimizer.{key}": value for key, value in asdict(optimizer).items()})
+    # Manifest defaults, then row overrides, take precedence over config files.
+    # Explicit CLI seed/device choices below take precedence over the manifest.
+    overrides.update(experiment.overrides)
     if args.seed is not None:
         overrides["train.seed"] = args.seed
     if args.data_seed is not None:
@@ -234,7 +260,11 @@ def read_summary(run_dir):
 
 def completed(run_dir, max_iters):
     if (run_dir / COMPLETION_MARKER).is_file():
-        return True
+        resolved = run_dir / "config.resolved.yaml"
+        saved = yaml.safe_load(resolved.read_text(encoding="utf-8")) if resolved.is_file() else {}
+        previous_limit = (saved or {}).get("train", {}).get("max_iters", max_iters)
+        if previous_limit >= max_iters:
+            return True
     summary = read_summary(run_dir)
     return summary is not None and int(summary["iter"]) >= max_iters
 
@@ -248,7 +278,7 @@ def collect(args, experiments, models, max_iters):
             summary = read_summary(run_dir)
             if summary is None:
                 continue
-            complete += int(completed(run_dir, max_iters))
+            complete += int(completed(run_dir, int(experiment.overrides.get("train.max_iters", max_iters))))
             try:
                 reported_run_dir = run_dir.relative_to(PROJECT_ROOT)
             except ValueError:
@@ -284,10 +314,25 @@ def build_jobs(args, experiments, models, max_iters):
     for model in models:
         for index, experiment in enumerate(experiments, start=1):
             run_dir = run_dir_for(args.run_root, model, index, experiment)
-            if completed(run_dir, max_iters):
+            command = tuple(command_for(args, model, index, experiment))
+            resolved_path = run_dir / "config.resolved.yaml"
+            if resolved_path.is_file():
+                saved = yaml.safe_load(resolved_path.read_text(encoding="utf-8")) or {}
+                previous = asdict(OptimizerConfig(**(saved.get("optimizer") or {})))
+                expected = {
+                    key.removeprefix("optimizer."): parse_value(value)
+                    for arg in command
+                    for key, sep, value in [arg.partition("=")]
+                    if sep and key.startswith("optimizer.")
+                }
+                if previous != expected:
+                    raise ValueError(
+                        f"optimizer settings changed for {run_dir}; use a fresh "
+                        "--run-root and --output to avoid resuming or skipping old settings"
+                    )
+            if completed(run_dir, int(experiment.overrides.get("train.max_iters", max_iters))):
                 print(f"SKIP complete: {run_dir}")
                 continue
-            command = tuple(command_for(args, model, index, experiment))
             if args.dry_run:
                 print(shlex.join(command))
                 continue
