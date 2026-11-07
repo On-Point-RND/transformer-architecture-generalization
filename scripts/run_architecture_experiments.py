@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the checked-in GDN, GDN2, Mamba2, and Mamba3 experiment matrix."""
+"""Run the checked-in vanilla, GDN, GDN2, Mamba2, and Mamba3 experiment matrix."""
 
 import argparse
 import csv
@@ -26,9 +26,11 @@ TASK_CONFIG_ROOT = PROJECT_ROOT / "configs/tasks"
 DEFAULT_MANIFEST = PROJECT_ROOT / "configs/architecture_comparison/experiments.yaml"
 DEFAULT_RUN_ROOT = PROJECT_ROOT / "runs/architecture-comparison"
 DEFAULT_OUTPUT = PROJECT_ROOT / "architecture-comparison-results.csv"
+COMPARISON_DEFAULTS = PROJECT_ROOT / "configs/architecture_comparison/defaults.yaml"
 COMPLETION_MARKER = ".complete"
 
 MODEL_CONFIGS = {
+    "vanilla": PROJECT_ROOT / "configs/architecture_comparison/vanilla.yaml",
     "gdn_negative_eigenvalues": (
         PROJECT_ROOT / "configs/architecture_comparison/gdn_negative_eigenvalues.yaml"
     ),
@@ -206,19 +208,38 @@ def _value(value):
     return str(value)
 
 
+def comparison_defaults():
+    """Shared comparison policy, independent of the selected architecture."""
+    return yaml.safe_load(COMPARISON_DEFAULTS.read_text(encoding="utf-8")) or {}
+
+
+def validate_model_config(path):
+    config = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    if set(config) != {"model"}:
+        raise ValueError(f"{path}: architecture configs must contain only a model section")
+    if {"n_layer", "block_size"} & set(config["model"]):
+        raise ValueError(f"{path}: set depth and block size in the experiment manifest")
+
+
 def command_for(args, model, index, experiment):
+    validate_model_config(MODEL_CONFIGS[model])
     run_dir = run_dir_for(args.run_root, model, index, experiment)
     overrides = {
+        f"{section}.{key}": value
+        for section, settings in comparison_defaults().items()
+        for key, value in settings.items()
+    }
+    overrides.update({
         "model.n_layer": experiment.n_layer,
         "model.block_size": experiment.block_size,
         "task.name": experiment.task,
         "task.params": experiment.params,
         "paths.run_dir": str(run_dir),
         "train.init": "auto",
-    }
+    })
     # Task configs are the shared optimizer source for vanilla and every
     # comparison architecture. Resolve omitted fields from the same defaults
-    # as main.py, rather than retaining architecture-specific optimizer values.
+    # as main.py.
     task_path = TASK_CONFIG_ROOT / f"{experiment.task}.yaml"
     task_config = yaml.safe_load(task_path.read_text(encoding="utf-8")) or {}
     optimizer = OptimizerConfig(**(task_config.get("optimizer") or {}))
@@ -442,17 +463,7 @@ def main():
         args.run_root if args.run_root.is_absolute() else PROJECT_ROOT / args.run_root
     )
     args.output = args.output if args.output.is_absolute() else PROJECT_ROOT / args.output
-    max_iters_by_model = {
-        model: int(
-            (yaml.safe_load(path.read_text(encoding="utf-8")) or {})
-            .get("train", {})
-            .get("max_iters", 80000)
-        )
-        for model, path in MODEL_CONFIGS.items()
-    }
-    if len(set(max_iters_by_model.values())) != 1:
-        raise ValueError(f"model configs disagree on train.max_iters: {max_iters_by_model}")
-    max_iters = next(iter(max_iters_by_model.values()))
+    max_iters = int(comparison_defaults()["train"]["max_iters"])
     experiments = load_experiments(args.manifest)
     if args.limit is not None:
         if args.limit < 0:

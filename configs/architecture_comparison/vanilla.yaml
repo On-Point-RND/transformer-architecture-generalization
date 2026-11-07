@@ -1,0 +1,8 @@
+# Model settings only. Use with scripts/run_architecture_experiments.py.
+# Depth, block size, and task parameters come from the experiment manifest.
+model:
+  name: vanilla
+  n_head: 4
+  n_embd: 128
+  dropout: 0.0
+  bias: false

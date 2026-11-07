@@ -1,0 +1,30 @@
+# Shared architecture-comparison runtime and training policy.
+# Model settings belong in model files; optimizer settings in configs/tasks/.
+# Manifests and CLI arguments may override these settings.
+# Keep historical dataset sizes and training settings for comparable reruns.
+hardware:
+  device: gpu
+  gpu: 0
+  dtype: bfloat16
+  compile: false
+train:
+  seed: 1337
+  data_seed: null
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 80000
+  eval_interval: 250
+  eval_iters: 100
+  eval_only: false
+  eval_accuracy: true
+  log_interval: 100
+  diag_interval: 0
+  always_save_checkpoint: true
+  reproducible_val: false
+  early_stop_metric: val
+  early_stop_patience: 20
+  early_stop_min_delta: 0.0001
+  early_stop_target: null
+task:
+  n_val: 1000
+  n_train: 0
