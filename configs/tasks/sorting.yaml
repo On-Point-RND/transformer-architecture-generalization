@@ -30,6 +30,19 @@ task:
   n_val: 1024
   n_train: 0
 
+# GDN2 depth-gap reference
+# Seeds 0/42/123, matching data seeds: mean exact match 21.69% at 1 layer
+# versus 99.61% at 2 layers.
+# Replace the active task.params mapping with these values to use this setting:
+# task:
+#   name: sorting
+#   params:
+#     n_items: [6, 10]  # 6-9 items (half-open)
+#     item_len: [4, 8]  # 4-7 characters (half-open)
+#     alphabet: "01"
+#     duplicates: true
+#     descending: false
+
 optimizer:
   name: adamw           # adamw | adam
   learning_rate: 5.0e-4 # float > 0; peak LR

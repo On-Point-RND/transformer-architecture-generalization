@@ -28,6 +28,17 @@ task:
   n_val: 1024
   n_train: 0
 
+# GDN2 depth-gap reference
+# Seeds 0/42/123, matching data seeds: mean exact match 79.95% at 1 layer
+# versus 99.95% at 2 layers.
+# Replace the active task.params mapping with these values to use this setting:
+# task:
+#   name: state_based_recall
+#   params:
+#     n_bits: 16
+#     n_swaps: 4
+#     max_bits: 32
+
 optimizer:
   name: adamw           # adamw | adam
   learning_rate: 5.0e-4 # float > 0; peak LR
