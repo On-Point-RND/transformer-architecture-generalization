@@ -17,6 +17,7 @@ paths:
 # name:
 #   vanilla          обычный causal Transformer с learned absolute positions
 #   lstm             stacked causal LSTM без positional encoding
+#   gru              stacked causal GRU без positional encoding
 #   positional       сравнение/композиция positional encodings
 #   attention_design MHA/GQA/MQA, K=V и local attention
 #   ffn_gating       GELU | ReLU | SwiGLU
@@ -65,6 +66,11 @@ model:
 # ffn_gating:
 #   ffn: gelu            # gelu | relu | swiglu
 #   ffn_hidden: 0         # 0 = iso-parameter width, иначе int > 0
+#
+# lstm, gru:
+#   tie_weights: true    # lm_head делит матрицу с embedding (рекомендовано false)
+#   emb_std: 0.02        # std инициализации embedding (рекомендовано 1.0)
+#   gate_bias: 1.0       # bias forget gate (LSTM) / update gate (GRU), при bias: true
 #
 # looped:
 #   n_loops: 4           # int > 0; сколько раз применить общий блок

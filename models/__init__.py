@@ -14,6 +14,9 @@ from models.gdn2_attention import Config as GDN2AttentionConfig
 from models.gdn2_attention import Model as GDN2AttentionModel
 from models.looped import Config as LoopedConfig
 from models.looped import build_model as build_looped
+from models.gru import Config as GRUConfig
+from models.gru import build_model as build_gru
+from models.lstm import Config as LSTMConfig
 from models.lstm import build_model as build_lstm
 from models.lssa import LSSAConfig, LSSARConfig, build_lssa, build_lssar
 from models.mamba2 import Config as Mamba2Config
@@ -34,7 +37,8 @@ def build_vanilla(config):
 
 MODELS = {
     "vanilla": (ModelConfig, build_vanilla),
-    "lstm": (ModelConfig, build_lstm),
+    "lstm": (LSTMConfig, build_lstm),
+    "gru": (GRUConfig, build_gru),
     "positional": (PositionalConfig, build_positional),
     "attention_design": (AttentionConfig, build_attention),
     "ffn_gating": (FFNConfig, build_ffn),
