@@ -1,0 +1,21 @@
+# Model settings only: attention uses RoPE; GDN2 is unchanged.
+# No absolute positional embeddings. Historical hybrid configs remain separate.
+model:
+  allow_neg_eigval: false
+  beta_guard: true
+  bias: false
+  d_conv: 4
+  dropout: 0.0
+  expand_k: 1.0
+  expand_v: 1.0
+  n_embd: 128
+  n_head: 4
+  name: gdn2_attention
+  scan_kernel: fla
+  layer_pattern:
+  - gdn2
+  - attention
+  use_pos_embedding: false
+  norm: rms
+  attention_pos_encoding: rope
+  rope_theta: 10000.0

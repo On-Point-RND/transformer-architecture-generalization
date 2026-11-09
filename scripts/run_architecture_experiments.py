@@ -39,6 +39,7 @@ MODEL_CONFIGS = {
     "mamba3_mimo": PROJECT_ROOT / "configs/architecture_comparison/mamba3_mimo.yaml",
     "gdn2": PROJECT_ROOT / "configs/architecture_comparison/gdn2.yaml",
     "gdn2_attention": PROJECT_ROOT / "configs/architecture_comparison/gdn2_attention.yaml",
+    "gdn2_attention_rope": PROJECT_ROOT / "configs/architecture_comparison/gdn2_attention_rope.yaml",
     "attention_gdn2": PROJECT_ROOT / "configs/architecture_comparison/attention_gdn2.yaml",
     "gdn2_negative_eigenvalues": (
         PROJECT_ROOT / "configs/architecture_comparison/gdn2_negative_eigenvalues.yaml"
