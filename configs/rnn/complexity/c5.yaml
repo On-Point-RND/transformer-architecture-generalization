@@ -1,0 +1,68 @@
+hardware:
+  device: gpu
+  gpu: 0
+  dtype: bfloat16
+  compile: false
+
+paths:
+  run_dir: runs/rnn/complexity/c5
+  logs: ""
+  checkpoints: ""
+  results: ""
+
+model:
+  name: gru
+  block_size: 128
+  n_layer: 1
+  n_head: 4
+  n_embd: 128
+  dropout: 0.0
+  bias: true
+  tie_weights: false
+  emb_std: 1.0
+  gate_bias: 1.0
+
+task:
+  name: c5
+  params:
+    n_permutations: 72
+  n_val: 1024
+  n_train: 0
+
+optimizer:
+  name: adamw
+  learning_rate: 2.0e-3
+  beta1: 0.9
+  beta2: 0.95
+  weight_decay: 0.0
+  decay: matrices
+  grad_clip: 1.0
+  schedule: cosine
+  warmup_iters: 1000
+  lr_decay_iters: 45000
+  min_lr: 1.0e-4
+
+train:
+  init: auto
+  seed: 0
+  data_seed: null
+  batch_size: 256
+  gradient_accumulation_steps: 1
+  max_iters: 50000
+  eval_interval: 1000
+  eval_iters: 10
+  eval_only: false
+  eval_accuracy: true
+  log_interval: 100
+  diag_interval: 0
+  always_save_checkpoint: true
+  reproducible_val: false
+  early_stop_metric: val
+  early_stop_patience: 0
+  early_stop_min_delta: 0.0
+  early_stop_target: null
+
+grid:
+  train.seed: [0, 42, 123]
+  model.name: [gru, lstm]
+  model.n_layer: [1, 2, 3, 4]
