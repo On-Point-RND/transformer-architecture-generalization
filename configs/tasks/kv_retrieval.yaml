@@ -21,7 +21,7 @@ model:
 
 task:
   name: kv_retrieval
-  params: {vocab_size: 8192, input_seq_len: 512, num_kv_pairs: 64}
+  params: {vocab_size: 8192, input_seq_len: 512, num_kv_pairs: 128}
 
 optimizer:
   name: adamw           # adamw | adam

@@ -22,8 +22,8 @@ model:
 task:
   name: sorting
   params:
-    n_items: [4, 9]     
-    item_len: [8, 16]    
+    n_items: [4, 8]     
+    item_len: [8, 8]    
     alphabet: 0123456789abcdefghijklmnopqrstuvwxyz
     duplicates: true
     descending: false

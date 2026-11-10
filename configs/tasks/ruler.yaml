@@ -25,7 +25,7 @@ task:
     n_vars: 128
     v_card: 32
     num_chains: 8       
-    num_hops: 4       
+    num_hops: 6       
     n_filler: [0, 33]  
   n_val: 1024
   n_train: 0
