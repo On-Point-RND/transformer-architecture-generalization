@@ -3,6 +3,8 @@
 The LSTM has no normalization layers, so ``model.norm`` is ignored here.
 """
 
+from dataclasses import dataclass
+
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -11,10 +13,22 @@ from core.config import ModelConfig
 from optimizers import get_optimizer
 
 
+@dataclass
+class Config(ModelConfig):
+    name: str = "lstm"
+    tie_weights: bool = True
+    emb_std: float = 0.02
+    gate_bias: float = 1.0
+
+    def __post_init__(self):
+        if self.emb_std <= 0:
+            raise ValueError("emb_std must be positive")
+
+
 class LSTMModel(nn.Module):
     """Token embedding -> stacked LSTM -> vocabulary logits."""
 
-    def __init__(self, config: ModelConfig):
+    def __init__(self, config: Config):
         super().__init__()
         if config.vocab_size is None:
             raise ValueError("vocab_size must be filled from the task")
@@ -33,11 +47,14 @@ class LSTMModel(nn.Module):
             bias=config.bias,
         )
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
-        self.lm_head.weight = self.embedding.weight
+        if config.tie_weights:
+            self.lm_head.weight = self.embedding.weight
         self._init_weights()
 
     def _init_weights(self):
-        nn.init.normal_(self.embedding.weight, mean=0.0, std=0.02)
+        nn.init.normal_(self.embedding.weight, mean=0.0, std=self.config.emb_std)
+        if not self.config.tie_weights:
+            nn.init.normal_(self.lm_head.weight, mean=0.0, std=0.02)
         for name, parameter in self.lstm.named_parameters():
             if "weight_ih" in name:
                 for gate in parameter.chunk(4, dim=0):
@@ -50,7 +67,7 @@ class LSTMModel(nn.Module):
                 if "bias_ih" in name:
                     hidden = self.config.n_embd
                     with torch.no_grad():
-                        parameter[hidden:2 * hidden].fill_(1.0)
+                        parameter[hidden:2 * hidden].fill_(self.config.gate_bias)
 
     def forward(self, idx, targets=None):
         _, length = idx.shape
@@ -127,5 +144,5 @@ class LSTMModel(nn.Module):
         return idx
 
 
-def build_model(config: ModelConfig):
+def build_model(config: Config):
     return LSTMModel(config)
